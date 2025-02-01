@@ -11,13 +11,16 @@
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
+
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #1a1f25 0%, #2d3748 100%);
             color: #e0e0e0;
             padding: 20px;
             min-height: 100vh;
+            line-height: 1.6;
         }
+
         .container {
             max-width: 700px;
             margin: 20px auto;
@@ -28,6 +31,7 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         h1 {
             text-align: center;
             margin-bottom: 30px;
@@ -37,6 +41,7 @@
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
             letter-spacing: 0.5px;
         }
+
         label {
             display: block;
             margin: 15px 0 8px;
@@ -46,6 +51,7 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
+
         input, select {
             width: 100%;
             padding: 12px 16px;
@@ -57,34 +63,45 @@
             font-size: 15px;
             outline: none;
         }
+
+        input[readonly] {
+            background: rgba(44, 44, 44, 0.5);
+            cursor: not-allowed;
+        }
+
         input:focus, select:focus {
             border-color: #60a5fa;
             box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
         }
+
         input::placeholder {
             color: #666;
         }
+
         .field-info {
             color: #888;
             font-size: 0.85em;
             margin-top: -10px;
             margin-bottom: 15px;
-            padding: 8px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.05);
-            border-radius: 6px;
+            border-radius: 8px;
             border-left: 3px solid #60a5fa;
         }
+
         .field-info strong {
             color: #60a5fa;
         }
+
         .button-group {
             display: flex;
             gap: 12px;
             margin-top: 20px;
         }
+
         button {
             flex: 1;
-            padding: 12px;
+            padding: 12px 16px;
             background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
             color: white;
             border: none;
@@ -94,12 +111,15 @@
             font-weight: 500;
             letter-spacing: 0.5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
         }
+
         button:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
+
         .output {
             margin-top: 25px;
             padding: 16px;
@@ -110,7 +130,9 @@
             white-space: pre-wrap;
             word-break: break-all;
             font-size: 14px;
+            min-height: 60px;
         }
+
         .message {
             display: none;
             margin-top: 15px;
@@ -121,35 +143,41 @@
             text-align: center;
             animation: fadeIn 0.3s ease;
         }
+
         .reminder {
-            display: none;
             margin-top: 15px;
             padding: 12px;
-            background: rgba(255, 193, 7, 0.9);
-            color: black;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffd700;
             border-radius: 8px;
             text-align: center;
-            animation: fadeIn 0.3s ease;
+            border: 1px solid rgba(255, 193, 7, 0.3);
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         footer {
             margin-top: 30px;
             text-align: center;
             font-size: 13px;
             color: #888;
+            padding: 20px;
         }
+
         footer a {
             color: #60a5fa;
             text-decoration: none;
             font-weight: 500;
         }
+
         footer a:hover {
             color: #3b82f6;
             text-decoration: underline;
         }
+
         .error {
             color: #f87171;
             margin-bottom: 15px;
@@ -160,9 +188,11 @@
             background: rgba(248, 113, 113, 0.1);
             border-radius: 6px;
         }
+
         .field-error {
             border-color: #f87171;
         }
+
         .error-detail {
             color: #f87171;
             font-size: 12px;
@@ -197,24 +227,24 @@
             <input type="text" id="location" value="brazilsouth" readonly>
             <div id="location-error" class="error-detail"></div>
             
-            <label for="locationUS">Localização US</label>
+            <label for="locationUS">US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
             <div class="field-info">
-                <strong>Importante:</strong> A região US East é necessária para o Azure Automation Account. <strong>Esta região deve ser diferente da região principal (Brazil South)</strong>, pois isso garante a redundância e o correto funcionamento da automação. O Automation Account é um serviço gerenciado que executará os runbooks de automação para seus recursos.
+                <strong>Importante:</strong> Região necessária para o Azure Automation Account. Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação.
             </div>
             
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que maiúsculo?</strong> Este formato é utilizado para nomear os recursos seguindo as convenções de nomenclatura do Azure. Será usado para criar grupos de recursos (Resource Groups) e outros componentes onde a identificação em maiúsculo facilita a visualização dos recursos no portal.
+                <strong>Por que maiúsculo?</strong> Utilizado para nomear recursos no Azure, facilitando a identificação no portal.
             </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que minúsculo?</strong> Este formato é necessário para criar as tags dos recursos no Azure. As tags são identificadores importantes que permitem gerenciar, buscar e organizar os recursos de forma eficiente, e por convenção são utilizadas em letras minúsculas.
+                <strong>Por que minúsculo?</strong> Necessário para criar as tags dos recursos, permitindo melhor organização e gerenciamento.
             </div>
             
             <label for="environment">Ambiente *</label>
@@ -241,7 +271,7 @@
         
         <div class="output" id="output"></div>
         <div class="message" id="copyMessage">Comando copiado!</div>
-        <div class="reminder" id="reminderMessage">Lembre-se de fazer o upload do script no CloudShell antes de executar o comando gerado.</div>
+        <div class="reminder">Lembre-se de fazer o upload do script no CloudShell antes de executar o comando gerado.</div>
     </div>
     
     <footer>
@@ -317,14 +347,7 @@
             }
             navigator.clipboard.writeText(outputElement.textContent).then(() => {
                 const copyMessage = document.getElementById('copyMessage');
-                const reminderMessage = document.getElementById('reminderMessage');
                 copyMessage.style.display = 'block';
-                reminderMessage.style.display = 'block';
-                
-                setTimeout(() => {
-                    copyMessage.style.display = 'none';
-                    reminderMessage.style.display = 'none';
-                }, 3000);
             }).catch(err => {
                 console.error('Erro ao copiar:', err);
                 alert('Erro ao copiar o comando');
