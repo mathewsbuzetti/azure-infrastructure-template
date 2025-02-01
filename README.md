@@ -6,6 +6,23 @@
 
 Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth.
 
+## 📑 Visão Geral da Infraestrutura
+
+### 💻 Máquina Virtual
+* Windows Server 2022 Datacenter
+* Tamanho: Standard_B2ms
+* Disco OS: 127GB StandardSSD_LRS
+
+### 🌐 Rede
+* VNET (10.1.0.0/16)
+  * SNET-Internal (10.1.1.0/24)
+  * GatewaySubnet (10.1.253.0/27)
+
+### 🔒 VPN Gateway (Opcional)
+* Gateway VPN Ativo-Ativo
+* Suporte para conexões S2S e P2S
+* SKU: VpnGw1
+
 ## 📋 Pré-requisitos
 
 1. Você precisará de uma assinatura ativa do Azure.
@@ -37,7 +54,13 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 
 8. Cole o comando gerado no Azure CloudShell e pressione Enter.
 
-O script iniciará a implantação dos recursos do Azure. Esse processo pode levar de 30 minutos a uma hora, então tenha paciência. Após a conclusão da implantação, o script exibirá informações sobre os recursos criados, incluindo o endereço IP público da Máquina Virtual.
+O script iniciará a implantação dos recursos do Azure.
+
+## ⏱️ Tempo de Execução
+- Deploy completo sem VPN: ~30 minutos
+- Deploy com VPN: ~60 minutos
+
+Após a conclusão da implantação, o script exibirá informações sobre os recursos criados, incluindo o endereço IP público da Máquina Virtual.
 
 ## ⚠️ Avisos Importantes
 
@@ -93,11 +116,6 @@ O script iniciará a implantação dos recursos do Azure. Esse processo pode lev
   - Configurado para backup de VMs
   - Requer configuração manual de redundância
 
-### VPN Gateway (Opcional)
-- 🔒 Gateway VPN Ativo-Ativo
-- 🌐 Suporte para conexões S2S e P2S
-- ⚡ SKU: VpnGw1
-
 ## 🏷️ Tagging
 
 Todos os recursos são automaticamente tagueados com:
@@ -112,17 +130,6 @@ O script fornece feedback em tempo real com cores:
 - 🟩 Verde: Sucesso
 - 🟨 Amarelo: Aviso
 - 🟥 Vermelho: Erro
-
-## ⏱️ Tempo de Execução
-
-- Deploy completo sem VPN: ~30 minutos
-- Deploy com VPN: ~60 minutos
-
-## 👨‍💻 Suporte
-
-Script desenvolvido por Mathews Buzetti. Para suporte:
-- 📧 Email: [seu-email]
-- 🌐 GitHub: [seu-github]
 
 ## 🔄 Versionamento
 
