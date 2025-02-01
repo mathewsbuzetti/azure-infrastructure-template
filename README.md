@@ -4,14 +4,22 @@
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
 
+## 📋 Metadados
+
+| Metadado | Descrição |
+|----------|-----------|
+| Título | Template ARM para Provisionamento de Infraestrutura no Azure |
+| Assunto | Azure Virtual Machines |
+| Tipo | Início Rápido |
+| Data | 31/01/2025 |
+| Autor | Mathews Buzetti |
+| Tags | subject-armqs, mode-arm, devx-track-arm-template |
+
+**Aplica-se a:** ✔️ VMs do Windows
+
 Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth.
 
 ## 💻 Especificações Técnicas
-
-### 💻 Máquina Virtual
-* Windows Server 2022 Datacenter
-* Tamanho: Standard_B2ms
-* Disco OS: 127GB StandardSSD_LRS
 
 ### 🌐 Networking
 * VNET (10.1.0.0/16)
@@ -36,6 +44,11 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 * Gateway VPN Ativo-Ativo
 * Suporte para conexões S2S e P2S
 * SKU: VpnGw1
+
+### 💻 Máquina Virtual
+* Windows Server 2022 Datacenter
+* Tamanho: Standard_B2ms
+* Disco OS: 127GB StandardSSD_LRS
 
 ### 💾 Armazenamento e Backup
 * Storage Account (Standard_LRS)
@@ -91,7 +104,6 @@ O script iniciará a implantação dos recursos do Azure.
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 ![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
-
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
