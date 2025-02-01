@@ -101,6 +101,10 @@ O script iniciará a implantação dos recursos do Azure.
 
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
+### 🔐 Credenciais Padrão
+- **Username**: admaz
+- **Password**: BaucCr@f#PgU
+
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
@@ -153,10 +157,6 @@ O script iniciará a implantação dos recursos do Azure.
    * Valor da tag: [TagValue configurado no Runbook]
 
 ![image](https://github.com/user-attachments/assets/777c4d05-ad95-446a-a905-ba7aa284f092)
-
-### 🔐 Credenciais Padrão
-- **Username**: admaz
-- **Password**: BaucCr@f#PgU
 
 ⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!
 
