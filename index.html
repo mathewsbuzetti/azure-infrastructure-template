@@ -147,8 +147,8 @@
         .reminder {
             margin-top: 15px;
             padding: 12px;
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffd700;
+            background: rgba(255, 193, 7, 0.9);
+            color: black;
             border-radius: 8px;
             text-align: center;
             border: 1px solid rgba(255, 193, 7, 0.3);
@@ -227,7 +227,7 @@
             <input type="text" id="location" value="brazilsouth" readonly>
             <div id="location-error" class="error-detail"></div>
             
-            <label for="locationUS">US East</label>
+            <label for="locationUS">Localização US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
             <div class="field-info">
                 <strong>Importante:</strong> Região necessária para o Azure Automation Account. Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação.
@@ -237,14 +237,14 @@
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que maiúsculo?</strong> Utilizado para nomear recursos no Azure, facilitando a identificação no portal.
+                <strong>Por que maiúsculo?</strong> Utilizado para criar os resource groups e os recursos.
             </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que minúsculo?</strong> Necessário para criar as tags dos recursos, permitindo melhor organização e gerenciamento.
+                <strong>Por que minúsculo?</strong> Necessário para criar as tags dos recursos.
             </div>
             
             <label for="environment">Ambiente *</label>
