@@ -8,6 +8,11 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 
 ## 💻 Especificações Técnicas
 
+### 💻 Máquina Virtual
+* Windows Server 2022 Datacenter
+* Tamanho: Standard_B2ms
+* Disco OS: 127GB StandardSSD_LRS
+
 ### 🌐 Networking
 * VNET (10.1.0.0/16)
   * SNET-Internal (10.1.1.0/24)
@@ -31,11 +36,6 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 * Gateway VPN Ativo-Ativo
 * Suporte para conexões S2S e P2S
 * SKU: VpnGw1
-
-### 💻 Máquina Virtual
-* Windows Server 2022 Datacenter
-* Tamanho: Standard_B2ms
-* Disco OS: 127GB StandardSSD_LRS
 
 ### 💾 Armazenamento e Backup
 * Storage Account (Standard_LRS)
