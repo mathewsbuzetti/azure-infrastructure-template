@@ -4,20 +4,19 @@
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
 
+**Aplica-se a:** ✔️ VMs do Windows
+
 ## 📋 Metadados
 
 | Metadado | Descrição |
 |----------|-----------|
-| Título | Template ARM para Provisionamento de Infraestrutura no Azure |
+| Título | Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth |
 | Assunto | Azure Virtual Machines |
 | Tipo | Início Rápido |
 | Data | 31/01/2025 |
 | Autor | Mathews Buzetti |
 | Tags | subject-armqs, mode-arm, devx-track-arm-template |
 
-**Aplica-se a:** ✔️ VMs do Windows
-
-Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth.
 
 ## 💻 Especificações Técnicas
 
