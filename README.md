@@ -126,13 +126,16 @@ O script iniciará a implantação dos recursos do Azure.
 
 2. No Automation Account, acesse o Runbook "START_STOP_VMs"
 3. Importe o conteúdo do script baixado
+
 ![image](https://github.com/user-attachments/assets/6b321a34-4421-4816-b4aa-f783cedea4ec)
 
 4. Configure as políticas de execução:
    * Crie um agendamento para Start (ex: dias úteis às 9h)
+
 ![image](https://github.com/user-attachments/assets/a49a51f6-c229-4d40-b235-19f4bdae45e6)
 
    * Crie um agendamento para Stop (ex: dias úteis às 19h)
+
 ![image](https://github.com/user-attachments/assets/6bb4c703-8a6c-4a1a-8714-b6f5274792e9)
 
    * Configure os parâmetros:
@@ -143,12 +146,13 @@ O script iniciará a implantação dos recursos do Azure.
 ### Configuração de Tags na VM
 1. Acesse a VM que deseja configurar o Start/Stop automático
 2. Na seção "Tags", adicione uma nova tag:
+
    > ⚙️ **Configuração**: A tag deve corresponder aos parâmetros configurados no Runbook
+
    * Nome da tag: [TagName configurado no Runbook]
    * Valor da tag: [TagValue configurado no Runbook]
 
 ![image](https://github.com/user-attachments/assets/777c4d05-ad95-446a-a905-ba7aa284f092)
-
 
 ### 🔐 Credenciais Padrão
 - **Username**: admaz
