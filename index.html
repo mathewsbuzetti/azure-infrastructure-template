@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de Comando de Deploy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        .output {
+            margin-top: 20px;
+            padding: 10px;
+            background: #f4f4f4;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de Comando de Deploy</h1>
+        <form id="deployForm">
+            <label for="subscriptionId">Subscription ID</label>
+            <input type="text" id="subscriptionId" placeholder="e.g., e875c481-3a50-4369-8c6f-5c58697332e2" required>
+
+            <label for="locationBrazil">Location Brazil</label>
+            <input type="text" id="locationBrazil" placeholder="e.g., brazilsouth" required>
+
+            <label for="locationUS">Location US</label>
+            <input type="text" id="locationUS" placeholder="e.g., eastus" required>
+
+            <label for="clientNameUpper">Client Name (Uppercase)</label>
+            <input type="text" id="clientNameUpper" placeholder="e.g., MATHEWSB" required>
+
+            <label for="clientNameLower">Client Name (Lowercase)</label>
+            <input type="text" id="clientNameLower" placeholder="e.g., mathews" required>
+
+            <label for="environment">Environment</label>
+            <input type="text" id="environment" placeholder="e.g., production" required>
+
+            <label for="vmName">VM Name</label>
+            <input type="text" id="vmName" placeholder="e.g., MATHEWS-DC01" required>
+
+            <button type="button" onclick="generateCommand()">Gerar Comando</button>
+        </form>
+
+        <div class="output" id="output"></div>
+    </div>
+
+    <script>
+        function generateCommand() {
+            const subscriptionId = document.getElementById('subscriptionId').value;
+            const locationBrazil = document.getElementById('locationBrazil').value;
+            const locationUS = document.getElementById('locationUS').value;
+            const clientNameUpper = document.getElementById('clientNameUpper').value;
+            const clientNameLower = document.getElementById('clientNameLower').value;
+            const environment = document.getElementById('environment').value;
+            const vmName = document.getElementById('vmName').value;
+
+            const command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -Environment "${environment}" -VMName "${vmName}"`;
+
+            document.getElementById('output').textContent = command;
+        }
+    </script>
+</body>
+</html>
