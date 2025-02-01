@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Comando de Deploy</title>
     <style>
-        /* Estilo base */
         * {
             margin: 0;
             padding: 0;
@@ -31,7 +30,7 @@
         h1 {
             text-align: center;
             margin-bottom: 20px;
-            color: #bb86fc;
+            color: #007bff;
         }
 
         label {
@@ -64,7 +63,7 @@
         button {
             flex: 1;
             padding: 10px;
-            background-color: #bb86fc;
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
@@ -74,7 +73,7 @@
         }
 
         button:hover {
-            background-color: #9a6ce0;
+            background-color: #0056b3;
         }
 
         .output {
@@ -96,7 +95,7 @@
         }
 
         footer a {
-            color: #bb86fc;
+            color: #007bff;
             text-decoration: none;
         }
 
@@ -155,6 +154,7 @@
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
                 <button type="button" onclick="copyCommand()">Copiar Comando</button>
+                <button type="button" onclick="openAzureCloudShell()">Acessar Azure CloudShell</button>
             </div>
         </form>
 
@@ -239,6 +239,10 @@
                 console.error('Erro ao copiar:', err);
                 alert('Erro ao copiar o comando');
             });
+        }
+
+        function openAzureCloudShell() {
+            window.open('https://portal.azure.com/#cloudshell/', '_blank');
         }
     </script>
 </body>
