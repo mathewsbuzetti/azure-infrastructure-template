@@ -17,7 +17,6 @@
 | Autor | Mathews Buzetti |
 | Tags | subject-armqs, mode-arm, devx-track-arm-template |
 
-
 ## 💻 Especificações Técnicas
 
 ### 🌐 Networking
@@ -69,7 +68,8 @@
 
 ## 🚀 Como Usar
 
-1. Baixe o script Deploy-AzureInfrastructure-BrazilSouth.ps1:
+1. Baixe o script Deploy-AzureInfrastructure-BrazilSouth.ps1
+   
    [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](https://github.com/mathewsbuzetti/deployazure/blob/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
 
 2. Acesse o portal do Azure e abra o Azure CloudShell.
@@ -78,7 +78,8 @@
 
 4. Navegue até o diretório onde você fez o upload do script.
 
-5. Acesse nossa interface web:
+5. Acesse nossa interface
+   
    [![Web Interface](https://img.shields.io/badge/Web%20Interface-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
 
 6. Preencha os parâmetros necessários:
@@ -107,6 +108,7 @@ O script iniciará a implantação dos recursos do Azure.
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
+   > 💰 **Recomendação**: A alteração para LRS é recomendada para redução de custos, pois oferece redundância suficiente para a maioria dos cenários com um custo menor.
 
 ![image](https://github.com/user-attachments/assets/bfabecec-1d52-4f64-959e-a904fb637e07)
 
