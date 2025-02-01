@@ -95,6 +95,8 @@ O script iniciará a implantação dos recursos do Azure.
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
+![image](https://github.com/user-attachments/assets/bfabecec-1d52-4f64-959e-a904fb637e07)
+
 2. Configurar o backup para a VM criada
 3. Definir a política de retenção conforme necessidade
 
