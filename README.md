@@ -124,14 +124,9 @@ O script fornece feedback em tempo real com cores:
 - 🟨 Amarelo: Aviso
 - 🟥 Vermelho: Erro
 
-## 👨‍💻 Suporte e Versionamento
+## 🔄 Versionamento
 
 Script desenvolvido por Mathews Buzetti.
 
-### Suporte
-- 📧 Email: [seu-email]
-- 🌐 GitHub: [seu-github]
-
-### Versão
 - Versão: 1.0.0
 - Última atualização: 01/02/2025
