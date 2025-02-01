@@ -109,12 +109,9 @@ O script iniciará a implantação dos recursos do Azure.
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
    > 💰 **Recomendação**: A alteração para LRS é recomendada para redução de custos, pois oferece redundância suficiente para a maioria dos cenários com um custo menor.
-
 ![image](https://github.com/user-attachments/assets/bfabecec-1d52-4f64-959e-a904fb637e07)
-
 2. Definir a política de retenção conforme necessidade
-   > 💰 **Recomendação**: A política abaixo é uma recomendação amplamente utilizada por empresas. Caso deseje seguir este modelo:
-
+   > ⚙️ **Recomendação**: A política abaixo é uma recomendação amplamente utilizada por empresas. Caso deseje seguir este modelo:
 ![image](https://github.com/user-attachments/assets/0adee237-3151-4de4-a38f-3ea6b362be36)
 
 ### Configuração do Start/Stop de VMs
