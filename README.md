@@ -1,3 +1,5 @@
+Entendi, vou adicionar os botões para facilitar o acesso ao script.
+
 # 🚀 Implantação de Infraestrutura do Azure no Brasil Sul
 
 ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure)
@@ -23,7 +25,7 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
    - Contribuidor (Contributor) ou Proprietário (Owner) na assinatura
 
 ## 🚀 Como Usar
-### Via Interface Web (Recomendado)
+
 1. Acesse nossa interface web https://mathewsbuzetti.github.io/deployazure/
 2. Preencha os parâmetros necessários:
    - ID da Assinatura Azure
@@ -31,15 +33,12 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
    - Nome do Cliente (minúsculo)
    - Ambiente (ex: production, development)
    - Nome da Máquina Virtual
-3. Copie o comando gerado
-4. Execute no Azure CloudShell
-
-### Via Azure CloudShell
-1. Baixar o script no git https://github.com/mathewsbuzetti/deployazure/blob/main/Deploy-AzureInfrastructure-BrazilSouth.ps1
-2. Abra o Azure CloudShell em seu portal do Azure link My Dashboard - Microsoft Azure
-3. Faz uplound do script CloudShell Deploy-AzureInfrastructure-BrazilSouth.ps1
-4. Navega até o diretorio que você fez o uplound do script.
-5. Cole o comando gerado na etapa anterior e pressione Enter.
+3. Copie o comando gerado.
+4. Abra o Azure CloudShell em seu portal do Azure (link My Dashboard - Microsoft Azure).
+5. Faça o upload do script:
+   [![Upload Script](https://img.shields.io/badge/Upload%20Script-blueviolet?style=flat-square)](https://github.com/mathewsbuzetti/deployazure/blob/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
+6. Navegue até o diretório onde você fez o upload do script.
+7. Cole o comando gerado na etapa 3 e pressione Enter.
 
 O script iniciará a implantação dos recursos do Azure. Esse processo pode levar de 30 minutos a uma hora, então tenha paciência. Após a conclusão da implantação, o script exibirá informações sobre os recursos criados, incluindo o endereço IP público da Máquina Virtual.
 
