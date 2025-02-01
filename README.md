@@ -1,9 +1,9 @@
-# 🚀 Implantação de Infraestrutura do Azure no Brasil Sul
+# 🚀 Implantação de Infraestrutura do Azure no BrazilSouth
 
 ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 
-Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do Brasil Sul. Ele cria os seguintes recursos:
+Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth. Ele cria os seguintes recursos:
 
 - 🗂️ Grupos de Recursos
 - 🌐 Rede Virtual (VNET) e Sub-redes 
