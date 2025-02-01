@@ -6,22 +6,44 @@
 
 Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth.
 
-## 📑 Visão Geral da Infraestrutura
+## 💻 Especificações Técnicas
+
+### 🌐 Networking
+* VNET (10.1.0.0/16)
+  * SNET-Internal (10.1.1.0/24)
+  * GatewaySubnet (10.1.253.0/27)
+* NSG com regras para:
+  * RDP (porta 3389)
+
+### 🌍 IPs Públicos
+* VM: PIP-VM-[NOME-DA-VM]
+* VPN Gateway (opcional):
+  * PIP-S2S-PRIMARY (Site-to-Site Primário)
+  * PIP-S2S-SECONDARY (Site-to-Site Secundário)
+  * PIP-P2S-PRIMARY (Point-to-Site)
+* Todos configurados como:
+  * Tipo: Static
+  * SKU: Standard
+
+### 🔒 VPN Gateway (Opcional)
+* Gateway VPN Ativo-Ativo
+* Suporte para conexões S2S e P2S
+* SKU: VpnGw1
 
 ### 💻 Máquina Virtual
 * Windows Server 2022 Datacenter
 * Tamanho: Standard_B2ms
 * Disco OS: 127GB StandardSSD_LRS
 
-### 🌐 Rede
-* VNET (10.1.0.0/16)
-  * SNET-Internal (10.1.1.0/24)
-  * GatewaySubnet (10.1.253.0/27)
+### 💾 Armazenamento e Backup
+* Storage Account (Standard_LRS)
+* Recovery Services Vault
+* Availability Set
 
-### 🔒 VPN Gateway (Opcional)
-* Gateway VPN Ativo-Ativo
-* Suporte para conexões S2S e P2S
-* SKU: VpnGw1
+### 📊 Monitoramento
+* Automation Account com Runbook START_STOP_VMs
+* Log Analytics Workspace
+* Diagnósticos de Boot (desabilitado por padrão)
 
 ## 📋 Pré-requisitos
 
@@ -56,67 +78,37 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 
 O script iniciará a implantação dos recursos do Azure.
 
-## ⏱️ Tempo de Execução
+### ⏱️ Tempo de Execução
 - Deploy completo sem VPN: ~30 minutos
 - Deploy com VPN: ~60 minutos
 
-Após a conclusão da implantação, o script exibirá informações sobre os recursos criados, incluindo o endereço IP público da Máquina Virtual.
+## ⚠️ Avisos Importantes e Pós-Instalação
 
-## ⚠️ Avisos Importantes
+### Diagnóstico da VM
+- Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
-- **Diagnóstico da VM**: Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
-- **Configuração de Backup**: Após a criação do Backup Vault:
-  1. Alterar a redundância para Locally-redundant (LRS)
-  2. Configurar o backup para a VM criada
-  3. Definir a política de retenção conforme necessidade
+### Configuração de Backup
+1. Alterar a redundância para Locally-redundant (LRS)
+2. Configurar o backup para a VM criada
+3. Definir a política de retenção conforme necessidade
 
-## 🔐 Credenciais Padrão
-
+### 🔐 Credenciais Padrão
 - **Username**: admaz
 - **Password**: BaucCr@f#PgU
 
 ⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!
 
-## 🏗️ Recursos Criados
+## 🏗️ Resource Groups e Organização
 
-### Grupos de Recursos (Resource Groups)
+### Grupos de Recursos
 - RG-[CLIENT]-VM (BrazilSouth)
 - RG-[CLIENT]-Storage (BrazilSouth)
 - RG-[CLIENT]-Networks (BrazilSouth)
 - RG-[CLIENT]-Backup (BrazilSouth)
-- RG-[CLIENT]-Automation (East US)
+- RG-[CLIENT]-Automation (East US) 
 - RG-[CLIENT]-LogAnalytics (East US)
 
-### Networking
-- 🌐 VNET (10.1.0.0/16)
-  - SNET-Internal (10.1.1.0/24)
-  - GatewaySubnet (10.1.253.0/27)
-- 🛡️ NSG com regras para:
-  - RDP (porta 3389)
-- 🌍 IPs Públicos para:
-  - VM
-  - VPN Gateway (opcional)
-
-### Computação e Storage
-- 💻 Máquina Virtual
-  - Windows Server 2022 Datacenter
-  - Tamanho: Standard_B2ms
-  - Disco OS: 127GB StandardSSD_LRS
-- 💾 Storage Account (Standard_LRS)
-- ⚖️ Availability Set
-
-### Monitoramento e Automação
-- 🤖 Automation Account
-  - Runbook: START_STOP_VMs
-- 📊 Log Analytics Workspace
-- 📝 Diagnósticos de Boot (desabilitado por padrão)
-
-### Backup e Recuperação
-- 💾 Recovery Services Vault
-  - Configurado para backup de VMs
-  - Requer configuração manual de redundância
-
-## 🏷️ Tagging
+## 🏷️ Tagging e Governança
 
 Todos os recursos são automaticamente tagueados com:
 - client: [nome-cliente]
@@ -131,7 +123,14 @@ O script fornece feedback em tempo real com cores:
 - 🟨 Amarelo: Aviso
 - 🟥 Vermelho: Erro
 
-## 🔄 Versionamento
+## 👨‍💻 Suporte e Versionamento
 
+Script desenvolvido por Mathews Buzetti.
+
+### Suporte
+- 📧 Email: [seu-email]
+- 🌐 GitHub: [seu-github]
+
+### Versão
 - Versão: 1.0.0
 - Última atualização: 01/02/2025
