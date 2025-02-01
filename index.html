@@ -185,7 +185,6 @@
                     isFormValid = false;
                 }
             });
-            // Validate Client Name
             const clientNameUpper = document.getElementById('clientNameUpper');
             const clientNameLower = document.getElementById('clientNameLower');
             if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
@@ -212,8 +211,11 @@
             const environment = document.getElementById('environment').value;
             const vmName = document.getElementById('vmName').value;
 
-            // Geração do comando ajustado
-            const command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -Environment "${environment}" -VMName "${vmName}"`;
+            // Comando ajustado com `.\`
+            const command = '.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "' + subscriptionId +
+                '" -LocationBrazil "' + locationBrazil + '" -LocationUS "' + locationUS +
+                '" -ClientNameUpper "' + clientNameUpper + '" -ClientNameLower "' + clientNameLower +
+                '" -Environment "' + environment + '" -VMName "' + vmName + '"';
 
             document.getElementById('output').textContent = command;
         }
