@@ -160,8 +160,6 @@ O script iniciará a implantação dos recursos do Azure.
 
 ![image](https://github.com/user-attachments/assets/777c4d05-ad95-446a-a905-ba7aa284f092)
 
-⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!
-
 ## 🏗️ Resource Groups e Organização
 
 ### Grupos de Recursos
