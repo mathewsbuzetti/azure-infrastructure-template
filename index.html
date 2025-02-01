@@ -10,14 +10,12 @@
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #121212;
             color: #e0e0e0;
             padding: 20px;
         }
-
         .container {
             max-width: 600px;
             margin: 0 auto;
@@ -26,20 +24,17 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
         }
-
         h1 {
             text-align: center;
             margin-bottom: 20px;
             color: #007bff;
         }
-
         label {
             display: block;
             margin: 10px 0 5px;
             font-weight: bold;
             color: #e0e0e0;
         }
-
         input, select {
             width: 100%;
             padding: 10px;
@@ -49,17 +44,14 @@
             background: #2c2c2c;
             color: #e0e0e0;
         }
-
         input::placeholder, select option {
             color: #888;
         }
-
         .button-group {
             display: flex;
             gap: 10px;
             margin-top: 10px;
         }
-
         button {
             flex: 1;
             padding: 10px;
@@ -71,11 +63,9 @@
             font-size: 16px;
             font-weight: bold;
         }
-
         button:hover {
             background-color: #0056b3;
         }
-
         .output {
             margin-top: 20px;
             padding: 10px;
@@ -86,34 +76,28 @@
             white-space: pre-wrap;
             word-break: break-all;
         }
-
         footer {
             margin-top: 20px;
             text-align: center;
             font-size: 12px;
             color: #777;
         }
-
         footer a {
             color: #007bff;
             text-decoration: none;
         }
-
         footer a:hover {
             text-decoration: underline;
         }
-
         .error {
             color: #ff5555;
             margin-bottom: 10px;
             display: none;
             text-align: left;
         }
-
         .field-error {
             border: 2px solid #ff5555;
         }
-
         .error-detail {
             color: #ff5555;
             font-size: 0.8em;
@@ -129,7 +113,6 @@
             <label for="subscriptionId">Subscription ID *</label>
             <input type="text" id="subscriptionId" placeholder="e.g., e875c481-3a50-4369-8c6f-5c58697332e2" required>
             <div id="subscriptionId-error" class="error-detail"></div>
-
             <label for="location">Location *</label>
             <select id="location" required onchange="updateUSLocation()">
                 <option value="">Selecione uma localização</option>
@@ -137,21 +120,17 @@
                 <option value="eastus2">East US 2</option>
             </select>
             <div id="location-error" class="error-detail"></div>
-
             <label for="locationUS">Location US</label>
             <input type="text" id="locationUS" placeholder="Location US" readonly>
             <p style="color: #888; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">
                 <strong>Importante:</strong> Esta região é para recursos de Automation. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto da infraestrutura.
             </p>
-
             <label for="clientNameUpper">Client Name (Uppercase) *</label>
             <input type="text" id="clientNameUpper" placeholder="e.g., MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
-
             <label for="clientNameLower">Client Name (Lowercase) *</label>
             <input type="text" id="clientNameLower" placeholder="e.g., mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
-
             <label for="environment">Environment *</label>
             <select id="environment" required>
                 <option value="">Selecione o ambiente</option>
@@ -160,32 +139,25 @@
                 <option value="homologation">homologation</option>
             </select>
             <div id="environment-error" class="error-detail"></div>
-
             <label for="vmName">VM Name *</label>
             <input type="text" id="vmName" placeholder="e.g., MATHEWS-DC01" required>
             <div id="vmName-error" class="error-detail"></div>
-
             <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
-
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
                 <button type="button" onclick="copyCommand()">Copiar Comando</button>
                 <button type="button" onclick="openAzureCloudShell()">Acessar Azure CloudShell</button>
             </div>
         </form>
-
         <div class="output" id="output"></div>
     </div>
-
     <footer>
         Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
     </footer>
-
     <script>
         function updateUSLocation() {
             const locationSelect = document.getElementById('location');
             const locationUSInput = document.getElementById('locationUS');
-            
             if (locationSelect.value === 'brazilsouth') {
                 locationUSInput.value = 'eastus2';
             } else if (locationSelect.value === 'eastus2') {
@@ -194,7 +166,6 @@
                 locationUSInput.value = '';
             }
         }
-
         function resetErrorStyles() {
             const inputs = document.querySelectorAll('input[required], select[required]');
             inputs.forEach(input => {
@@ -202,13 +173,11 @@
                 document.getElementById(`${input.id}-error`).textContent = '';
             });
         }
-
         function validateForm() {
             resetErrorStyles();
             const inputs = document.querySelectorAll('input[required], select[required]');
             const errorMessage = document.getElementById('errorMessage');
             let isFormValid = true;
-
             inputs.forEach(input => {
                 if (!input.value.trim()) {
                     input.classList.add('field-error');
@@ -216,27 +185,22 @@
                     isFormValid = false;
                 }
             });
-
             // Validate Client Name
             const clientNameUpper = document.getElementById('clientNameUpper');
             const clientNameLower = document.getElementById('clientNameLower');
-
             if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
                 clientNameUpper.classList.add('field-error');
                 document.getElementById('clientNameUpper-error').textContent = 'O nome do cliente deve estar totalmente em MAIÚSCULAS';
                 isFormValid = false;
             }
-
             if (clientNameLower.value !== clientNameLower.value.toLowerCase()) {
                 clientNameLower.classList.add('field-error');
                 document.getElementById('clientNameLower-error').textContent = 'O nome do cliente deve estar totalmente em minúsculas';
                 isFormValid = false;
             }
-
             errorMessage.style.display = isFormValid ? 'none' : 'block';
             return isFormValid;
         }
-
         function generateCommand() {
             if (!validateForm()) return;
 
@@ -248,19 +212,17 @@
             const environment = document.getElementById('environment').value;
             const vmName = document.getElementById('vmName').value;
 
+            // Geração do comando ajustado
             const command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -Environment "${environment}" -VMName "${vmName}"`;
 
             document.getElementById('output').textContent = command;
         }
-
         function copyCommand() {
             const outputElement = document.getElementById('output');
-            
             if (!outputElement.textContent.trim()) {
                 alert('Primeiro gere um comando');
                 return;
             }
-
             navigator.clipboard.writeText(outputElement.textContent).then(() => {
                 alert('Comando copiado!');
             }).catch(err => {
@@ -268,7 +230,6 @@
                 alert('Erro ao copiar o comando');
             });
         }
-
         function openAzureCloudShell() {
             window.open('https://portal.azure.com/#cloudshell/', '_blank');
         }
