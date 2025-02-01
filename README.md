@@ -104,17 +104,18 @@ O script iniciará a implantação dos recursos do Azure.
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
-![image](https://github.com/user-attachments/assets/45806f9b-28ae-4936-97a7-a906c9282fa4)
-
+![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
    > 💰 **Recomendação**: A alteração para LRS é recomendada para redução de custos, pois oferece redundância suficiente para a maioria dos cenários com um custo menor.
 
-![image](https://github.com/user-attachments/assets/bfabecec-1d52-4f64-959e-a904fb637e07)
+![Configuração LRS](https://github.com/mathewsbuzetti/deployazure/raw/main/images/backup-lrs.png)
 
-2. Configurar o backup para a VM criada
-3. Definir a política de retenção conforme necessidade
+2. Definir a política de retenção conforme necessidade
+   > 💰 **Recomendação**: A política abaixo é uma recomendação amplamente utilizada por empresas. Caso deseje seguir este modelo:
+
+![Política de Retenção](https://github.com/mathewsbuzetti/deployazure/raw/main/images/politica-retencao.png)
 
 ### Configuração do Start/Stop de VMs
 1. Baixe o script Start/Stop:
