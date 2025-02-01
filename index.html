@@ -64,6 +64,19 @@
         input::placeholder {
             color: #666;
         }
+        .field-info {
+            color: #888;
+            font-size: 0.85em;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            border-left: 3px solid #60a5fa;
+        }
+        .field-info strong {
+            color: #60a5fa;
+        }
         .button-group {
             display: flex;
             gap: 12px;
@@ -158,7 +171,6 @@
             opacity: 0.9;
         }
         
-        /* Responsividade */
         @media (max-width: 768px) {
             .container {
                 margin: 10px;
@@ -187,17 +199,23 @@
             
             <label for="locationUS">Localização US</label>
             <input type="text" id="locationUS" value="eastus" readonly>
-            <p style="color: #888; font-size: 0.85em; margin-top: -10px; margin-bottom: 15px;">
+            <div class="field-info">
                 <strong>Importante:</strong> Esta região é para recurso Azure Automation account. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto do Azure Automation account.
-            </p>
+            </div>
             
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
+            <div class="field-info">
+                <strong>Por que maiúsculo?</strong> Este formato é utilizado para nomear recursos do Azure seguindo as convenções de nomenclatura. Será usado para criar grupos de recursos (Resource Groups) e outros componentes onde o padrão é utilizar letras maiúsculas.
+            </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
+            <div class="field-info">
+                <strong>Por que minúsculo?</strong> Este formato é necessário para recursos do Azure que exigem nomes em letras minúsculas, como contas de armazenamento (Storage Accounts) e outros serviços que não aceitam caracteres maiúsculos.
+            </div>
             
             <label for="environment">Ambiente *</label>
             <select id="environment" required>
@@ -303,7 +321,6 @@
                 copyMessage.style.display = 'block';
                 reminderMessage.style.display = 'block';
                 
-                // Hide messages after 3 seconds
                 setTimeout(() => {
                     copyMessage.style.display = 'none';
                     reminderMessage.style.display = 'none';
