@@ -41,7 +41,7 @@
             color: #e0e0e0;
         }
 
-        input {
+        input, select {
             width: 100%;
             padding: 10px;
             margin-bottom: 15px;
@@ -51,12 +51,18 @@
             color: #e0e0e0;
         }
 
-        input::placeholder {
+        input::placeholder, select option {
             color: #888;
         }
 
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
         button {
-            width: 100%;
+            flex: 1;
             padding: 10px;
             background-color: #bb86fc;
             color: white;
@@ -79,6 +85,7 @@
             border-radius: 4px;
             font-family: monospace;
             white-space: pre-wrap;
+            word-break: break-all;
         }
 
         footer {
@@ -96,47 +103,102 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        .error {
+            color: #ff5555;
+            margin-bottom: 10px;
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerador de Comando de Deploy</h1>
         <form id="deployForm">
-            <label for="subscriptionId">Subscription ID</label>
+            <label for="subscriptionId">Subscription ID *</label>
             <input type="text" id="subscriptionId" placeholder="e.g., e875c481-3a50-4369-8c6f-5c58697332e2" required>
 
-            <label for="locationBrazil">Location Brazil</label>
-            <input type="text" id="locationBrazil" value="brazilsouth" required>
+            <label for="location">Location *</label>
+            <select id="location" required onchange="updateUSLocation()">
+                <option value="">Selecione uma localização</option>
+                <option value="brazilsouth">Brazil South</option>
+                <option value="eastus2">East US 2</option>
+            </select>
 
-            <label for="locationUS">Location US</label>
-            <input type="text" id="locationUS" value="eastus" required>
+            <label for="locationUS">Location US *</label>
+            <input type="text" id="locationUS" placeholder="Location US" readonly required>
+            <p style="color: #888; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">
+                <strong>Importante:</strong> Esta região é para recursos de Automation. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto da infraestrutura.
+            </p>
 
-            <label for="clientNameUpper">Client Name (Uppercase)</label>
+            <label for="clientNameUpper">Client Name (Uppercase) *</label>
             <input type="text" id="clientNameUpper" placeholder="e.g., MATHEWSB" required>
 
-            <label for="clientNameLower">Client Name (Lowercase)</label>
+            <label for="clientNameLower">Client Name (Lowercase) *</label>
             <input type="text" id="clientNameLower" placeholder="e.g., mathews" required>
 
-            <label for="environment">Environment</label>
-            <input type="text" id="environment" value="production" required>
+            <label for="environment">Environment *</label>
+            <select id="environment" required>
+                <option value="">Selecione o Ambiente</option>
+                <option value="production">Production</option>
+                <option value="development">Development</option>
+                <option value="staging">Staging</option>
+                <option value="homologation">Homologation</option>
+                <option value="test">Test</option>
+            </select>
 
-            <label for="vmName">VM Name</label>
+            <label for="vmName">VM Name *</label>
             <input type="text" id="vmName" placeholder="e.g., MATHEWS-DC01" required>
 
-            <button type="button" onclick="generateCommand()">Gerar Comando</button>
+            <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
+
+            <div class="button-group">
+                <button type="button" onclick="generateCommand()">Gerar Comando</button>
+                <button type="button" onclick="copyCommand()">Copiar Comando</button>
+            </div>
         </form>
 
         <div class="output" id="output"></div>
     </div>
 
     <footer>
-        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">mathewsbuzetti</a>
+        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
     </footer>
 
     <script>
+        function updateUSLocation() {
+            const locationSelect = document.getElementById('location');
+            const locationUSInput = document.getElementById('locationUS');
+            
+            if (locationSelect.value === 'brazilsouth') {
+                locationUSInput.value = 'eastus';
+            } else if (locationSelect.value === 'eastus2') {
+                locationUSInput.value = 'eastus';
+            } else {
+                locationUSInput.value = '';
+            }
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            for (let input of inputs) {
+                if (!input.value.trim()) {
+                    errorMessage.style.display = 'block';
+                    return false;
+                }
+            }
+            
+            errorMessage.style.display = 'none';
+            return true;
+        }
+
         function generateCommand() {
+            if (!validateForm()) return;
+
             const subscriptionId = document.getElementById('subscriptionId').value;
-            const locationBrazil = document.getElementById('locationBrazil').value;
+            const locationBrazil = document.getElementById('location').value;
             const locationUS = document.getElementById('locationUS').value;
             const clientNameUpper = document.getElementById('clientNameUpper').value;
             const clientNameLower = document.getElementById('clientNameLower').value;
@@ -146,6 +208,22 @@
             const command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -Environment "${environment}" -VMName "${vmName}"`;
 
             document.getElementById('output').textContent = command;
+        }
+
+        function copyCommand() {
+            const outputElement = document.getElementById('output');
+            
+            if (!outputElement.textContent.trim()) {
+                alert('Primeiro gere um comando');
+                return;
+            }
+
+            navigator.clipboard.writeText(outputElement.textContent).then(() => {
+                alert('Comando copiado!');
+            }).catch(err => {
+                console.error('Erro ao copiar:', err);
+                alert('Erro ao copiar o comando');
+            });
         }
     </script>
 </body>
