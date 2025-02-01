@@ -8,11 +8,6 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 
 ## 💻 Especificações Técnicas
 
-### 💻 Máquina Virtual
-* Windows Server 2022 Datacenter
-* Tamanho: Standard_B2ms
-* Disco OS: 127GB StandardSSD_LRS
-
 ### 🌐 Networking
 * VNET (10.1.0.0/16)
   * SNET-Internal (10.1.1.0/24)
@@ -37,15 +32,36 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 * Suporte para conexões S2S e P2S
 * SKU: VpnGw1
 
+### 💻 Máquina Virtual
+* Windows Server 2022 Datacenter
+* Tamanho: Standard_B2ms
+* Disco OS: 127GB StandardSSD_LRS
+
 ### 💾 Armazenamento e Backup
 * Storage Account (Standard_LRS)
 * Recovery Services Vault
 * Availability Set
 
-### 📊 Monitoramento
-* Automation Account com Runbook START_STOP_VMs
+### 🤖 Automation e Monitoramento
+* Automation Account
+  * Runbook: START_STOP_VMs (requer configuração adicional)
+  * Baixe o script Start/Stop:
+    
+    [![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script%20Start%20e%20Stop%20de%20VMs.ps1)
 * Log Analytics Workspace
 * Diagnósticos de Boot (desabilitado por padrão)
+
+#### Configuração do Start/Stop de VMs:
+1. Baixe o script de Start/Stop usando o link acima
+2. No Automation Account, acesse o Runbook "START_STOP_VMs"
+3. Importe o conteúdo do script baixado
+4. Configure as políticas de execução:
+   * Crie um agendamento para Start (ex: dias úteis às 7h)
+   * Crie um agendamento para Stop (ex: dias úteis às 19h)
+   * Configure os parâmetros:
+     - TagName: nome da tag para identificar VMs
+     - TagValue: valor da tag
+     - Shutdown: true (para parar) ou false (para iniciar)
 
 ## 📋 Pré-requisitos
 
