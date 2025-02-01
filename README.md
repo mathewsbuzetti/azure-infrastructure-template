@@ -1,9 +1,9 @@
-# 🚀 Implantação de Infraestrutura do Azure no BrazilSouth
+# 🚀 Implantação de Infraestrutura do Azure no Brasil Sul
 
 ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 
-Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth. Ele cria os seguintes recursos:
+Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do Brasil Sul. Ele cria os seguintes recursos:
 
 - 🗂️ Grupos de Recursos
 - 🌐 Rede Virtual (VNET) e Sub-redes 
@@ -25,7 +25,7 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 ## 🚀 Como Usar
 
 1. Baixe o script Deploy-AzureInfrastructure-BrazilSouth.ps1:
-   [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](blob:https://github.com/ca2d2fe7-5523-4667-b70c-b5f513e1395e)
+   [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](https://raw.githubusercontent.com/mathewsbuzetti/deployazure/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
 2. Acesse o portal do Azure e abra o Azure CloudShell.
 3. Faça o upload do script Deploy-AzureInfrastructure-BrazilSouth.ps1 no CloudShell.
 4. Navegue até o diretório onde você fez o upload do script.
