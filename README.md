@@ -126,6 +126,18 @@ O script fornece feedback em tempo real com cores:
 - 🟨 Amarelo: Aviso
 - 🟥 Vermelho: Erro
 
+## 🔧 Parâmetros do Script
+
+| Parâmetro | Descrição | Exemplo |
+|-----------|-----------|---------|
+| SubscriptionId | ID da Assinatura Azure | "e875c481-..." |
+| LocationBrazil | Região do Azure Brasil | "brazilsouth" |
+| LocationUS | Região do Azure EUA | "eastus" |
+| ClientNameUpper | Nome do Cliente (Maiúsculo) | "MATHEWSB" |
+| ClientNameLower | Nome do Cliente (Minúsculo) | "mathewsb" |
+| Environment | Ambiente do Deploy | "production" |
+| VMName | Nome da Máquina Virtual | "MATHEWS-DC01" |
+
 ## 🔄 Versionamento
 
 Script desenvolvido por Mathews Buzetti.
