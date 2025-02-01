@@ -250,10 +250,6 @@
                 const reminderMessage = document.getElementById('reminderMessage');
                 copyMessage.style.display = 'block';
                 reminderMessage.style.display = 'block';
-                setTimeout(() => {
-                    copyMessage.style.display = 'none';
-                    reminderMessage.style.display = 'none';
-                }, 5000); // Mensagem desaparece após 5 segundos
             }).catch(err => {
                 console.error('Erro ao copiar:', err);
                 alert('Erro ao copiar o comando');
