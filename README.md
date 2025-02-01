@@ -10,12 +10,12 @@
 
 | Metadado | Descrição |
 |----------|-----------|
-| Título | Este script PowerShell automatiza a implantação de recursos de infraestrutura do Azure na região do BrazilSouth |
+| Título | Template de Infraestrutura Azure para Ambiente Corporativo com Alta Disponibilidade |
 | Assunto | Azure Virtual Machines |
 | Tipo | Início Rápido |
 | Data | 31/01/2025 |
 | Autor | Mathews Buzetti |
-| Tags | subject-armqs, mode-arm, devx-track-arm-template |
+| Tags | azure-automation, windows-server, high-availability, infrastructure-as-code |
 
 ## 💻 Especificações Técnicas
 
@@ -104,7 +104,8 @@ O script iniciará a implantação dos recursos do Azure.
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
-![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
+![image](https://github.com/user-attachments/assets/45806f9b-28ae-4936-97a7-a906c9282fa4)
+
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
