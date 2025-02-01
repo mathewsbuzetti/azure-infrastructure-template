@@ -25,7 +25,7 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 ## 🚀 Como Usar
 
 1. Baixe o script Deploy-AzureInfrastructure-BrazilSouth.ps1:
-   [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](https://raw.githubusercontent.com/mathewsbuzetti/deployazure/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
+   [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](blob:https://github.com/ca2d2fe7-5523-4667-b70c-b5f513e1395e)
 2. Acesse o portal do Azure e abra o Azure CloudShell.
 3. Faça o upload do script Deploy-AzureInfrastructure-BrazilSouth.ps1 no CloudShell.
 4. Navegue até o diretório onde você fez o upload do script.
@@ -44,8 +44,7 @@ O script iniciará a implantação dos recursos do Azure. Esse processo pode lev
 ## 🔐 Segurança
 - 🛡️ NSG configurado com regras básicas de segurança
 - 🏷️ Todos os recursos tagueados para melhor governança
-- 💾 Cofre de Backup provisionado (configuração adicional necessária)
-- 📊 Monitoramento via Log Analytics
+- 💾 Cofre de Backup provisionado
 
 ## 🔧 Parâmetros do Script
 
