@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerador de Comando de Deploy</title>
     <style>
-        /* Estilo base */
         * {
             margin: 0;
             padding: 0;
@@ -125,8 +124,8 @@
                 <option value="eastus2">East US 2</option>
             </select>
 
-            <label for="locationUS">Location US *</label>
-            <input type="text" id="locationUS" placeholder="Location US" readonly required>
+            <label for="locationUS">Location US</label>
+            <input type="text" id="locationUS" placeholder="Location US" readonly>
             <p style="color: #888; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">
                 <strong>Importante:</strong> Esta região é para recursos de Automation. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto da infraestrutura.
             </p>
@@ -183,11 +182,26 @@
             const inputs = document.querySelectorAll('input[required], select[required]');
             const errorMessage = document.getElementById('errorMessage');
             
+            // Check if any required field is empty
             for (let input of inputs) {
                 if (!input.value.trim()) {
                     errorMessage.style.display = 'block';
                     return false;
                 }
+            }
+            
+            // Validate Client Name
+            const clientNameUpper = document.getElementById('clientNameUpper').value;
+            const clientNameLower = document.getElementById('clientNameLower').value;
+
+            if (clientNameUpper !== clientNameUpper.toUpperCase()) {
+                alert('O nome do cliente em maiúsculas deve estar totalmente em MAIÚSCULAS.');
+                return false;
+            }
+
+            if (clientNameLower !== clientNameLower.toLowerCase()) {
+                alert('O nome do cliente em minúsculas deve estar totalmente em minúsculas.');
+                return false;
             }
             
             errorMessage.style.display = 'none';
