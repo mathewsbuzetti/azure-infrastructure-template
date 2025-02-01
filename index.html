@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -110,37 +110,37 @@
     <div class="container">
         <h1>Gerador de Comando de Deploy</h1>
         <form id="deployForm">
-            <label for="subscriptionId">Subscription ID *</label>
-            <input type="text" id="subscriptionId" placeholder="e.g., e875c481-3a50-4369-8c6f-5c58697332e2" required>
+            <label for="subscriptionId">ID da Assinatura *</label>
+            <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
             <div id="subscriptionId-error" class="error-detail"></div>
-            <label for="location">Location *</label>
+            <label for="location">Localização *</label>
             <select id="location" required onchange="updateUSLocation()">
                 <option value="">Selecione uma localização</option>
                 <option value="brazilsouth">Brazil South</option>
                 <option value="eastus2">East US 2</option>
             </select>
             <div id="location-error" class="error-detail"></div>
-            <label for="locationUS">Location US</label>
-            <input type="text" id="locationUS" placeholder="Location US" readonly>
+            <label for="locationUS">Localização dos Recursos Nos EUA</label>
+            <input type="text" id="locationUS" placeholder="Localização US" readonly>
             <p style="color: #888; font-size: 0.8em; margin-top: -10px; margin-bottom: 10px;">
                 <strong>Importante:</strong> Esta região é para recursos de Automation. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto da infraestrutura.
             </p>
-            <label for="clientNameUpper">Client Name (Uppercase) *</label>
-            <input type="text" id="clientNameUpper" placeholder="e.g., MATHEWSB" required>
+            <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
+            <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
-            <label for="clientNameLower">Client Name (Lowercase) *</label>
-            <input type="text" id="clientNameLower" placeholder="e.g., mathews" required>
+            <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
+            <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
-            <label for="environment">Environment *</label>
+            <label for="environment">Ambiente *</label>
             <select id="environment" required>
                 <option value="">Selecione o ambiente</option>
-                <option value="production">production</option>
-                <option value="development">development</option>
-                <option value="homologation">homologation</option>
+                <option value="production">Produção</option>
+                <option value="development">Desenvolvimento</option>
+                <option value="homologation">Homologação</option>
             </select>
             <div id="environment-error" class="error-detail"></div>
-            <label for="vmName">VM Name *</label>
-            <input type="text" id="vmName" placeholder="e.g., MATHEWS-DC01" required>
+            <label for="vmName">Nome da Máquina Virtual *</label>
+            <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
             <div id="vmName-error" class="error-detail"></div>
             <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
             <div class="button-group">
