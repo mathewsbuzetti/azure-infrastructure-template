@@ -107,6 +107,18 @@
             color: #ff5555;
             margin-bottom: 10px;
             display: none;
+            text-align: left;
+        }
+
+        .field-error {
+            border: 2px solid #ff5555;
+        }
+
+        .error-detail {
+            color: #ff5555;
+            font-size: 0.8em;
+            margin-top: -10px;
+            margin-bottom: 10px;
         }
     </style>
 </head>
@@ -116,6 +128,7 @@
         <form id="deployForm">
             <label for="subscriptionId">Subscription ID *</label>
             <input type="text" id="subscriptionId" placeholder="e.g., e875c481-3a50-4369-8c6f-5c58697332e2" required>
+            <div id="subscriptionId-error" class="error-detail"></div>
 
             <label for="location">Location *</label>
             <select id="location" required onchange="updateUSLocation()">
@@ -123,6 +136,7 @@
                 <option value="brazilsouth">Brazil South</option>
                 <option value="eastus2">East US 2</option>
             </select>
+            <div id="location-error" class="error-detail"></div>
 
             <label for="locationUS">Location US</label>
             <input type="text" id="locationUS" placeholder="Location US" readonly>
@@ -132,22 +146,24 @@
 
             <label for="clientNameUpper">Client Name (Uppercase) *</label>
             <input type="text" id="clientNameUpper" placeholder="e.g., MATHEWSB" required>
+            <div id="clientNameUpper-error" class="error-detail"></div>
 
             <label for="clientNameLower">Client Name (Lowercase) *</label>
             <input type="text" id="clientNameLower" placeholder="e.g., mathews" required>
+            <div id="clientNameLower-error" class="error-detail"></div>
 
             <label for="environment">Environment *</label>
             <select id="environment" required>
                 <option value="">Selecione o ambiente</option>
                 <option value="production">production</option>
                 <option value="development">development</option>
-                <option value="staging">staging</option>
                 <option value="homologation">homologation</option>
-                <option value="test">test</option>
             </select>
+            <div id="environment-error" class="error-detail"></div>
 
             <label for="vmName">VM Name *</label>
             <input type="text" id="vmName" placeholder="e.g., MATHEWS-DC01" required>
+            <div id="vmName-error" class="error-detail"></div>
 
             <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
 
@@ -171,7 +187,7 @@
             const locationUSInput = document.getElementById('locationUS');
             
             if (locationSelect.value === 'brazilsouth') {
-                locationUSInput.value = 'eastus';
+                locationUSInput.value = 'eastus2';
             } else if (locationSelect.value === 'eastus2') {
                 locationUSInput.value = 'eastus';
             } else {
@@ -179,34 +195,46 @@
             }
         }
 
+        function resetErrorStyles() {
+            const inputs = document.querySelectorAll('input[required], select[required]');
+            inputs.forEach(input => {
+                input.classList.remove('field-error');
+                document.getElementById(`${input.id}-error`).textContent = '';
+            });
+        }
+
         function validateForm() {
+            resetErrorStyles();
             const inputs = document.querySelectorAll('input[required], select[required]');
             const errorMessage = document.getElementById('errorMessage');
-            
-            // Check if any required field is empty
-            for (let input of inputs) {
+            let isFormValid = true;
+
+            inputs.forEach(input => {
                 if (!input.value.trim()) {
-                    errorMessage.style.display = 'block';
-                    return false;
+                    input.classList.add('field-error');
+                    document.getElementById(`${input.id}-error`).textContent = 'Este campo é obrigatório';
+                    isFormValid = false;
                 }
-            }
-            
+            });
+
             // Validate Client Name
-            const clientNameUpper = document.getElementById('clientNameUpper').value;
-            const clientNameLower = document.getElementById('clientNameLower').value;
+            const clientNameUpper = document.getElementById('clientNameUpper');
+            const clientNameLower = document.getElementById('clientNameLower');
 
-            if (clientNameUpper !== clientNameUpper.toUpperCase()) {
-                alert('O nome do cliente em maiúsculas deve estar totalmente em MAIÚSCULAS.');
-                return false;
+            if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
+                clientNameUpper.classList.add('field-error');
+                document.getElementById('clientNameUpper-error').textContent = 'O nome do cliente deve estar totalmente em MAIÚSCULAS';
+                isFormValid = false;
             }
 
-            if (clientNameLower !== clientNameLower.toLowerCase()) {
-                alert('O nome do cliente em minúsculas deve estar totalmente em minúsculas.');
-                return false;
+            if (clientNameLower.value !== clientNameLower.value.toLowerCase()) {
+                clientNameLower.classList.add('field-error');
+                document.getElementById('clientNameLower-error').textContent = 'O nome do cliente deve estar totalmente em minúsculas';
+                isFormValid = false;
             }
-            
-            errorMessage.style.display = 'none';
-            return true;
+
+            errorMessage.style.display = isFormValid ? 'none' : 'block';
+            return isFormValid;
         }
 
         function generateCommand() {
