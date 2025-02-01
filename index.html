@@ -200,21 +200,21 @@
             <label for="locationUS">Localização US</label>
             <input type="text" id="locationUS" value="eastus" readonly>
             <div class="field-info">
-                <strong>Importante:</strong> Esta região é para recurso Azure Automation account. <strong>Não pode estar na mesma região do recurso principal</strong>, pois isso impedirá o funcionamento correto do Azure Automation account.
+                <strong>Importante:</strong> A região US East é necessária para o Azure Automation Account. <strong>Esta região deve ser diferente da região principal (Brazil South)</strong>, pois isso garante a redundância e o correto funcionamento da automação. O Automation Account é um serviço gerenciado que executará os runbooks de automação para seus recursos.
             </div>
             
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
             <div id="clientNameUpper-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que maiúsculo?</strong> Este formato é utilizado para nomear recursos do Azure seguindo as convenções de nomenclatura. Será usado para criar grupos de recursos (Resource Groups) e outros componentes onde o padrão é utilizar letras maiúsculas.
+                <strong>Por que maiúsculo?</strong> Este formato é utilizado para nomear os recursos seguindo as convenções de nomenclatura do Azure. Será usado para criar grupos de recursos (Resource Groups) e outros componentes onde a identificação em maiúsculo facilita a visualização dos recursos no portal.
             </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
             <div id="clientNameLower-error" class="error-detail"></div>
             <div class="field-info">
-                <strong>Por que minúsculo?</strong> Este formato é necessário para recursos do Azure que exigem nomes em letras minúsculas, como contas de armazenamento (Storage Accounts) e outros serviços que não aceitam caracteres maiúsculos.
+                <strong>Por que minúsculo?</strong> Este formato é necessário para criar as tags dos recursos no Azure. As tags são identificadores importantes que permitem gerenciar, buscar e organizar os recursos de forma eficiente, e por convenção são utilizadas em letras minúsculas.
             </div>
             
             <label for="environment">Ambiente *</label>
