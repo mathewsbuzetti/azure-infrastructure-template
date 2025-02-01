@@ -45,23 +45,8 @@ Este script PowerShell automatiza a implantação de recursos de infraestrutura 
 ### 🤖 Automation e Monitoramento
 * Automation Account
   * Runbook: START_STOP_VMs (requer configuração adicional)
-  * Baixe o script Start/Stop:
-    
-    [![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script%20Start%20e%20Stop%20de%20VMs.ps1)
 * Log Analytics Workspace
 * Diagnósticos de Boot (desabilitado por padrão)
-
-#### Configuração do Start/Stop de VMs:
-1. Baixe o script de Start/Stop usando o link acima
-2. No Automation Account, acesse o Runbook "START_STOP_VMs"
-3. Importe o conteúdo do script baixado
-4. Configure as políticas de execução:
-   * Crie um agendamento para Start (ex: dias úteis às 7h)
-   * Crie um agendamento para Stop (ex: dias úteis às 19h)
-   * Configure os parâmetros:
-     - TagName: nome da tag para identificar VMs
-     - TagValue: valor da tag
-     - Shutdown: true (para parar) ou false (para iniciar)
 
 ## 📋 Pré-requisitos
 
@@ -110,6 +95,21 @@ O script iniciará a implantação dos recursos do Azure.
 1. Alterar a redundância para Locally-redundant (LRS)
 2. Configurar o backup para a VM criada
 3. Definir a política de retenção conforme necessidade
+
+### Configuração do Start/Stop de VMs
+1. Baixe o script Start/Stop:
+   
+   [![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script%20Start%20e%20Stop%20de%20VMs.ps1)
+
+2. No Automation Account, acesse o Runbook "START_STOP_VMs"
+3. Importe o conteúdo do script baixado
+4. Configure as políticas de execução:
+   * Crie um agendamento para Start (ex: dias úteis às 7h)
+   * Crie um agendamento para Stop (ex: dias úteis às 19h)
+   * Configure os parâmetros:
+     - TagName: nome da tag para identificar VMs
+     - TagValue: valor da tag
+     - Shutdown: true (para parar) ou false (para iniciar)
 
 ### 🔐 Credenciais Padrão
 - **Username**: admaz
