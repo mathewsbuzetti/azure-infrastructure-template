@@ -76,6 +76,24 @@
             white-space: pre-wrap;
             word-break: break-all;
         }
+        .message {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #28a745;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .reminder {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #ffc107;
+            color: black;
+            border-radius: 4px;
+            text-align: center;
+        }
         footer {
             margin-top: 20px;
             text-align: center;
@@ -150,6 +168,8 @@
             </div>
         </form>
         <div class="output" id="output"></div>
+        <div class="message" id="copyMessage">Comando copiado!</div>
+        <div class="reminder" id="reminderMessage">Lembre-se de fazer o upload do script no CloudShell antes de executar o comando gerado.</div>
     </div>
     <footer>
         Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
@@ -226,7 +246,14 @@
                 return;
             }
             navigator.clipboard.writeText(outputElement.textContent).then(() => {
-                alert('Comando copiado!');
+                const copyMessage = document.getElementById('copyMessage');
+                const reminderMessage = document.getElementById('reminderMessage');
+                copyMessage.style.display = 'block';
+                reminderMessage.style.display = 'block';
+                setTimeout(() => {
+                    copyMessage.style.display = 'none';
+                    reminderMessage.style.display = 'none';
+                }, 5000); // Mensagem desaparece após 5 segundos
             }).catch(err => {
                 console.error('Erro ao copiar:', err);
                 alert('Erro ao copiar o comando');
