@@ -105,6 +105,8 @@ O script iniciará a implantação dos recursos do Azure.
 - **Username**: admaz
 - **Password**: BaucCr@f#PgU
 
+⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!
+
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
