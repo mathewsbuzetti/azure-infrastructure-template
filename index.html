@@ -13,64 +13,33 @@
         * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e0e0e0; padding: 20px; min-height: 100vh; }
         .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
-        h1 { text-align: center; font-size: 28px; margin-bottom: 20px;}
-        label { display: block; margin: 15px 0 8px; font-size: 14px; text-transform: uppercase; }
-        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #444; border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; }
-        button { padding: 12px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
-        button:hover { transform: translateY(-2px); }
-        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-word; font-size: 14px; }
-        .output:not(:empty) { border-color: #60a5fa; }
-
-        /* Estilização dos botões "Sim" ou "Não" */
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 15px;
-        }
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-        .radio-option input[type="radio"] {
-            appearance: none;
-            width: 20px;
-            height: 20px;
-            border: 2px solid rgba(255, 255, 255, 0.6);
-            border-radius: 50%;
-            outline: none;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .radio-option input[type="radio"]:checked {
-            background: linear-gradient(135deg, #3b82f6, #60a5fa);
-            border-color: #60a5fa;
-        }
-        .radio-option span {
-            font-size: 14px;
-            color: white;
-            text-transform: uppercase;
-        }
-
-        /* Estilização de mensagens e avisos */
-        .message {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(40, 167, 69, 0.9);
-            color: white;
-            border-radius: 8px;
-            text-align: center;
-        }
-        .reminder {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(255, 193, 7, 0.9);
-            color: black;
-            border-radius: 8px;
-            text-align: center;
-        }
+        h1 { text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; font-weight: 600; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: 0.5px; }
+        label { display: block; margin: 15px 0 8px; font-weight: 500; color: #e0e0e0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; transition: all 0.3s ease; }
+        input[readonly] { background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
+        input:focus, select:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); transform: translateY(-1px); }
+        input::placeholder { color: #666; }
+        .field-info { color: #888; font-size: 0.85em; margin-top: -10px; margin-bottom: 15px; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border-left: 3px solid #60a5fa; transition: all 0.3s ease; }
+        .field-info:hover { background: rgba(255, 255, 255, 0.08); transform: translateX(5px); }
+        .field-info strong { color: #60a5fa; }
+        .button-group { display: flex; gap: 12px; margin-top: 20px; }
+        button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        button:active { transform: translateY(0); }
+        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; position: relative; }
+        .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
+        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
+        .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
+        footer { margin-top: 30px; text-align: center; font-size: 13px; color: #888; padding: 20px; }
+        footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
+        footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
+        footer a:hover:after { width: 100%; }
+        .error { color: #f87171; margin-bottom: 15px; display: none; text-align: left; font-size: 14px; padding: 8px 12px; background: rgba(248, 113, 113, 0.1); border-radius: 6px; animation: fadeIn 0.3s ease; }
+        .field-error { border-color: #f87171; animation: shake 0.5s ease-in-out; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+        .error-detail { color: #f87171; font-size: 12px; margin-top: -12px; margin-bottom: 12px; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
+        .error-detail:not(:empty) { opacity: 1; transform: translateY(0); }
+        @media (max-width: 768px) { .container { margin: 10px; padding: 20px; } .button-group { flex-direction: column; } button { width: 100%; } }
     </style>
 </head>
 <body>
@@ -109,7 +78,7 @@
             </div>
 
             <!-- Campo "Sim" ou "Não" para VPN -->
-            <label>Deseja instalar a VPN? *</label>
+            <label>Deseja instalar a VPN GW1? *</label>
             <div class="radio-group">
                 <label class="radio-option">
                     <input type="radio" name="vpn" value="yes" required>
@@ -149,7 +118,7 @@
             let isValid = true;
 
             requiredFields.forEach(field => {
-                if (!field.checked && field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
                     isValid = false;
                     field.parentNode.style.borderColor = 'red';
                 } else {
