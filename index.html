@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
-        /* Estilo Visual Original */
+        /* Estilos base */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -14,25 +14,123 @@
         body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e0e0e0; padding: 20px; min-height: 100vh; }
         .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
         h1 { text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; font-weight: 600; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: 0.5px; }
-        label { display: block; margin: 15px 0 8px; font-weight: 500; color: #e0e0e0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input[type="text"], select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; }
-        input[readonly] { background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
         
-        /* Novo estilo apenas para os radio buttons */
+        /* Estilos dos campos */
+        label { display: block; margin: 15px 0 8px; font-weight: 500; color: #e0e0e0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input[type="text"], 
+        input[type="password"] { 
+            width: 100%; 
+            padding: 12px 16px; 
+            margin-bottom: 15px; 
+            border: 2px solid rgba(255, 255, 255, 0.1); 
+            border-radius: 8px; 
+            background: rgba(44, 44, 44, 0.8); 
+            color: #e0e0e0; 
+            font-size: 15px; 
+            outline: none; 
+        }
+        input[readonly] { 
+            background: rgba(44, 44, 44, 0.5);
+            border-color: rgba(255, 255, 255, 0.05);
+            cursor: not-allowed;
+        }
+
+        /* Estilo das caixas informativas */
+        .info-box {
+            margin: -10px 0 15px 0;
+            padding: 15px;
+            background: rgba(44, 44, 44, 0.8);
+            border-radius: 8px;
+            border-left: 3px solid #60a5fa;
+        }
+        .info-box h4 {
+            color: #60a5fa;
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .info-box ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        .info-box li {
+            padding-left: 20px;
+            position: relative;
+            margin: 5px 0;
+            color: #e0e0e0;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+        .info-box li:before {
+            content: "•";
+            color: #60a5fa;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        /* Estilo do campo de senha */
+        .password-field {
+            position: relative;
+            margin-bottom: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .password-input-wrapper {
+            position: relative;
+            flex: 1;
+        }
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #60a5fa;
+            cursor: pointer;
+            padding: 4px;
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .password-toggle:hover {
+            opacity: 1;
+        }
+        .password-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        .action-btn {
+            padding: 0 20px;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(96, 165, 250, 0.2);
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        }
+
+        /* Estilos dos botões de rádio */
         .radio-group {
             margin: 15px 0;
             display: flex;
             gap: 15px;
         }
-
-        .radio-option {
-            position: relative;
-        }
-
         .radio-option input[type="radio"] {
             display: none;
         }
-
         .radio-option label {
             display: inline-block;
             padding: 8px 24px;
@@ -43,40 +141,26 @@
             margin: 0;
             text-transform: none;
             font-size: 14px;
-            color: #e0e0e0;
-            transition: all 0.2s ease;
+            transition: all 0.2s;
         }
-
         .radio-option input[type="radio"]:checked + label {
             background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
             border-color: #60a5fa;
-            color: white;
         }
 
-        .radio-option label:hover {
-            border-color: #60a5fa;
-        }
-
-        /* Resto dos estilos originais */
+        /* Outros estilos */
         .button-group { display: flex; gap: 12px; margin-top: 20px; }
         button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
         button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        button:active { transform: translateY(0); }
         .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; }
-        .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
-        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
+        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; }
         .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
-        footer { margin-top: 30px; text-align: center; font-size: 13px; color: #888; padding: 20px; }
-        footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
-        footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
-        footer a:hover:after { width: 100%; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Azure Infrastructure Deployment Tool</h1>
         <form id="deployForm">
-            <!-- Campos básicos -->
             <label for="subscriptionId">ID da Assinatura *</label>
             <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
             
@@ -85,17 +169,69 @@
             
             <label for="locationUS">Localização US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
+            <div class="info-box">
+                <h4>Importante</h4>
+                <ul>
+                    <li>Região necessária para o Azure Automation Account</li>
+                    <li>Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação</li>
+                </ul>
+            </div>
             
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWS" required>
+            <div class="info-box">
+                <h4>Por que maiúsculo?</h4>
+                <ul>
+                    <li>Utilizado para criar os resource groups e os recursos</li>
+                </ul>
+            </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
-            
-            <label for="vmName">Nome da Máquina Virtual *</label>
-            <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
+            <div class="info-box">
+                <h4>Por que minúsculo?</h4>
+                <ul>
+                    <li>Necessário para criar as tags dos recursos</li>
+                </ul>
+            </div>
 
-            <!-- Radio buttons melhorados -->
+            <label for="vmUsername">Nome do Usuário *</label>
+            <input type="text" id="vmUsername" placeholder="Ex.: administrador" required>
+            <div class="info-box">
+                <h4>Informação do Usuário</h4>
+                <ul>
+                    <li>Nome do usuário para login nas máquinas virtuais</li>
+                </ul>
+            </div>
+
+            <label for="vmPassword">Senha *</label>
+            <div class="password-field">
+                <div class="password-input-wrapper">
+                    <input type="password" id="vmPassword" placeholder="Digite a senha" required>
+                    <button type="button" class="password-toggle" onclick="togglePassword()" title="Mostrar/Ocultar senha">
+                        👁️
+                    </button>
+                </div>
+                <div class="password-buttons">
+                    <button type="button" class="action-btn" onclick="generatePassword()">
+                        🔑 Gerar
+                    </button>
+                    <button type="button" class="action-btn" onclick="copyPassword()">
+                        📋 Copiar
+                    </button>
+                </div>
+            </div>
+            <div class="info-box">
+                <h4>Requisitos de Senha</h4>
+                <ul>
+                    <li>Mínimo de 12 caracteres</li>
+                    <li>Letras maiúsculas e minúsculas</li>
+                    <li>Números</li>
+                    <li>Caracteres especiais</li>
+                </ul>
+                <div class="warning" style="margin-top: 10px; color: #f87171;">Evite usar caracteres como $, `, ", etc</div>
+            </div>
+
             <label>Deseja provisionar mais uma máquina virtual? *</label>
             <div class="radio-group">
                 <div class="radio-option">
@@ -137,82 +273,30 @@
         <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
     </div>
 
-    <footer>
-        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
-    </footer>
-
     <script>
         function toggleSecondVMField(show) {
             const secondVMField = document.getElementById('secondVMField');
             secondVMField.style.display = show ? 'block' : 'none';
         }
 
-        function validateForm() {
-            const requiredFields = document.querySelectorAll('input[required]');
-            let isValid = true;
-
-            requiredFields.forEach(field => {
-                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
-                    isValid = false;
-                } else if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('field-error');
-                } else {
-                    field.classList.remove('field-error');
-                }
-            });
-
-            return isValid;
-        }
-
-        function generateCommand() {
-            if (!validateForm()) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
-                return;
-            }
-
-            const subscriptionId = document.getElementById('subscriptionId').value.trim();
-            const locationBrazil = document.getElementById('location').value.trim();
-            const locationUS = document.getElementById('locationUS').value.trim();
-            const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
-            const clientNameLower = document.getElementById('clientNameLower').value.trim();
-            const vmName = document.getElementById('vmName').value.trim();
-
-            const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
-            const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
-            const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
-
-            let command = `.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
-
-            if (secondVM) {
-                command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
+        function togglePassword() {
+            const passwordInput = document.getElementById('vmPassword');
+            const toggleButton = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleButton.textContent = '🔒';
             } else {
-                command += ` -CriarSegundaVM $false`;
-            }
-
-            command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
-
-            document.getElementById('output').textContent = command;
-        }
-
-        function copyCommand() {
-            const outputText = document.getElementById('output').textContent.trim();
-            if (outputText) {
-                navigator.clipboard.writeText(outputText)
-                    .then(() => {
-                        const copyMessage = document.getElementById('copyMessage');
-                        copyMessage.style.display = 'block';
-
-                    })
-                    .catch(() => alert('Erro ao copiar o comando.'));
-            } else {
-                alert('Nada para copiar!');
+                passwordInput.type = 'password';
+                toggleButton.textContent = '👁️';
             }
         }
 
-        function openAzureCloudShell() {
-            window.open('https://shell.azure.com', '_blank');
-        }
-    </script>
-</body>
-</html>
+        function generatePassword() {
+            const upperCase = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
+            const lowerCase = 'abcdefghijkmnopqrstuvwxyz';
+            const numbers = '23456789';
+            const symbols = '!@#%&*()_+-=[]{};<>?';
+            
+            let password = '';
+            password += upperCase.charAt(Math.floor
