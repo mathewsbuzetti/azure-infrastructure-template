@@ -309,9 +309,31 @@
             </select>
             <div id="environment-error" class="error-detail"></div>
             
-            <label for="vmName">Nome da Máquina Virtual *</label>
+            <label for="vmName">Nome da Primeira Máquina Virtual *</label>
             <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
             <div id="vmName-error" class="error-detail"></div>
+            
+            <label for="createSecondVM">Deseja provisionar mais uma máquina virtual? *</label>
+            <select id="createSecondVM" required onchange="toggleSecondVMField()">
+                <option value="">Selecione uma opção</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+            <div id="createSecondVM-error" class="error-detail"></div>
+            
+            <div id="secondVMSection" style="display: none;">
+                <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
+                <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
+                <div id="secondVMName-error" class="error-detail"></div>
+            </div>
+            
+            <label for="installVPN">Deseja provisionar VPN SKU: VpnGw1? *</label>
+            <select id="installVPN" required>
+                <option value="">Selecione uma opção</option>
+                <option value="true">Sim</option>
+                <option value="false">Não</option>
+            </select>
+            <div id="installVPN-error" class="error-detail"></div>
             
             <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
             
@@ -373,6 +395,21 @@
             return isFormValid;
         }
         
+        function toggleSecondVMField() {
+            const createSecondVM = document.getElementById('createSecondVM');
+            const secondVMSection = document.getElementById('secondVMSection');
+            const secondVMName = document.getElementById('secondVMName');
+            
+            if (createSecondVM.value === 'true') {
+                secondVMSection.style.display = 'block';
+                secondVMName.required = true;
+            } else {
+                secondVMSection.style.display = 'none';
+                secondVMName.required = false;
+                secondVMName.value = '';
+            }
+        }
+        
         function generateCommand() {
             if (!validateForm()) return;
 
@@ -384,10 +421,27 @@
             const environment = document.getElementById('environment').value;
             const vmName = document.getElementById('vmName').value;
 
+            const createSecondVM = document.getElementById('createSecondVM').value;
+            const secondVMName = document.getElementById('secondVMName').value;
+            const installVPN = document.getElementById('installVPN').value;
+
             const command = '.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "' + subscriptionId +
                 '" -LocationBrazil "' + locationBrazil + '" -LocationUS "' + locationUS +
                 '" -ClientNameUpper "' + clientNameUpper + '" -ClientNameLower "' + clientNameLower +
-                '" -Environment "' + environment + '" -VMName "' + vmName + '"';
+                '" -Environment "' + environment + '" -VMName "' + vmName + '"' +
+                ' -CreateSecondVM 
+
+            document.getElementById('output').textContent = command;
+        }
+        
+        function copyCommand() { + createSecondVM +
+                (createSecondVM === 'true' ? ' -SecondVMName "' + secondVMName + '"' : '') +
+                ' -InstallVPN 
+
+            document.getElementById('output').textContent = command;
+        }
+        
+        function copyCommand() { + installVPN;
 
             document.getElementById('output').textContent = command;
         }
