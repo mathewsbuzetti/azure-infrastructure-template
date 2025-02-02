@@ -23,6 +23,7 @@
 * Windows Server 2022 Datacenter
 * Tamanho: Standard_B2ms
 * Disco OS: 127GB StandardSSD_LRS
+* Opção de criar uma segunda VM com as mesmas configurações
 
 ### 🌐 Networking
 * VNET (10.1.0.0/16)
@@ -72,15 +73,17 @@
    
    [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](https://github.com/mathewsbuzetti/deployazure/blob/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
 
-2. Acesse o portal do Azure e abra o Azure CloudShell.
+2. Acesse o portal do Azure e abra o Azure CloudShell:
+   
+   [![Azure CloudShell](https://img.shields.io/badge/Abrir%20Azure%20CloudShell-blue?style=flat-square&logo=microsoftazure)](https://shell.azure.com)
 
 3. Faça o upload do script Deploy-AzureInfrastructure-BrazilSouth.ps1 no CloudShell.
 
 4. Navegue até o diretório onde você fez o upload do script.
 
-5. Acesse nossa interface
+5. Acesse nosso site para gerar o código de execução do script
    
-   [![Web Interface](https://img.shields.io/badge/Web%20Interface-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
+   [![Web Interface](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
 
 6. Preencha os parâmetros necessários:
    - ID da Assinatura Azure
@@ -88,6 +91,11 @@
    - Nome do Cliente (minúsculo)
    - Ambiente (ex: production, development)
    - Nome da Máquina Virtual
+   - Nome da Segunda VM (opcional)
+   - Usuário Admin
+   - Senha Admin
+   - Selecione se deseja criar segunda VM
+   - Selecione se deseja instalar VPN
 
 7. Copie o comando gerado.
 
@@ -101,12 +109,6 @@ O script iniciará a implantação dos recursos do Azure.
 
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
-### 🔐 Credenciais Padrão
-- **Username**: admaz
-- **Password**: BaucCr@f#PgU
-
-⚠️ **IMPORTANTE**: Altere a senha após o primeiro login!
-
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
 
@@ -114,15 +116,15 @@ O script iniciará a implantação dos recursos do Azure.
 
 ### Configuração de Backup
 1. Alterar a redundância para Locally-redundant (LRS)
-
+   
    > 💰 **Recomendação**: A alteração para LRS é recomendada para redução de custos, pois oferece redundância suficiente para a maioria dos cenários com um custo menor.
-
+   
 ![image](https://github.com/user-attachments/assets/bfabecec-1d52-4f64-959e-a904fb637e07)
 
-2. Definir a política de retenção conforme necessidade
-
+3. Definir a política de retenção conforme necessidade
+   
    > ⚙️ **Recomendação**: A política abaixo é uma recomendação amplamente utilizada por empresas. Caso deseje seguir este modelo:
-
+   
 ![image](https://github.com/user-attachments/assets/0adee237-3151-4de4-a38f-3ea6b362be36)
 
 ### Configuração do Start/Stop de VMs
@@ -132,16 +134,17 @@ O script iniciará a implantação dos recursos do Azure.
 
 2. No Automation Account, acesse o Runbook "START_STOP_VMs"
 3. Importe o conteúdo do script baixado
-
+   
 ![image](https://github.com/user-attachments/assets/6b321a34-4421-4816-b4aa-f783cedea4ec)
 
-4. Configure as políticas de execução:
+5. Configure as políticas de execução:
+   
    * Crie um agendamento para Start (ex: dias úteis às 9h)
-
+     
 ![image](https://github.com/user-attachments/assets/a49a51f6-c229-4d40-b235-19f4bdae45e6)
 
    * Crie um agendamento para Stop (ex: dias úteis às 19h)
-
+     
 ![image](https://github.com/user-attachments/assets/6bb4c703-8a6c-4a1a-8714-b6f5274792e9)
 
    * Configure os parâmetros:
@@ -152,13 +155,19 @@ O script iniciará a implantação dos recursos do Azure.
 ### Configuração de Tags na VM
 1. Acesse a VM que deseja configurar o Start/Stop automático
 2. Na seção "Tags", adicione uma nova tag:
-
+   
    > ⚙️ **Configuração**: A tag deve corresponder aos parâmetros configurados no Runbook
-
+   
    * Nome da tag: [TagName configurado no Runbook]
    * Valor da tag: [TagValue configurado no Runbook]
+     
+![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
 
-![image](https://github.com/user-attachments/assets/777c4d05-ad95-446a-a905-ba7aa284f092)
+### 🔐 Credenciais
+- **Username**: Definido durante a execução do script
+- **Password**: Definido durante a execução do script
+
+⚠️ **IMPORTANTE**: Use uma senha forte que atenda aos requisitos de segurança do Azure!
 
 ## 🏗️ Resource Groups e Organização
 
@@ -187,19 +196,24 @@ O script fornece feedback em tempo real com cores:
 
 ## 🔧 Parâmetros do Script
 
-| Parâmetro | Descrição | Exemplo |
-|-----------|-----------|---------|
-| SubscriptionId | ID da Assinatura Azure | "e875c481-..." |
-| LocationBrazil | Região do Azure Brasil | "brazilsouth" |
-| LocationUS | Região do Azure EUA | "eastus" |
-| ClientNameUpper | Nome do Cliente (Maiúsculo) | "MATHEWSB" |
-| ClientNameLower | Nome do Cliente (Minúsculo) | "mathewsb" |
-| Environment | Ambiente do Deploy | "production" |
-| VMName | Nome da Máquina Virtual | "MATHEWS-DC01" |
+| Parâmetro | Descrição | Exemplo | Obrigatório |
+|-----------|-----------|---------|-------------|
+| SubscriptionId | ID da Assinatura Azure | "e875c481-..." | Sim |
+| LocationBrazil | Região do Azure Brasil | "brazilsouth" | Sim |
+| LocationUS | Região do Azure EUA | "eastus" | Sim |
+| ClientNameUpper | Nome do Cliente (Maiúsculo) | "MATHEWSB" | Sim |
+| ClientNameLower | Nome do Cliente (Minúsculo) | "mathewsb" | Sim |
+| Environment | Ambiente do Deploy | "production" | Não |
+| VMName | Nome da Máquina Virtual Principal | "MATHEWS-DC01" | Sim |
+| SecondVMName | Nome da Segunda Máquina Virtual | "MATHEWS-DC02" | Não |
+| CriarSegundaVM | Criar Segunda VM | $true/$false | Não |
+| InstalarVPN | Instalar Gateway VPN | $true/$false | Não |
+| VMUsername | Nome do Usuário Admin | "admaz" | Sim |
+| VMPassword | Senha do Usuário Admin | "Sua@Senha123" | Sim |
 
 ## 🔄 Versionamento
 
 Script desenvolvido por Mathews Buzetti.
 
 - Versão: 1.0.0
-- Última atualização: 01/02/2025
+- Última atualização: 02/02/2025
