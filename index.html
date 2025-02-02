@@ -62,10 +62,16 @@
 
             <!-- Campo "Sim" ou "Não" para segunda máquina -->
             <label>Deseja provisionar mais uma máquina virtual? *</label>
-            <input type="radio" id="secondVMYes" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
-            <label for="secondVMYes">Sim</label>
-            <input type="radio" id="secondVMNo" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
-            <label for="secondVMNo">Não</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
+                    <span>Sim</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
+                    <span>Não</span>
+                </label>
+            </div>
             <div id="secondVMField" style="display: none;">
                 <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
                 <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
@@ -73,10 +79,16 @@
 
             <!-- Campo "Sim" ou "Não" para VPN -->
             <label>Deseja instalar a VPN GW1? *</label>
-            <input type="radio" id="vpnYes" name="vpn" value="yes" required>
-            <label for="vpnYes">Sim</label>
-            <input type="radio" id="vpnNo" name="vpn" value="no" required>
-            <label for="vpnNo">Não</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="vpn" value="yes" required>
+                    <span>Sim</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="vpn" value="no" required>
+                    <span>Não</span>
+                </label>
+            </div>
 
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
