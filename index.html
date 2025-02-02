@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
-        /* Estilo Visual */
+        /* Estilo Visual Original */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -15,18 +15,54 @@
         .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
         h1 { text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; font-weight: 600; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: 0.5px; }
         label { display: block; margin: 15px 0 8px; font-weight: 500; color: #e0e0e0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input, select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; transition: all 0.3s ease; }
+        input[type="text"], select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; }
         input[readonly] { background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
-        input:focus, select:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); transform: translateY(-1px); }
-        input::placeholder { color: #666; }
-        .field-info { color: #888; font-size: 0.85em; margin-top: -10px; margin-bottom: 15px; padding: 12px; background: rgba(255, 255, 255, 0.05); border-radius: 8px; border-left: 3px solid #60a5fa; transition: all 0.3s ease; }
-        .field-info:hover { background: rgba(255, 255, 255, 0.08); transform: translateX(5px); }
-        .field-info strong { color: #60a5fa; }
+        
+        /* Novo estilo apenas para os radio buttons */
+        .radio-group {
+            margin: 15px 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .radio-option {
+            position: relative;
+        }
+
+        .radio-option input[type="radio"] {
+            display: none;
+        }
+
+        .radio-option label {
+            display: inline-block;
+            padding: 8px 24px;
+            background: rgba(44, 44, 44, 0.8);
+            border: 2px solid rgba(96, 165, 250, 0.3);
+            border-radius: 6px;
+            cursor: pointer;
+            margin: 0;
+            text-transform: none;
+            font-size: 14px;
+            color: #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        .radio-option input[type="radio"]:checked + label {
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            border-color: #60a5fa;
+            color: white;
+        }
+
+        .radio-option label:hover {
+            border-color: #60a5fa;
+        }
+
+        /* Resto dos estilos originais */
         .button-group { display: flex; gap: 12px; margin-top: 20px; }
         button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
         button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
         button:active { transform: translateY(0); }
-        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; position: relative; }
+        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; }
         .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
         .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
         .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
@@ -34,12 +70,6 @@
         footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
         footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
         footer a:hover:after { width: 100%; }
-        .error { color: #f87171; margin-bottom: 15px; display: none; text-align: left; font-size: 14px; padding: 8px 12px; background: rgba(248, 113, 113, 0.1); border-radius: 6px; animation: fadeIn 0.3s ease; }
-        .field-error { border-color: #f87171; animation: shake 0.5s ease-in-out; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
-        .error-detail { color: #f87171; font-size: 12px; margin-top: -12px; margin-bottom: 12px; opacity: 0; transform: translateY(-10px); transition: all 0.3s ease; }
-        .error-detail:not(:empty) { opacity: 1; transform: translateY(0); }
-        @media (max-width: 768px) { .container { margin: 10px; padding: 20px; } .button-group { flex-direction: column; } button { width: 100%; } }
     </style>
 </head>
 <body>
@@ -49,45 +79,50 @@
             <!-- Campos básicos -->
             <label for="subscriptionId">ID da Assinatura *</label>
             <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
+            
             <label for="location">Localização Brazil South</label>
             <input type="text" id="location" value="brazilsouth" readonly>
+            
             <label for="locationUS">Localização US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
+            
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWS" required>
+            
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
+            
             <label for="vmName">Nome da Máquina Virtual *</label>
             <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
 
-            <!-- Campo "Sim" ou "Não" para segunda máquina -->
+            <!-- Radio buttons melhorados -->
             <label>Deseja provisionar mais uma máquina virtual? *</label>
             <div class="radio-group">
-                <label class="radio-option">
-                    <input type="radio" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
-                    <span>Sim</span>
-                </label>
-                <label class="radio-option">
-                    <input type="radio" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
-                    <span>Não</span>
-                </label>
+                <div class="radio-option">
+                    <input type="radio" id="secondVMYes" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
+                    <label for="secondVMYes">Sim</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="secondVMNo" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
+                    <label for="secondVMNo">Não</label>
+                </div>
             </div>
+
             <div id="secondVMField" style="display: none;">
                 <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
                 <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
             </div>
 
-            <!-- Campo "Sim" ou "Não" para VPN -->
             <label>Deseja instalar a VPN GW1? *</label>
             <div class="radio-group">
-                <label class="radio-option">
-                    <input type="radio" name="vpn" value="yes" required>
-                    <span>Sim</span>
-                </label>
-                <label class="radio-option">
-                    <input type="radio" name="vpn" value="no" required>
-                    <span>Não</span>
-                </label>
+                <div class="radio-option">
+                    <input type="radio" id="vpnYes" name="vpn" value="yes" required>
+                    <label for="vpnYes">Sim</label>
+                </div>
+                <div class="radio-option">
+                    <input type="radio" id="vpnNo" name="vpn" value="no" required>
+                    <label for="vpnNo">Não</label>
+                </div>
             </div>
 
             <div class="button-group">
@@ -97,7 +132,6 @@
             </div>
         </form>
 
-        <!-- Área de saída -->
         <div class="output" id="output"></div>
         <div class="message" id="copyMessage">COMANDO COPIADO!</div>
         <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
@@ -120,9 +154,11 @@
             requiredFields.forEach(field => {
                 if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
                     isValid = false;
-                    field.parentNode.style.borderColor = 'red';
+                } else if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('field-error');
                 } else {
-                    field.parentNode.style.borderColor = '';
+                    field.classList.remove('field-error');
                 }
             });
 
@@ -142,25 +178,20 @@
             const clientNameLower = document.getElementById('clientNameLower').value.trim();
             const vmName = document.getElementById('vmName').value.trim();
 
-            // Valores para segunda máquina e VPN
             const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
             const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
             const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
 
-            // Comando inicial
-            let command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
+            let command = `.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
 
-            // Adiciona parâmetros da segunda máquina virtual
             if (secondVM) {
                 command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
             } else {
                 command += ` -CriarSegundaVM $false`;
             }
 
-            // Adiciona parâmetro da VPN
             command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
 
-            // Exibe o comando gerado
             document.getElementById('output').textContent = command;
         }
 
