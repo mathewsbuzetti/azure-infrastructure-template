@@ -251,9 +251,22 @@
             
             <label for="locationUS">Localização US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
+            <div class="password-requirements">
+                <h4>Importante: Região US East</h4>
+                <ul>
+                    <li>Região necessária para o Azure Automation Account</li>
+                    <li>Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação START/STOP</li>
+                </ul>
+            </div>
             
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
             <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWS" required>
+            <div class="password-requirements">
+                <h4>Por que maiúsculo?</h4>
+                <ul>
+                    <li>Utilizado para criar os Resource Groups e os recursos</li>
+                </ul>
+            </div>
             
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
