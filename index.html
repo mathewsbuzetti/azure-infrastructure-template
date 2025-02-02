@@ -5,23 +5,52 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
-        /* Estilos visuais */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        /* Estilo Visual */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
         * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
         body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e0e0e0; padding: 20px; min-height: 100vh; }
         .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
-        h1 { text-align: center; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px;}
+        h1 { text-align: center; font-size: 28px; margin-bottom: 20px;}
         label { display: block; margin: 15px 0 8px; font-size: 14px; text-transform: uppercase; }
         input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #444; border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; }
-        input[readonly] { background: rgba(44, 44, 44, 0.5); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
-        input:focus, select:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); }
-        button { padding: 12px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; }
+        button { padding: 12px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
         button:hover { transform: translateY(-2px); }
         .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-word; font-size: 14px; }
         .output:not(:empty) { border-color: #60a5fa; }
-        footer { margin-top: 30px; text-align: center; font-size: 13px; }
-        @media (max-width: 768px) { 
-            .container { margin: 10px; padding: 20px; } 
+
+        /* Estilização dos botões "Sim" ou "Não" */
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .radio-option input[type="radio"] {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            outline: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .radio-option input[type="radio"]:checked {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            border-color: #60a5fa;
+        }
+        .radio-option span {
+            font-size: 14px;
+            color: white;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -29,7 +58,7 @@
     <div class="container">
         <h1>Azure Infrastructure Deployment Tool</h1>
         <form id="deployForm">
-            <!-- Campos principais -->
+            <!-- Campos básicos -->
             <label for="subscriptionId">ID da Assinatura *</label>
             <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
             <label for="location">Localização Brazil South</label>
@@ -43,43 +72,49 @@
             <label for="vmName">Nome da Máquina Virtual *</label>
             <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
 
-            <!-- Campo para segunda VM -->
-            <label for="secondVMCheckbox">Deseja provisionar mais uma máquina virtual?</label>
-            <input type="checkbox" id="secondVMCheckbox" onchange="toggleSecondVMField()">
+            <!-- Campo "Sim" ou "Não" para segunda máquina -->
+            <label>Deseja provisionar mais uma máquina virtual?</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="secondVM" value="yes" onclick="toggleSecondVMField(true)">
+                    <span>Sim</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="secondVM" value="no" onclick="toggleSecondVMField(false)" checked>
+                    <span>Não</span>
+                </label>
+            </div>
             <div id="secondVMField" style="display: none;">
                 <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
                 <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
             </div>
 
-            <!-- Campo para VPN -->
-            <label for="vpnCheckbox">Deseja instalar a VPN?</label>
-            <input type="checkbox" id="vpnCheckbox">
+            <!-- Campo "Sim" ou "Não" para VPN -->
+            <label>Deseja instalar a VPN?</label>
+            <div class="radio-group">
+                <label class="radio-option">
+                    <input type="radio" name="vpn" value="yes">
+                    <span>Sim</span>
+                </label>
+                <label class="radio-option">
+                    <input type="radio" name="vpn" value="no" checked>
+                    <span>Não</span>
+                </label>
+            </div>
 
-            <!-- Botões -->
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
-                <button type="button" onclick="copyCommand()">Copiar Comando</button>
-                <button type="button" onclick="openAzureCloudShell()">Acessar CloudShell</button>
             </div>
         </form>
 
-        <!-- Saída do comando gerado -->
+        <!-- Área de saída -->
         <div class="output" id="output"></div>
-        <div class="message" id="copyMessage" style="display:none;">COMANDO COPIADO!</div>
     </div>
 
-    <footer>
-        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
-    </footer>
-
     <script>
-        function resetErrorStyles() {
-            document.querySelectorAll('input').forEach(input => input.classList.remove('field-error'));
-        }
-
-        function toggleSecondVMField() {
+        function toggleSecondVMField(show) {
             const secondVMField = document.getElementById('secondVMField');
-            secondVMField.style.display = document.getElementById('secondVMCheckbox').checked ? 'block' : 'none';
+            secondVMField.style.display = show ? 'block' : 'none';
         }
 
         function generateCommand() {
@@ -89,36 +124,27 @@
             const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
             const clientNameLower = document.getElementById('clientNameLower').value.trim();
             const vmName = document.getElementById('vmName').value.trim();
-            const criarSegundaVM = document.getElementById('secondVMCheckbox').checked;
-            const instalarVPN = document.getElementById('vpnCheckbox').checked;
-            const secondVMName = criarSegundaVM ? document.getElementById('secondVMName').value.trim() : '';
 
+            // Valores para segunda máquina e VPN
+            const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
+            const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
+            const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
+
+            // Comando inicial
             let command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
 
-            command += criarSegundaVM 
-                ? ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`
-                : ` -CriarSegundaVM $false`;
-
-            command += instalarVPN 
-                ? ` -InstalarVPN $true`
-                : ` -InstalarVPN $false`;
-
-            document.getElementById('output').textContent = command;
-        }
-
-        function copyCommand() {
-            const outputText = document.getElementById('output').textContent.trim();
-            if (outputText) {
-                navigator.clipboard.writeText(outputText)
-                    .then(() => alert('Comando copiado para a área de transferência!'))
-                    .catch(() => alert('Erro ao copiar o comando.'));
+            // Adiciona parâmetros da segunda máquina virtual
+            if (secondVM) {
+                command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
             } else {
-                alert('Nada para copiar!');
+                command += ` -CriarSegundaVM $false`;
             }
-        }
 
-        function openAzureCloudShell() {
-            window.open('https://shell.azure.com', '_blank');
+            // Adiciona parâmetro da VPN
+            command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
+
+            // Exibe o comando gerado
+            document.getElementById('output').textContent = command;
         }
     </script>
 </body>
