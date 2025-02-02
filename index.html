@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,7 +25,7 @@
 
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #1a1f25 0%, #2d3748 100%);
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             color: #e0e0e0;
             padding: 20px;
             min-height: 100vh;
@@ -30,12 +41,15 @@
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.6s ease-out;
         }
 
         h1 {
             text-align: center;
             margin-bottom: 30px;
-            color: #60a5fa;
+            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             font-size: 32px;
             font-weight: 600;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -62,16 +76,19 @@
             color: #e0e0e0;
             font-size: 15px;
             outline: none;
+            transition: all 0.3s ease;
         }
 
         input[readonly] {
-            background: rgba(44, 44, 44, 0.5);
+            background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%);
+            border-color: rgba(255, 255, 255, 0.05);
             cursor: not-allowed;
         }
 
         input:focus, select:focus {
             border-color: #60a5fa;
-            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2);
+            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+            transform: translateY(-1px);
         }
 
         input::placeholder {
@@ -87,6 +104,12 @@
             background: rgba(255, 255, 255, 0.05);
             border-radius: 8px;
             border-left: 3px solid #60a5fa;
+            transition: all 0.3s ease;
+        }
+
+        .field-info:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
         }
 
         .field-info strong {
@@ -120,6 +143,10 @@
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
 
+        button:active {
+            transform: translateY(0);
+        }
+
         .output {
             margin-top: 25px;
             padding: 16px;
@@ -131,6 +158,12 @@
             word-break: break-all;
             font-size: 14px;
             min-height: 60px;
+            position: relative;
+        }
+
+        .output:not(:empty) {
+            border-color: #60a5fa;
+            box-shadow: 0 0 10px rgba(96, 165, 250, 0.1);
         }
 
         .message {
@@ -151,12 +184,6 @@
             color: black;
             border-radius: 8px;
             text-align: center;
-            border: 1px solid rgba(255, 193, 7, 0.3);
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         footer {
@@ -171,11 +198,22 @@
             color: #60a5fa;
             text-decoration: none;
             font-weight: 500;
+            position: relative;
         }
 
-        footer a:hover {
-            color: #3b82f6;
-            text-decoration: underline;
+        footer a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: #60a5fa;
+            transition: width 0.3s ease;
+        }
+
+        footer a:hover:after {
+            width: 100%;
         }
 
         .error {
@@ -187,10 +225,18 @@
             padding: 8px 12px;
             background: rgba(248, 113, 113, 0.1);
             border-radius: 6px;
+            animation: fadeIn 0.3s ease;
         }
 
         .field-error {
             border-color: #f87171;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
         }
 
         .error-detail {
@@ -198,7 +244,14 @@
             font-size: 12px;
             margin-top: -12px;
             margin-bottom: 12px;
-            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+        .error-detail:not(:empty) {
+            opacity: 1;
+            transform: translateY(0);
         }
         
         @media (max-width: 768px) {
@@ -270,8 +323,8 @@
         </form>
         
         <div class="output" id="output"></div>
-        <div class="message" id="copyMessage">Comando copiado!</div>
-        <div class="reminder">Lembre-se de fazer o upload do script no CloudShell antes de executar o comando gerado.</div>
+        <div class="message" id="copyMessage">COMANDO COPIADO!</div>
+        <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
     </div>
     
     <footer>
@@ -340,23 +393,3 @@
         }
         
         function copyCommand() {
-            const outputElement = document.getElementById('output');
-            if (!outputElement.textContent.trim()) {
-                alert('Primeiro gere um comando');
-                return;
-            }
-            navigator.clipboard.writeText(outputElement.textContent).then(() => {
-                const copyMessage = document.getElementById('copyMessage');
-                copyMessage.style.display = 'block';
-            }).catch(err => {
-                console.error('Erro ao copiar:', err);
-                alert('Erro ao copiar o comando');
-            });
-        }
-        
-        function openAzureCloudShell() {
-            window.open('https://portal.azure.com/#cloudshell/', '_blank');
-        }
-    </script>
-</body>
-</html>
