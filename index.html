@@ -5,334 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
-        @keyframes fadeIn {
-            from { 
-                opacity: 0; 
-                transform: translateY(-20px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-            color: #e0e0e0;
-            padding: 20px;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 700px;
-            margin: 20px auto;
-            background: rgba(30, 30, 30, 0.95);
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            animation: fadeIn 0.6s ease-out;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 32px;
-            font-weight: 600;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-            letter-spacing: 0.5px;
-        }
-
-        label {
-            display: block;
-            margin: 15px 0 8px;
-            font-weight: 500;
-            color: #e0e0e0;
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px 16px;
-            margin-bottom: 15px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            background: rgba(44, 44, 44, 0.8);
-            color: #e0e0e0;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-        }
-
-        .radio-group {
-            display: flex;
-            gap: 20px;
-            margin: 10px 0;
-            padding: 12px 16px;
-            background: rgba(44, 44, 44, 0.8);
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .radio-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            padding: 4px 12px;
-            border-radius: 6px;
-            transition: all 0.2s ease;
-        }
-
-        .radio-label:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .radio-text {
-            color: #e0e0e0;
-            font-size: 15px;
-            user-select: none;
-        }
-
-        input[type="radio"] {
-            width: 18px;
-            height: 18px;
-            margin: 0;
-            cursor: pointer;
-            accent-color: #3b82f6;
-        }
-
-        .label-group {
-            margin-bottom: 15px;
-        }
-
-        input[readonly] {
-            background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%);
-            border-color: rgba(255, 255, 255, 0.05);
-            cursor: not-allowed;
-        }
-
-        input:focus, select:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
-            transform: translateY(-1px);
-        }
-
-        .checkbox-wrapper {
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(44, 44, 44, 0.8);
-            padding: 12px 16px;
-            border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .checkbox-wrapper input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            margin: 0;
-            cursor: pointer;
-        }
-
-        .checkbox-wrapper label {
-            margin: 0;
-            text-transform: none;
-            font-size: 15px;
-            cursor: pointer;
-        }
-
-        .hidden {
-            display: none;
-        }
-
-        /* Mantendo todos os estilos originais */
-        .field-info {
-            color: #888;
-            font-size: 0.85em;
-            margin-top: -10px;
-            margin-bottom: 15px;
-            padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            border-left: 3px solid #60a5fa;
-            transition: all 0.3s ease;
-        }
-
-        .field-info:hover {
-            background: rgba(255, 255, 255, 0.08);
-            transform: translateX(5px);
-        }
-
-        .field-info strong {
-            color: #60a5fa;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-        }
-
-        button {
-            flex: 1;
-            padding: 12px 16px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-            text-transform: uppercase;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .output {
-            margin-top: 25px;
-            padding: 16px;
-            background: rgba(44, 44, 44, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
-            font-family: 'Consolas', monospace;
-            white-space: pre-wrap;
-            word-break: break-all;
-            font-size: 14px;
-            min-height: 60px;
-            position: relative;
-        }
-
-        .output:not(:empty) {
-            border-color: #60a5fa;
-            box-shadow: 0 0 10px rgba(96, 165, 250, 0.1);
-        }
-
-        .message {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(40, 167, 69, 0.9);
-            color: white;
-            border-radius: 8px;
-            text-align: center;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .reminder {
-            margin-top: 15px;
-            padding: 12px;
-            background: rgba(255, 193, 7, 0.9);
-            color: black;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            font-size: 13px;
-            color: #888;
-            padding: 20px;
-        }
-
-        footer a {
-            color: #60a5fa;
-            text-decoration: none;
-            font-weight: 500;
-            position: relative;
-        }
-
-        footer a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -2px;
-            left: 0;
-            background-color: #60a5fa;
-            transition: width 0.3s ease;
-        }
-
-        footer a:hover:after {
-            width: 100%;
-        }
-
-        .error {
-            color: #f87171;
-            margin-bottom: 15px;
-            display: none;
-            text-align: left;
-            font-size: 14px;
-            padding: 8px 12px;
-            background: rgba(248, 113, 113, 0.1);
-            border-radius: 6px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .field-error {
-            border-color: #f87171;
-            animation: shake 0.5s ease-in-out;
-        }
-
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
-        .error-detail {
-            color: #f87171;
-            font-size: 12px;
-            margin-top: -12px;
-            margin-bottom: 12px;
-            opacity: 0;
-            transform: translateY(-10px);
-            transition: all 0.3s ease;
-        }
-
-        .error-detail:not(:empty) {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        @media (max-width: 768px) {
-            .container {
-                margin: 10px;
-                padding: 20px;
-            }
-            .button-group {
-                flex-direction: column;
-            }
-            button {
-                width: 100%;
-            }
+        /* Estilos visuais */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e0e0e0; padding: 20px; min-height: 100vh; }
+        .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
+        h1 { text-align: center; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px;}
+        label { display: block; margin: 15px 0 8px; font-size: 14px; text-transform: uppercase; }
+        input, select { width: 100%; padding: 12px; margin-bottom: 15px; border: 2px solid #444; border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; }
+        input[readonly] { background: rgba(44, 44, 44, 0.5); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
+        input:focus, select:focus { border-color: #60a5fa; box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2); }
+        button { padding: 12px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; }
+        button:hover { transform: translateY(-2px); }
+        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-word; font-size: 14px; }
+        .output:not(:empty) { border-color: #60a5fa; }
+        footer { margin-top: 30px; text-align: center; font-size: 13px; }
+        @media (max-width: 768px) { 
+            .container { margin: 10px; padding: 20px; } 
         }
     </style>
 </head>
@@ -340,124 +29,97 @@
     <div class="container">
         <h1>Azure Infrastructure Deployment Tool</h1>
         <form id="deployForm">
+            <!-- Campos principais -->
             <label for="subscriptionId">ID da Assinatura *</label>
             <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
-            <div id="subscriptionId-error" class="error-detail"></div>
-            
             <label for="location">Localização Brazil South</label>
             <input type="text" id="location" value="brazilsouth" readonly>
-            <div id="location-error" class="error-detail"></div>
-            
             <label for="locationUS">Localização US East</label>
             <input type="text" id="locationUS" value="eastus" readonly>
-            <div class="field-info">
-                <strong>Importante:</strong> Região necessária para o Azure Automation Account. Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação.
-            </div>
-            
             <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
-            <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWSB" required>
-            <div id="clientNameUpper-error" class="error-detail"></div>
-            <div class="field-info">
-                <strong>Por que maiúsculo?</strong> Utilizado para criar os resource groups e os recursos.
-            </div>
-            
+            <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWS" required>
             <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
             <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
-            <div id="clientNameLower-error" class="error-detail"></div>
-            <div class="field-info">
-                <strong>Por que minúsculo?</strong> Necessário para criar as tags dos recursos.
-            </div>
-            
-            <label for="environment">Ambiente *</label>
-            <select id="environment" required>
-                <option value="">Selecione o ambiente</option>
-                <option value="production">production</option>
-                <option value="development">development</option>
-                <option value="homologation">homologation</option>
-            </select>
-            <div id="environment-error" class="error-detail"></div>
-            
             <label for="vmName">Nome da Máquina Virtual *</label>
             <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
-            <div id="vmName-error" class="error-detail"></div>
 
-            <div class="label-group">
-                <label>Deseja provisionar uma segunda máquina virtual? *</label>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="createSecondVM" value="sim" required>
-                        <span class="radio-text">Sim</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="createSecondVM" value="nao" required>
-                        <span class="radio-text">Não</span>
-                    </label>
-                </div>
-                <div id="createSecondVM-error" class="error-detail"></div>
-            </div>
-            
-            <div id="secondVMSection" class="hidden">
+            <!-- Campo para segunda VM -->
+            <label for="secondVMCheckbox">Deseja provisionar mais uma máquina virtual?</label>
+            <input type="checkbox" id="secondVMCheckbox" onchange="toggleSecondVMField()">
+            <div id="secondVMField" style="display: none;">
                 <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
                 <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
-                <div id="secondVMName-error" class="error-detail"></div>
             </div>
 
-            <div class="label-group">
-                <label>Deseja provisionar VPN SKU: Gw1? *</label>
-                <div class="radio-group">
-                    <label class="radio-label">
-                        <input type="radio" name="installVPN" value="sim" required>
-                        <span class="radio-text">Sim</span>
-                    </label>
-                    <label class="radio-label">
-                        <input type="radio" name="installVPN" value="nao" required>
-                        <span class="radio-text">Não</span>
-                    </label>
-                </div>
-                <div id="installVPN-error" class="error-detail"></div>
-            </div>
-            
-            <div class="error" id="errorMessage">Por favor, preencha todos os campos obrigatórios.</div>
-            
+            <!-- Campo para VPN -->
+            <label for="vpnCheckbox">Deseja instalar a VPN?</label>
+            <input type="checkbox" id="vpnCheckbox">
+
+            <!-- Botões -->
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
                 <button type="button" onclick="copyCommand()">Copiar Comando</button>
-                <button type="button" onclick="openAzureCloudShell()">Acessar Azure CloudShell</button>
+                <button type="button" onclick="openAzureCloudShell()">Acessar CloudShell</button>
             </div>
         </form>
-        
+
+        <!-- Saída do comando gerado -->
         <div class="output" id="output"></div>
-        <div class="message" id="copyMessage">COMANDO COPIADO!</div>
-        <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
+        <div class="message" id="copyMessage" style="display:none;">COMANDO COPIADO!</div>
     </div>
-    
+
     <footer>
         Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
     </footer>
-    
-    <script>
-        // Adiciona event listener para o select da segunda VM
-        document.querySelectorAll('input[name="createSecondVM"]').forEach(radio => {
-            radio.addEventListener('change', function() {
-            const secondVMSection = document.getElementById('secondVMSection');
-            const secondVMNameInput = document.getElementById('secondVMName');
-            
-            });
-        });
-        });
 
+    <script>
         function resetErrorStyles() {
-            const inputs = document.querySelectorAll('input[required], select[required]');
-            inputs.forEach(input => {
-                input.classList.remove('field-error');
-                document.getElementById(`${input.id}-error`).textContent = '';
-            });
+            document.querySelectorAll('input').forEach(input => input.classList.remove('field-error'));
         }
-        
-        function validateForm() {
-            resetErrorStyles();
-            const inputs = document.querySelectorAll('input[required], select[required]');
-            const errorMessage = document.getElementById('errorMessage');
-            let isFormValid = true;
-            
-            inputs.forEach(input => {
+
+        function toggleSecondVMField() {
+            const secondVMField = document.getElementById('secondVMField');
+            secondVMField.style.display = document.getElementById('secondVMCheckbox').checked ? 'block' : 'none';
+        }
+
+        function generateCommand() {
+            const subscriptionId = document.getElementById('subscriptionId').value.trim();
+            const locationBrazil = document.getElementById('location').value.trim();
+            const locationUS = document.getElementById('locationUS').value.trim();
+            const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
+            const clientNameLower = document.getElementById('clientNameLower').value.trim();
+            const vmName = document.getElementById('vmName').value.trim();
+            const criarSegundaVM = document.getElementById('secondVMCheckbox').checked;
+            const instalarVPN = document.getElementById('vpnCheckbox').checked;
+            const secondVMName = criarSegundaVM ? document.getElementById('secondVMName').value.trim() : '';
+
+            let command = `.\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
+
+            command += criarSegundaVM 
+                ? ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`
+                : ` -CriarSegundaVM $false`;
+
+            command += instalarVPN 
+                ? ` -InstalarVPN $true`
+                : ` -InstalarVPN $false`;
+
+            document.getElementById('output').textContent = command;
+        }
+
+        function copyCommand() {
+            const outputText = document.getElementById('output').textContent.trim();
+            if (outputText) {
+                navigator.clipboard.writeText(outputText)
+                    .then(() => alert('Comando copiado para a área de transferência!'))
+                    .catch(() => alert('Erro ao copiar o comando.'));
+            } else {
+                alert('Nada para copiar!');
+            }
+        }
+
+        function openAzureCloudShell() {
+            window.open('https://shell.azure.com', '_blank');
+        }
+    </script>
+</body>
+</html>
