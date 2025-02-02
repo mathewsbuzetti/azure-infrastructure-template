@@ -81,21 +81,20 @@
 
 4. Navegue até o diretório onde você fez o upload do script.
 
-5. Acesse nosso site para gerar o código de execução do script
+5. Acesse nosso site para gerar o código de execução do script:
    
-   [![Web Interface](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
+   [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
 
-6. Preencha os parâmetros necessários:
-   - ID da Assinatura Azure
-   - Nome do Cliente (maiúsculo)
-   - Nome do Cliente (minúsculo)
-   - Ambiente (ex: production, development)
-   - Nome da Máquina Virtual
-   - Nome da Segunda VM (opcional)
-   - Usuário Admin
-   - Senha Admin
-   - Selecione se deseja criar segunda VM
-   - Selecione se deseja instalar VPN
+   No site web será pedido os parâmetros necessários:
+   * ID da Assinatura Azure
+   * Nome do Cliente (maiúsculo)
+   * Nome do Cliente (minúsculo)
+   * Ambiente (ex: production, development)
+   * Nome da Máquina Virtual
+   * Nome da Segunda VM (opcional)
+   * Usuário e senha para login nas máquinas virtuais
+   * Selecione se deseja criar segunda VM
+   * Selecione se deseja instalar VPN **GW1**
 
 7. Copie o comando gerado.
 
