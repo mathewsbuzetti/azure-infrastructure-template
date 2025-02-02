@@ -103,8 +103,8 @@
 O script iniciará a implantação dos recursos do Azure.
 
 ### ⏱️ Tempo de Execução
-- Deploy completo sem VPN: ~30 minutos
-- Deploy com VPN: ~60 minutos
+- Deploy completo sem VPN: 30 minutos
+- Deploy com VPN: 60 minutos
 
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
