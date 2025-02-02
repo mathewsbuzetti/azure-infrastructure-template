@@ -195,6 +195,9 @@
                 </ul>
             </div>
 
+            <label for="vmName">Nome da Máquina Virtual *</label>
+            <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
+
             <label for="vmUsername">Nome do Usuário *</label>
             <input type="text" id="vmUsername" placeholder="Ex.: administrador" required>
             <div class="info-box">
@@ -279,24 +282,144 @@
             secondVMField.style.display = show ? 'block' : 'none';
         }
 
-        function togglePassword() {
-            const passwordInput = document.getElementById('vmPassword');
-            const toggleButton = document.querySelector('.password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleButton.textContent = '🔒';
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('input[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+            if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                isValid = false;
+            } else if (!field.value.trim()) {
+                isValid = false;
+                field.classList.add('field-error');
             } else {
-                passwordInput.type = 'password';
-                toggleButton.textContent = '👁️';
+                field.classList.remove('field-error');
             }
+        });
+
+        return isValid;
+    }
+
+    function generateCommand() {
+        if (!validateForm()) {
+            alert('Por favor, preencha todos os campos obrigatórios.');
+            return;
         }
 
-        function generatePassword() {
-            const upperCase = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
-            const lowerCase = 'abcdefghijkmnopqrstuvwxyz';
-            const numbers = '23456789';
-            const symbols = '!@#%&*()_+-=[]{};<>?';
-            
-            let password = '';
-            password += upperCase.charAt(Math.floor
+        const subscriptionId = document.getElementById('subscriptionId').value.trim();
+        const locationBrazil = document.getElementById('location').value.trim();
+        const locationUS = document.getElementById('locationUS').value.trim();
+        const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
+        const clientNameLower = document.getElementById('clientNameLower').value.trim();
+        const vmName = document.getElementById('vmName').value.trim();
+        const vmUsername = document.getElementById('vmUsername').value.trim();
+        const vmPassword = document.getElementById('vmPassword').value.trim();
+
+        const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
+        const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
+        const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
+
+        let command = `.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
+
+        command += ` -VMUsername "${vmUsername}" -VMPassword "${vmPassword}"`;
+
+        if (secondVM) {
+            command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
+        } else {
+            command += ` -CriarSegundaVM $false`;
+        }
+
+        command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
+
+        document.getElementById('output').textContent = command;
+    }
+
+    function copyCommand() {
+        const outputText = document.getElementById('output').textContent.trim();
+        if (outputText) {
+            navigator.clipboard.writeText(outputText)
+                .then(() => {
+                    const copyMessage = document.getElementById('copyMessage');
+                    copyMessage.style.display = 'block';
+                    setTimeout(() => {
+                        copyMessage.style.display = 'none';
+                    }, 3000);
+                })
+                .catch(() => alert('Erro ao copiar o comando.'));
+        } else {
+            alert('Nada para copiar!');
+        }
+    }
+
+    function copyPassword() {
+        const passwordInput = document.getElementById('vmPassword');
+        const password = passwordInput.value;
+        
+        if (password) {
+            navigator.clipboard.writeText(password)
+                .then(() => {
+                    alert('Senha copiada com sucesso!');
+                })
+                .catch(() => {
+                    alert('Erro ao copiar a senha.');
+                });
+        } else {
+            alert('Nenhuma senha para copiar!');
+        }
+    }
+
+    function generatePassword() {
+        // Conjuntos de caracteres para cada requisito
+        const upperCase = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
+        const lowerCase = 'abcdefghijkmnopqrstuvwxyz';
+        const numbers = '23456789';
+        const symbols = '!@#%&*()_+-=[]{};<>?';
+        
+        // Garantir pelo menos um caractere de cada tipo
+        let password = '';
+        password += upperCase.charAt(Math.floor(Math.random() * upperCase.length));
+        password += lowerCase.charAt(Math.floor(Math.random() * lowerCase.length));
+        password += numbers.charAt(Math.floor(Math.random() * numbers.length));
+        password += symbols.charAt(Math.floor(Math.random() * symbols.length));
+        
+        // Conjunto completo de caracteres permitidos
+        const allChars = upperCase + lowerCase + numbers + symbols;
+        
+        // Adicionar caracteres aleatórios até atingir 16 caracteres
+        while(password.length < 16) {
+            password += allChars.charAt(Math.floor(Math.random() * allChars.length));
+        }
+        
+        // Embaralhar a senha
+        password = password.split('').sort(() => Math.random() - 0.5).join('');
+        
+        // Definir a senha no campo
+        document.getElementById('vmPassword').value = password;
+        
+        // Mostrar a senha
+        document.getElementById('vmPassword').type = 'text';
+        document.querySelector('.password-toggle').textContent = '🔒';
+        
+        // Após 3 segundos, ocultar a senha novamente
+        setTimeout(() => {
+            document.getElementById('vmPassword').type = 'password';
+            document.querySelector('.password-toggle').textContent = '👁️';
+        }, 3000);
+    }
+
+    function togglePassword() {
+        const passwordInput = document.getElementById('vmPassword');
+        const toggleButton = document.querySelector('.password-toggle');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            toggleButton.textContent = '🔒';
+        } else {
+            passwordInput.type = 'password';
+            toggleButton.textContent = '👁️';
+        }
+    }
+
+    function openAzureCloudShell() {
+        window.open('https://shell.azure.com', '_blank');
+    }
