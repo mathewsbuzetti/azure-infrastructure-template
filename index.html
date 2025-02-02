@@ -52,6 +52,25 @@
             color: white;
             text-transform: uppercase;
         }
+
+        /* Estilização de mensagens e avisos */
+        .message {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(40, 167, 69, 0.9);
+            color: white;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .reminder {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255, 193, 7, 0.9);
+            color: black;
+            border-radius: 8px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
@@ -73,14 +92,14 @@
             <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
 
             <!-- Campo "Sim" ou "Não" para segunda máquina -->
-            <label>Deseja provisionar mais uma máquina virtual?</label>
+            <label>Deseja provisionar mais uma máquina virtual? *</label>
             <div class="radio-group">
                 <label class="radio-option">
-                    <input type="radio" name="secondVM" value="yes" onclick="toggleSecondVMField(true)">
+                    <input type="radio" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
                     <span>Sim</span>
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="secondVM" value="no" onclick="toggleSecondVMField(false)" checked>
+                    <input type="radio" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
                     <span>Não</span>
                 </label>
             </div>
@@ -90,26 +109,34 @@
             </div>
 
             <!-- Campo "Sim" ou "Não" para VPN -->
-            <label>Deseja instalar a VPN?</label>
+            <label>Deseja instalar a VPN? *</label>
             <div class="radio-group">
                 <label class="radio-option">
-                    <input type="radio" name="vpn" value="yes">
+                    <input type="radio" name="vpn" value="yes" required>
                     <span>Sim</span>
                 </label>
                 <label class="radio-option">
-                    <input type="radio" name="vpn" value="no" checked>
+                    <input type="radio" name="vpn" value="no" required>
                     <span>Não</span>
                 </label>
             </div>
 
             <div class="button-group">
                 <button type="button" onclick="generateCommand()">Gerar Comando</button>
+                <button type="button" onclick="copyCommand()">Copiar Comando</button>
+                <button type="button" onclick="openAzureCloudShell()">Acessar CloudShell</button>
             </div>
         </form>
 
         <!-- Área de saída -->
         <div class="output" id="output"></div>
+        <div class="message" id="copyMessage">COMANDO COPIADO!</div>
+        <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
     </div>
+
+    <footer>
+        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
+    </footer>
 
     <script>
         function toggleSecondVMField(show) {
@@ -117,7 +144,28 @@
             secondVMField.style.display = show ? 'block' : 'none';
         }
 
+        function validateForm() {
+            const requiredFields = document.querySelectorAll('input[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.checked && field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+                    isValid = false;
+                    field.parentNode.style.borderColor = 'red';
+                } else {
+                    field.parentNode.style.borderColor = '';
+                }
+            });
+
+            return isValid;
+        }
+
         function generateCommand() {
+            if (!validateForm()) {
+                alert('Por favor, preencha todos os campos obrigatórios.');
+                return;
+            }
+
             const subscriptionId = document.getElementById('subscriptionId').value.trim();
             const locationBrazil = document.getElementById('location').value.trim();
             const locationUS = document.getElementById('locationUS').value.trim();
@@ -145,6 +193,25 @@
 
             // Exibe o comando gerado
             document.getElementById('output').textContent = command;
+        }
+
+        function copyCommand() {
+            const outputText = document.getElementById('output').textContent.trim();
+            if (outputText) {
+                navigator.clipboard.writeText(outputText)
+                    .then(() => {
+                        const copyMessage = document.getElementById('copyMessage');
+                        copyMessage.style.display = 'block';
+                        setTimeout(() => copyMessage.style.display = 'none', 1500);
+                    })
+                    .catch(() => alert('Erro ao copiar o comando.'));
+            } else {
+                alert('Nada para copiar!');
+            }
+        }
+
+        function openAzureCloudShell() {
+            window.open('https://shell.azure.com', '_blank');
         }
     </script>
 </body>
