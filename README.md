@@ -13,7 +13,7 @@
 | Título | Template de Infraestrutura Azure para Ambiente Corporativo com Alta Disponibilidade |
 | Assunto | Azure Virtual Machines |
 | Tipo | Início Rápido |
-| Data | 31/01/2025 |
+| Data | 02/02/2025 |
 | Autor | Mathews Buzetti |
 | Tags | azure-automation, windows-server, high-availability, infrastructure-as-code |
 
