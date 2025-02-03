@@ -212,7 +212,5 @@ O script fornece feedback em tempo real com cores:
 
 ## 🔄 Versionamento
 
-Script desenvolvido por Mathews Buzetti.
-
 - Versão: 1.0.0
 - Última atualização: 02/02/2025
