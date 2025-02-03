@@ -83,7 +83,7 @@
 
 5. Acesse nosso site para gerar o código de execução do script:
    
-   [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/deployazure/)
+   [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/azure-infrastructure-template/)
 
    No site web será pedido os parâmetros necessários:
    * ID da Assinatura Azure
