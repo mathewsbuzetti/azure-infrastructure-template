@@ -18,7 +18,7 @@
         input[type="text"], select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; }
         input[readonly] { background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
         
-        /* Novo estilo apenas para os radio buttons */
+        /* Estilo dos radio buttons */
         .radio-group {
             margin: 15px 0;
             display: flex;
@@ -57,20 +57,7 @@
             border-color: #60a5fa;
         }
 
-        /* Resto dos estilos originais */
-        .button-group { display: flex; gap: 12px; margin-top: 20px; }
-        button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        button:active { transform: translateY(0); }
-        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; }
-        .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
-        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
-        .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
-        footer { margin-top: 30px; text-align: center; font-size: 13px; color: #888; padding: 20px; }
-        footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
-        footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
-        footer a:hover:after { width: 100%; }
-        /* Estilo moderno para o campo de senha */
+        /* Estilos da senha */
         .password-field {
             position: relative;
             margin-bottom: 15px;
@@ -136,52 +123,51 @@
             gap: 8px;
         }
 
-        .password-field .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(96, 165, 250, 0.2);
-            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        /* Novos estilos de validação */
+        .field-error {
+            border-color: #ef4444 !important;
+            background-color: rgba(239, 68, 68, 0.1) !important;
         }
 
-        .password-field .action-btn:active {
-            transform: translateY(0);
+        .error-message {
+            color: #ef4444;
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
 
-        .password-field input[type="password"]:focus {
-            border-color: #60a5fa;
-            box-shadow: 0 0 0 4px rgba(96, 165, 250, 0.15);
-            transform: translateY(-1px);
+        .error-container {
+            background-color: rgba(239, 68, 68, 0.1);
+            border: 1px solid #ef4444;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.3s ease;
         }
 
-        .password-field input[type="password"]::placeholder {
-            color: #666;
+        .error-container ul {
+            margin: 8px 0 0 20px;
+            color: #ef4444;
         }
 
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #60a5fa;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-        }
+        /* Resto dos estilos originais */
+        .button-group { display: flex; gap: 12px; margin-top: 20px; }
+        button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
+        button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
+        button:active { transform: translateY(0); }
+        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; }
+        .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
+        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
+        .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
+        footer { margin-top: 30px; text-align: center; font-size: 13px; color: #888; padding: 20px; }
+        footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
+        footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
+        footer a:hover:after { width: 100%; }
 
-        .password-toggle:hover {
-            opacity: 1;
-        }
-
-        .password-field input[type="password"]:focus + .password-toggle {
-            opacity: 1;
-        }
-
-        /* Estilo para os requisitos de senha */
+        /* Requisitos de senha */
         .password-requirements {
             margin: -10px 0 15px 0;
             padding: 12px 15px;
@@ -317,7 +303,7 @@
                 <div class="warning">Evite usar caracteres especiais como $, `, ", etc</div>
             </div>
 
-            <!-- Radio buttons melhorados -->
+            <!-- Radio buttons -->
             <label>Deseja provisionar mais uma máquina virtual? *</label>
             <div class="radio-group">
                 <div class="radio-option">
@@ -370,26 +356,190 @@
         }
 
         function validateForm() {
-            const requiredFields = document.querySelectorAll('input[required]');
+            // Limpa mensagens de erro anteriores
+            clearErrors();
+            
+            const errors = [];
             let isValid = true;
 
-            requiredFields.forEach(field => {
-                if (field.type === 'radio' && !document.querySelector(`input[name="${field.name}"]:checked`)) {
+            // Validação do ID da Assinatura
+            const subscriptionId = document.getElementById('subscriptionId');
+            if (!subscriptionId.value.trim()) {
+                addFieldError(subscriptionId, 'ID da Assinatura é obrigatório');
+                errors.push('ID da Assinatura não foi preenchido');
+                isValid = false;
+            } else if (!/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(subscriptionId.value)) {
+                addFieldError(subscriptionId, 'Formato inválido do ID da Assinatura');
+                errors.push('ID da Assinatura está em formato inválido');
+                isValid = false;
+            }
+
+            // Validação do Nome do Cliente (Maiúsculo)
+            const clientNameUpper = document.getElementById('clientNameUpper');
+            if (!clientNameUpper.value.trim()) {
+                addFieldError(clientNameUpper, 'Nome do Cliente em maiúsculo é obrigatório');
+                errors.push('Nome do Cliente (maiúsculo) não foi preenchido');
+                isValid = false;
+            } else if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
+                addFieldError(clientNameUpper, 'O nome deve estar em maiúsculo');
+                errors.push('Nome do Cliente deve estar em maiúsculo');
+                isValid = false;
+            }
+
+            // Validação do Nome do Cliente (Minúsculo)
+            const clientNameLower = document.getElementById('clientNameLower');
+            if (!clientNameLower.value.trim()) {
+                addFieldError(clientNameLower, 'Nome do Cliente em minúsculo é obrigatório');
+                errors.push('Nome do Cliente (minúsculo) não foi preenchido');
+                isValid = false;
+            } else if (clientNameLower.value !== clientNameLower.value.toLowerCase()) {
+                addFieldError(clientNameLower, 'O nome deve estar em minúsculo');
+                errors.push('Nome do Cliente deve estar em minúsculo');
+                isValid = false;
+            }
+
+            // Validação do Nome da VM
+            const vmName = document.getElementById('vmName');
+            if (!vmName.value.trim()) {
+                addFieldError(vmName, 'Nome da Máquina Virtual é obrigatório');
+                errors.push('Nome da Máquina Virtual não foi preenchido');
+                isValid = false;
+            }
+
+            // Validação do Nome de Usuário
+            const vmUsername = document.getElementById('vmUsername');
+            if (!vmUsername.value.trim()) {
+                addFieldError(vmUsername, 'Nome de Usuário é obrigatório');
+                errors.push('Nome de Usuário não foi preenchido');
+                isValid = false;
+            }
+
+            // Validação da Senha
+            const vmPassword = document.getElementById('vmPassword');
+            if (!vmPassword.value) {
+                addFieldError(vmPassword, 'Senha é obrigatória');
+                errors.push('Senha não foi preenchida');
+                isValid = false;
+            } else {
+                const passwordErrors = validatePassword(vmPassword.value);
+                if (passwordErrors.length > 0) {
+                    addFieldError(vmPassword, passwordErrors[0]);
+                    errors.push(...passwordErrors);
                     isValid = false;
-                } else if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('field-error');
-                } else {
-                    field.classList.remove('field-error');
                 }
-            });
+            }
+
+            // Validação dos Radio Buttons
+            if (!document.querySelector('input[name="secondVM"]:checked')) {
+                addFieldError(document.querySelector('.radio-group'), 'Selecione uma opção');
+                errors.push('Opção de segunda máquina virtual não foi selecionada');
+                isValid = false;
+            }
+
+            if (!document.querySelector('input[name="vpn"]:checked')) {
+                addFieldError(document.querySelector('input[name="vpn"]').closest('.radio-group'), 'Selecione uma opção');
+                errors.push('Opção de VPN não foi selecionada');
+                isValid = false;
+            }
+
+            // Validação da Segunda VM se necessário
+            const secondVMYes = document.getElementById('secondVMYes');
+            if (secondVMYes.checked) {
+                const secondVMName = document.getElementById('secondVMName');
+                if (!secondVMName.value.trim()) {
+                    addFieldError(secondVMName, 'Nome da Segunda Máquina Virtual é obrigatório');
+                    errors.push('Nome da Segunda Máquina Virtual não foi preenchido');
+                    isValid = false;
+                }
+            }
+
+            // Mostrar erros se houver
+            if (!isValid) {
+                showErrorSummary(errors);
+            }
 
             return isValid;
         }
 
+        function validatePassword(password) {
+            const errors = [];
+            
+            if (password.length < 12) {
+                errors.push('A senha deve ter no mínimo 12 caracteres');
+            }
+            if (!/[A-Z]/.test(password)) {
+                errors.push('A senha deve conter pelo menos uma letra maiúscula');
+            }
+            if (!/[a-z]/.test(password)) {
+                errors.push('A senha deve conter pelo menos uma letra minúscula');
+            }
+            if (!/[0-9]/.test(password)) {
+                errors.push('A senha deve conter pelo menos um número');
+            }
+            if (!/[!@#%&*()_+\-=\[\]{};:<>?]/.test(password)) {
+                errors.push('A senha deve conter pelo menos um caractere especial');
+            }
+
+            return errors;
+        }
+
+        function addFieldError(field, message) {
+            field.classList.add('field-error');
+            
+            // Criar e adicionar mensagem de erro
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'error-message';
+            errorDiv.textContent = message;
+            
+            // Inserir após o campo
+            field.parentNode.insertBefore(errorDiv, field.nextSibling);
+            errorDiv.style.display = 'block';
+        }
+
+        function showErrorSummary(errors) {
+            // Criar ou obter o container de erros
+            let errorContainer = document.querySelector('.error-container');
+            if (!errorContainer) {
+                errorContainer = document.createElement('div');
+                errorContainer.className = 'error-container';
+                const form = document.getElementById('deployForm');
+                form.insertBefore(errorContainer, form.firstChild);
+            }
+
+            // Limpar conteúdo anterior
+            errorContainer.innerHTML = '<strong>Por favor, corrija os seguintes erros:</strong><ul></ul>';
+            
+            // Adicionar cada erro à lista
+            const ul = errorContainer.querySelector('ul');
+            errors.forEach(error => {
+                const li = document.createElement('li');
+                li.textContent = error;
+                ul.appendChild(li);
+            });
+
+            errorContainer.style.display = 'block';
+        }
+
+        function clearErrors() {
+            // Remover classes de erro dos campos
+            document.querySelectorAll('.field-error').forEach(field => {
+                field.classList.remove('field-error');
+            });
+
+            // Remover mensagens de erro individuais
+            document.querySelectorAll('.error-message').forEach(message => {
+                message.remove();
+            });
+
+            // Remover sumário de erros
+            const errorContainer = document.querySelector('.error-container');
+            if (errorContainer) {
+                errorContainer.style.display = 'none';
+            }
+        }
+
         function generateCommand() {
             if (!validateForm()) {
-                alert('Por favor, preencha todos os campos obrigatórios.');
                 return;
             }
 
@@ -414,32 +564,9 @@
 
             command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
 
-            // Adiciona usuário e senha ao comando
             const vmUsername = document.getElementById('vmUsername').value.trim();
             const vmPassword = document.getElementById('vmPassword').value.trim();
             
-            // Validação da senha
-            if (vmPassword.length < 12) {
-                alert('A senha deve ter no mínimo 12 caracteres');
-                return;
-            }
-            if (!/[A-Z]/.test(vmPassword)) {
-                alert('A senha deve conter pelo menos uma letra maiúscula');
-                return;
-            }
-            if (!/[a-z]/.test(vmPassword)) {
-                alert('A senha deve conter pelo menos uma letra minúscula');
-                return;
-            }
-            if (!/[0-9]/.test(vmPassword)) {
-                alert('A senha deve conter pelo menos um número');
-                return;
-            }
-            if (!/[!@#%&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(vmPassword)) {
-                alert('A senha deve conter pelo menos um caractere especial');
-                return;
-            }
-
             command += ` -VMUsername "${vmUsername}" -VMPassword "${vmPassword}"`;
 
             document.getElementById('output').textContent = command;
@@ -452,7 +579,9 @@
                     .then(() => {
                         const copyMessage = document.getElementById('copyMessage');
                         copyMessage.style.display = 'block';
-
+                        setTimeout(() => {
+                            copyMessage.style.display = 'none';
+                        }, 3000);
                     })
                     .catch(() => alert('Erro ao copiar o comando.'));
             } else {
@@ -478,38 +607,30 @@
         }
 
         function generatePassword() {
-            // Conjuntos de caracteres para cada requisito
             const upperCase = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
             const lowerCase = 'abcdefghijkmnopqrstuvwxyz';
             const numbers = '23456789';
             const symbols = '!@#%&*()_+-=[]{};<>?';
             
-            // Garantir pelo menos um caractere de cada tipo
             let password = '';
             password += upperCase.charAt(Math.floor(Math.random() * upperCase.length));
             password += lowerCase.charAt(Math.floor(Math.random() * lowerCase.length));
             password += numbers.charAt(Math.floor(Math.random() * numbers.length));
             password += symbols.charAt(Math.floor(Math.random() * symbols.length));
             
-            // Conjunto completo de caracteres permitidos
             const allChars = upperCase + lowerCase + numbers + symbols;
             
-            // Adicionar caracteres aleatórios até atingir 16 caracteres
             while(password.length < 16) {
                 password += allChars.charAt(Math.floor(Math.random() * allChars.length));
             }
             
-            // Embaralhar a senha
             password = password.split('').sort(() => Math.random() - 0.5).join('');
             
-            // Definir a senha no campo
             document.getElementById('vmPassword').value = password;
             
-            // Mostrar a senha
             document.getElementById('vmPassword').type = 'text';
             document.querySelector('.password-toggle').textContent = '🔒';
             
-            // Após 3 segundos, ocultar a senha novamente
             setTimeout(() => {
                 document.getElementById('vmPassword').type = 'password';
                 document.querySelector('.password-toggle').textContent = '👁️';
@@ -532,6 +653,31 @@
         function openAzureCloudShell() {
             window.open('https://shell.azure.com', '_blank');
         }
+
+        // Event listeners para validação em tempo real
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('clientNameUpper').addEventListener('input', function() {
+                clearErrors();
+                if (this.value !== this.value.toUpperCase()) {
+                    addFieldError(this, 'O nome deve estar em maiúsculo');
+                }
+            });
+
+            document.getElementById('clientNameLower').addEventListener('input', function() {
+                clearErrors();
+                if (this.value !== this.value.toLowerCase()) {
+                    addFieldError(this, 'O nome deve estar em minúsculo');
+                }
+            });
+
+            // Validação em tempo real do ID da Assinatura
+            document.getElementById('subscriptionId').addEventListener('input', function() {
+                clearErrors();
+                if (this.value.trim() && !/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(this.value)) {
+                    addFieldError(this, 'Formato inválido do ID da Assinatura');
+                }
+            });
+        });
     </script>
 </body>
 </html>
