@@ -262,4 +262,4 @@ O script fornece feedback em tempo real com cores:
 ## 🔄 Versionamento
 
 - Versão: 1.0.0
-- Última atualização: 02/02/2025
+- Última atualização: 05/02/2025
