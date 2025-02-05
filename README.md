@@ -170,6 +170,35 @@ O script iniciará a implantação dos recursos do Azure.
 
 ⚠️ **IMPORTANTE**: Use uma senha forte que atenda aos requisitos de segurança do Azure!
 
+## 🔄 Procedimento de Rollback
+
+Se for necessário fazer rollback da infraestrutura, siga estes passos:
+
+1. Baixe o script Script_Delete_Resource_Groups:
+   
+   [![Download Script Rollback](https://img.shields.io/badge/Download%20Script%20Rollback-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script_Delete_Resource_Groups.ps1)
+
+2. Acesse o portal do Azure e abra o Azure CloudShell:
+   
+   [![Azure CloudShell](https://img.shields.io/badge/Abrir%20Azure%20CloudShell-blue?style=flat-square&logo=microsoftazure)](https://shell.azure.com)
+
+3. Faça o upload do Script_Delete_Resource_Groups no CloudShell.
+
+4. No CloudShell, execute o comando abaixo substituindo os parâmetros:
+
+```powershell
+./Script_Delete_Resource_Groups.ps1 -SubscriptionId "sua-subscription-id" -ClientNameUpper "NOME-CLIENTE"
+```
+
+⚠️ Demostração da execução:
+
+![image](https://github.com/user-attachments/assets/31c98d31-0d76-4bcb-85bf-a03ede100bd7)
+
+![image](https://github.com/user-attachments/assets/18f9115f-3801-4464-a49f-5837850fd11d)
+
+
+
+
 ## 🏗️ Resource Groups e Organização
 
 ### Grupos de Recursos
