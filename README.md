@@ -111,7 +111,7 @@ O script iniciará a implantação dos recursos do Azure.
 
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
-#### Troubleshooting VPN Gateway
+### Troubleshooting VPN Gateway
 Se durante o deploy você encontrar o erro:
 ```powershell
 New-AzVirtualNetworkGateway: /home/mathews/Deploy-AzureInfrastructure-BrazilSouth.ps1:575
