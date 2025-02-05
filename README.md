@@ -162,7 +162,7 @@ O script iniciará a implantação dos recursos do Azure.
    * Nome da tag: [TagName configurado no Runbook]
    * Valor da tag: [TagValue configurado no Runbook]
      
-![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
+![image](https://github.com/user-attachments/assets/881e769c-8a4e-41a9-8218-942059ce02b0)
 
 ### 🔐 Credenciais
 - **Username**: Definido durante a execução do script
