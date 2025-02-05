@@ -108,6 +108,23 @@ O script iniciará a implantação dos recursos do Azure.
 - Deploy completo sem VPN: 30 minutos
 - Deploy com VPN: 60 minutos
 
+#### ⚠️ Troubleshooting VPN Gateway
+Se durante o deploy você encontrar o erro:
+```powershell
+New-AzVirtualNetworkGateway: /home/mathews/Deploy-AzureInfrastructure-BrazilSouth.ps1:575
+Line | 575 | $vpnGateway = New-AzVirtualNetworkGateway ` | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ 
+| ManagedIdentityCredential authentication failed: [Managed Identity]
+Error Code: invalid_request
+Error Message: Timeout waiting for token from portal.
+Audience: https://management.core.windows.net/
+See the troubleshooting guide | for more information: https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot
+A criação do VPN Gateway 'VNG-MATHEWS' falhou.
+```
+Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o deploy continuará normalmente. Para verificar:
+1. Acesse o Resource Group da VPN
+2. Abra o recurso de VPN Gateway
+3. Você verá uma mensagem de "upgrading", indicando que a implantação está em andamento
+
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
 ### Diagnóstico da VM
