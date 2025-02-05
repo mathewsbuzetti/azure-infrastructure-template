@@ -108,7 +108,10 @@ O script iniciará a implantação dos recursos do Azure.
 - Deploy completo sem VPN: 30 minutos
 - Deploy com VPN: 60 minutos
 
-#### ⚠️ Troubleshooting VPN Gateway
+
+## ⚠️ Avisos Importantes e Pós-Instalação
+
+#### Troubleshooting VPN Gateway
 Se durante o deploy você encontrar o erro:
 ```powershell
 New-AzVirtualNetworkGateway: /home/mathews/Deploy-AzureInfrastructure-BrazilSouth.ps1:575
@@ -124,8 +127,6 @@ Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o 
 1. Acesse o Resource Group da VPN
 2. Abra o recurso de VPN Gateway
 3. Você verá uma mensagem de "upgrading", indicando que a implantação está em andamento
-
-## ⚠️ Avisos Importantes e Pós-Instalação
 
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
