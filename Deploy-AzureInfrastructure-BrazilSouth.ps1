@@ -571,7 +571,7 @@ if ($InstalarVPN) {
         $gatewayIPConfigPrimary = New-AzVirtualNetworkGatewayIpConfig -Name "gwipconfig1" -SubnetId $gatewaySubnet.Id -PublicIpAddressId $publicIPPrimary.Id
         $gatewayIPConfigSecondary = New-AzVirtualNetworkGatewayIpConfig -Name "gwipconfig2" -SubnetId $gatewaySubnet.Id -PublicIpAddressId $publicIPSecondary.Id
 
-        Write-Log "Deploy da VPN em andamento, favor aguardar..." "INFO"
+        Write-Log "Deploy da VPN em andamento, favor aguardar..." "BOLD-YELLOW"
         $vpnGateway = New-AzVirtualNetworkGateway `
             -ResourceGroupName $ResourceGroup `
             -Location $Location `
