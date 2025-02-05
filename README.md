@@ -79,6 +79,8 @@
 
 3. Faça o upload do script Deploy-AzureInfrastructure-BrazilSouth.ps1 no CloudShell.
 
+![image](https://github.com/user-attachments/assets/4b607995-c850-45c3-9270-e7e865faf3bf)
+
 4. Navegue até o diretório onde você fez o upload do script.
 
 5. Acesse nosso site para gerar o código de execução do script:
