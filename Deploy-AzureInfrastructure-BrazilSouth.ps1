@@ -191,6 +191,189 @@ function Create-PublicIP {
 # Criar IPs Públicos
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
+# Função para criar Automation Account
+function Create-AutomationAccount {
+    param (
+        [string]$ResourceGroup,
+        [string]$AutomationAccountName,
+        [string]$Location,
+        [string]$ClientNameLower,
+        [string]$Environment
+    )
+
+    Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
+    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location
+
+    if ($null -ne $automationAccount) {
+        # Aplicar as tags diretamente ao recurso de automação
+        Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.Automation/automationAccounts" -ResourceName $AutomationAccountName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="automation"} -Force
+
+        # Obter detalhes atualizados do Automation Account
+        $automationAccountDetails = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName
+        
+        Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
+        Write-Host ""
+        # Exibir detalhes do Automation Account como tabela
+        $automationAccountDetails | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
+    } else {
+        Write-Log "Falha ao criar o Automation Account '$AutomationAccountName'." "ERROR"
+    }
+}
+
+# Criar Automation Account
+Create-AutomationAccount `
+    -ResourceGroup "RG-$ClientNameUpper-Automation" `
+    -AutomationAccountName "AA-$ClientNameUpper-Automation" `
+    -Location $LocationUS `
+    -ClientNameLower $ClientNameLower `
+    -Environment $Environment
+
+# Função para criar Runbook no Automation Account
+function Create-Runbook {
+    param (
+        [string]$ResourceGroup,
+        [string]$AutomationAccountName,
+        [string]$RunbookName,
+        [string]$RunbookType
+    )
+
+    Write-Log "Criando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
+    $runbook = New-AzAutomationRunbook `
+        -ResourceGroupName $ResourceGroup `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $RunbookName `
+        -Type $RunbookType `
+        -Description "Runbook to start and stop VMs" `
+        -LogProgress $true `
+        -LogVerbose $true
+
+    Write-Log "Publicando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
+    Publish-AzAutomationRunbook `
+        -ResourceGroupName $ResourceGroup `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $RunbookName
+
+    Write-Log "Runbook '$RunbookName' criado e publicado com sucesso no Automation Account '$AutomationAccountName'." "SUCCESS"
+    Write-Host ""
+    $runbook | Format-Table -Property Name, ResourceGroupName, AutomationAccountName, Location, RunbookType, State, LogVerbose, LogProgress
+}
+
+# Criar Runbook no Automation Account
+Create-Runbook `
+    -ResourceGroup "RG-$ClientNameUpper-Automation" `
+    -AutomationAccountName "AA-$ClientNameUpper-Automation" `
+    -RunbookName "START_STOP_VMs" `
+    -RunbookType "PowerShell"
+
+# Função para criar Storage Account
+function Create-StorageAccount {
+    param (
+        [string]$ResourceGroupName,
+        [string]$StorageAccountName,
+        [string]$Location
+    )
+
+    Write-Log "Criando Storage Account '$StorageAccountName' no grupo de recursos '$ResourceGroupName'..." "INFO"
+    $validStorageAccountName = $StorageAccountName.ToLower()
+    if ($validStorageAccountName.Length -lt 3 -or $validStorageAccountName.Length -gt 24) {
+        throw "Storage account name must be between 3 and 24 characters in length and use numbers and lower-case letters only."
+    }
+    $storageAccount = New-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $validStorageAccountName -Location $Location -SkuName "Standard_LRS" -Kind "StorageV2" -AccessTier "Hot" -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="storage"}
+    Write-Log "Storage Account '$StorageAccountName' criado com sucesso." "SUCCESS"
+    Write-Host ""
+    $storageAccount | Format-Table -Property StorageAccountName, Location, ProvisioningState
+}
+
+# Criar Storage Account
+Create-StorageAccount -ResourceGroupName "RG-$ClientNameUpper-Storage" -StorageAccountName "st$($ClientNameLower)001" -Location $LocationBrazil
+
+# Função para criar Log Analytics Workspace
+function Create-LogAnalyticsWorkspace {
+param (
+    [string]$ResourceGroupName,
+    [string]$WorkspaceName,
+    [string]$Location
+)
+Write-Log "Criando Log Analytics Workspace '$WorkspaceName' no grupo de recursos '$ResourceGroupName'..." "INFO"
+$workspace = New-AzOperationalInsightsWorkspace -ResourceGroupName $ResourceGroupName -Name $WorkspaceName -Location $Location -Sku "PerGB2018"
+Write-Log "Log Analytics Workspace '$WorkspaceName' criado com sucesso." "SUCCESS"
+$workspace | Format-Table -Property Name, Location, ProvisioningState, Sku
+}
+
+# Criar Log Analytics Workspace
+Create-LogAnalyticsWorkspace -ResourceGroupName "RG-$ClientNameUpper-LogAnalytics" -WorkspaceName "LAW-$ClientNameUpper-EASTUS-001" -Location $LocationUS
+
+# Função para criar cofre de backup
+function Create-BackupVault {
+    param (
+        [string]$ResourceGroup,
+        [string]$VaultName,
+        [string]$Location,
+        [string]$ClientNameLower,
+        [string]$Environment
+    )
+
+    Write-Log "Criando cofre de backup '$VaultName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
+    
+    # Suprimir mensagens de aviso
+    $WarningPreference = "SilentlyContinue"
+    
+    $backupVault = New-AzRecoveryServicesVault -ResourceGroupName $ResourceGroup -Name $VaultName -Location $Location
+
+    # Restaurar a preferência de aviso
+    $WarningPreference = "Continue"
+
+    if ($null -ne $backupVault) {
+        # Aplicar as tags diretamente ao cofre de backup
+        Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.RecoveryServices/vaults" -ResourceName $VaultName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="backup"} -Force
+
+        # Obter detalhes atualizados do cofre de backup
+        $backupVaultDetails = Get-AzRecoveryServicesVault -ResourceGroupName $ResourceGroup -Name $VaultName
+        
+        Write-Log "Cofre de backup '$VaultName' criado com sucesso na região '$Location'." "SUCCESS"
+        Write-Host ""
+        # Exibir detalhes do cofre de backup como tabela
+        $backupVaultDetails | Format-Table -Property Name, ResourceGroupName, Location
+    } else {
+        Write-Log "Falha ao criar o cofre de backup '$VaultName'." "ERROR"
+    }
+}
+
+# Informar ao usuário sobre o tempo estimado de criação do cofre de backup
+Write-Log "Iniciando a criação do cofre de backup. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
+
+# Criar Cofre de Backup
+Create-BackupVault `
+-ResourceGroup "RG-$ClientNameUpper-Backup" `
+-VaultName "RSV-$ClientNameUpper-Backup-BrazilSouth" `
+-Location $LocationBrazil `
+-ClientNameLower $ClientNameLower `
+-Environment $Environment
+
+# Função para criar Availability Set
+function Create-AvailabilitySet {
+param (
+    [string]$ResourceGroup,
+    [string]$AvailabilitySetName,
+    [string]$Location
+)
+Write-Log "Criando Availability Set '$AvailabilitySetName' no grupo de recursos '$ResourceGroup'..." "INFO"
+$availabilitySet = New-AzAvailabilitySet -ResourceGroupName $ResourceGroup `
+                                         -Location $Location `
+                                         -Name $AvailabilitySetName `
+                                         -Sku Aligned `
+                                         -PlatformFaultDomainCount 2 `
+                                         -PlatformUpdateDomainCount 5
+Write-Log "Availability Set '$AvailabilitySetName' criado com sucesso." "SUCCESS"
+$availabilitySet | Format-Table -Property Name, Location, Sku
+}
+
+# Criar Availability Set
+Create-AvailabilitySet `
+-ResourceGroup "RG-$ClientNameUpper-VM" `
+-AvailabilitySetName "AS-$VMName" `
+-Location $LocationBrazil
+
 # Função para criar VM
 function Create-VM {
     param (
@@ -228,13 +411,25 @@ function Create-VM {
     
     # Definir perfil de rede
     Write-Log "Criando interface de rede para a VM '$VMName'..." "INFO"
-    $nic = New-AzNetworkInterface -ResourceGroupName $ResourceGroup `
-                                  -Name "$VMName-NIC" `
-                                  -Location $Location `
-                                  -SubnetId $SubnetId `
-                                  -NetworkSecurityGroupId $NSGId `
-                                  -PublicIpAddressId (Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName").Id | Out-Null
     
+    # Obter o IP público primeiro
+    $publicIP = Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName"
+    
+    # Criar a NIC (Removido o Out-Null para manter a referência)
+    $nic = New-AzNetworkInterface -ResourceGroupName $ResourceGroup `
+                                 -Name "$VMName-NIC" `
+                                 -Location $Location `
+                                 -SubnetId $SubnetId `
+                                 -NetworkSecurityGroupId $NSGId `
+                                 -PublicIpAddressId $publicIP.Id
+    
+    # Verificar se a NIC foi criada com sucesso
+    if ($null -eq $nic) {
+        Write-Log "Falha ao criar a interface de rede." "ERROR"
+        return
+    }
+    
+    # Adicionar interface de rede à configuração da VM
     Add-AzVMNetworkInterface -VM $vmConfig -Id $nic.Id | Out-Null
     
     # Definir perfil de armazenamento
@@ -254,29 +449,35 @@ function Create-VM {
     
     Write-Log "AVISO: Deploy da VM '$VMName' em andamento. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
     
-    # Criar a VM com Boot Diagnostics desabilitado
-    $vm = New-AzVM -ResourceGroupName $ResourceGroup `
-                   -Location $Location `
-                   -VM $vmConfig | Out-Null
-    
-    Write-Log "VM '$VMName' criada com sucesso." "SUCCESS"
-    
-    # Obter informações adicionais da VM
-    $vmDetails = Get-AzVM -ResourceGroupName $ResourceGroup -Name $VMName
-    $nicDetails = Get-AzNetworkInterface -ResourceGroupName $ResourceGroup -Name "$VMName-NIC"
-    $publicIPDetails = Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName"
-    
-    # Exibir informações formatadas sobre a VM criada
-    $output = @{
-        Name             = $vmDetails.Name
-        Location         = $vmDetails.Location
-        ProvisioningState= $vmDetails.ProvisioningState
-        AvailabilitySet  = if ($vmDetails.AvailabilitySetReference) { ($vmDetails.AvailabilitySetReference.Id.Split('/')[-1]) } else { "N/A" }
-        'IP Address'     = $nicDetails.IpConfigurations[0].PrivateIpAddress
-        'Public IP'      = if ($publicIPDetails) { $publicIPDetails.IpAddress } else { "N/A" }
+    try {
+        # Criar a VM com Boot Diagnostics desabilitado
+        $vm = New-AzVM -ResourceGroupName $ResourceGroup `
+                       -Location $Location `
+                       -VM $vmConfig
+        
+        Write-Log "VM '$VMName' criada com sucesso." "SUCCESS"
+        
+        # Obter informações adicionais da VM
+        $vmDetails = Get-AzVM -ResourceGroupName $ResourceGroup -Name $VMName
+        $nicDetails = Get-AzNetworkInterface -ResourceGroupName $ResourceGroup -Name "$VMName-NIC"
+        $publicIPDetails = Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName"
+        
+        # Exibir informações formatadas sobre a VM criada
+        $output = @{
+            Name = $vmDetails.Name
+            Location = $vmDetails.Location
+            ProvisioningState = $vmDetails.ProvisioningState
+            AvailabilitySet = if ($vmDetails.AvailabilitySetReference) { ($vmDetails.AvailabilitySetReference.Id.Split('/')[-1]) } else { "N/A" }
+            'IP Address' = $nicDetails.IpConfigurations[0].PrivateIpAddress
+            'Public IP' = if ($publicIPDetails) { $publicIPDetails.IpAddress } else { "N/A" }
+        }
+        
+        $output | Format-Table -AutoSize
     }
-    
-    $output | Format-Table -AutoSize
+    catch {
+        Write-Log "Erro ao criar a VM: $_" "ERROR"
+        throw $_
+    }
 }
 
 # Criar Availability Set para primeira VM
