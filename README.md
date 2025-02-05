@@ -194,7 +194,7 @@ Se for necessário fazer rollback da infraestrutura, siga estes passos:
 
 1. Baixe o script Script_Delete_Resource_Groups:
    
-   [![Download Script Rollback](https://img.shields.io/badge/Download%20Script%20Rollback-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script_Delete_Resource_Groups.ps1)
+   [![Download Script Rollback](https://img.shields.io/badge/Download%20Script%20Rollback-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/azure-infrastructure-template/blob/main/Script_Delete_Resource_Groups)
 
 2. Acesse o portal do Azure e abra o Azure CloudShell:
    
