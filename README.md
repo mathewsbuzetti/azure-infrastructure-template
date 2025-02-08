@@ -55,10 +55,32 @@
 * Availability Set
 
 ### 🤖 Automation e Monitoramento
-* Automation Account
-  * Runbook: START_STOP_VMs (requer configuração adicional)
-* Log Analytics Workspace
-* Diagnósticos de Boot (desabilitado por padrão)
+
+#### Automation Account
+* Configuração do START/STOP VMs:
+  * Runbook para automação de horários
+  * Suporte para agendamentos personalizados
+  * Execução baseada em tags nas VMs
+  * Monitoramento de execução via Log Analytics
+
+#### Log Analytics Workspace
+* Integração com Automation Account para:
+  * Monitoramento de jobs do Runbook
+  * Alertas por email em caso de falhas
+  * Coleta de logs de execução
+  * Métricas de performance
+
+#### Diagnóstico e Logs
+* Diagnostic settings configuráveis:
+  * JobLogs - Logs de execução dos jobs
+  * JobStreams - Output detalhado dos jobs
+  * AuditEvent - Registro de alterações
+* Diagnósticos de Boot:
+  * Desabilitado por padrão
+  * Configurável via Storage Account
+  * Permite troubleshooting de problemas de inicialização
+
+> 💡 **Dica**: Configure os alertas do Log Analytics para receber notificações em caso de falhas no START/STOP das VMs.
 
 ## 📋 Pré-requisitos
 
