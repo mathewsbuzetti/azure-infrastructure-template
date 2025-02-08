@@ -289,7 +289,7 @@ jobLogs
 
 4. Revise as configurações do Action Group
 
-![Review Action Group](https://github.com/user-attachments/assets/b81925ed-4c55-4399-9c4a-66f308f4bb71)
+![Review Action Group](https://github.com/user-attachments/assets/323b8638-7602-4df4-96f7-28dc44de3ef7)
 
 #### 4. Finalização do Alerta
 1. Configure os detalhes do alerta:
