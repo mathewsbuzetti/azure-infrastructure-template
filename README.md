@@ -15,7 +15,7 @@
 | Assunto | Azure Virtual Machines |
 | Data | 08/02/2025 |
 | Autor | Mathews Buzetti |
-| Tags | azure-automation, windows-server, high-availability, infrastructure-as-code |
+| Tags | `azure-automation`, `windows-server`, `high-availability`, `infrastructure-as-code`, |
 
 ## 💻 Especificações Técnicas
 
