@@ -190,6 +190,73 @@ Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o 
      
 ![image](https://github.com/user-attachments/assets/881e769c-8a4e-41a9-8218-942059ce02b0)
 
+### Configuração do Log Analytics Workspace para Enviar aviso caso o Start/Stop não funcionar
+
+No Automation Accounts configurar Diagnostic settings
+![image](https://github.com/user-attachments/assets/9ec9d390-2e4f-471c-9904-c002f29d411c)
+
+![image](https://github.com/user-attachments/assets/a3b213d1-566c-4b53-bd84-c1c02c937e4f)
+
+Criando o Alerta por e-mail:
+![image](https://github.com/user-attachments/assets/c0fc8eed-8a69-40e8-b4e1-585c93db8574)
+
+![image](https://github.com/user-attachments/assets/0a0a0a3f-d8d1-41a0-9742-fe4afa1aa2d7)
+
+![image](https://github.com/user-attachments/assets/46b53ede-1edc-496f-b015-c8d77f02c546)
+
+Search query
+
+// Azure Automation jobs that are failed, suspended, or stopped 
+// List all the automation jobs that failed, suspended or stopped in the last 24 hours.
+// To create an alert for this query, click '+ New alert rule'
+let jobLogs = AzureDiagnostics
+    | where ResourceProvider == "MICROSOFT.AUTOMATION"
+        and Category == "JobLogs"
+        and (ResultType == "Failed" or ResultType == "Stopped" or ResultType == "Suspended")
+    | project
+        TimeGenerated,
+        RunbookName_s,
+        ResultType,
+        _ResourceId,
+        JobId_g,
+        OperationName,
+        Category;
+let auditEvents = AzureDiagnostics
+    | where ResourceProvider == "MICROSOFT.AUTOMATION"
+        and Category == "AuditEvent"
+        and OperationName == "Delete"
+    | project
+        TimeGenerated,
+        RunbookName_s,
+        ResultType,
+        _ResourceId,
+        JobId_g,
+        OperationName,
+        Category;
+jobLogs
+| union auditEvents
+| order by TimeGenerated desc
+
+
+![image](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
+
+![image](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
+
+![image](https://github.com/user-attachments/assets/5dec4d9d-b69f-4f30-bcd0-5b04b49bce7b)
+
+![image](https://github.com/user-attachments/assets/d5784a2a-62be-4626-8770-3aebed766219)
+
+![image](https://github.com/user-attachments/assets/b81925ed-4c55-4399-9c4a-66f308f4bb71)
+
+![image](https://github.com/user-attachments/assets/c168828f-49b6-4f9d-b656-a3e38f65be83)
+
+![image](https://github.com/user-attachments/assets/f009ece4-63b0-4b00-8112-bbb83fa92136)
+
+![image](https://github.com/user-attachments/assets/e2ee6bd6-21b1-447b-94f7-50540d2220d1)
+
+![image](https://github.com/user-attachments/assets/f00bd1fe-f4ad-4b43-bc23-0e56a91807eb)
+
+
 ### 🔐 Credenciais
 - **Username**: Definido durante a execução do script
 - **Password**: Definido durante a execução do script
@@ -221,9 +288,6 @@ Se for necessário fazer rollback da infraestrutura, siga estes passos:
 ![image](https://github.com/user-attachments/assets/31c98d31-0d76-4bcb-85bf-a03ede100bd7)
 
 ![image](https://github.com/user-attachments/assets/18f9115f-3801-4464-a49f-5837850fd11d)
-
-
-
 
 ## 🏗️ Resource Groups e Organização
 
