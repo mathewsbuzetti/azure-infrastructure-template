@@ -17,7 +17,7 @@
 | Autor | Mathews Buzetti |
 | Tags | `azure-automation`, `windows-server`, `high-availability`, `infrastructure-as-code` |
 
-## Índice
+## 📋 Índice
 
 1. [Metadados](#-metadados)
 2. [Especificações Técnicas](#-especificações-técnicas)
