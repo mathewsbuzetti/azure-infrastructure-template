@@ -280,7 +280,6 @@ jobLogs
 
 ![Configurar Email](https://github.com/user-attachments/assets/3aa89cfa-4bfb-4944-9cb3-0d506cab5269)
 
-
 3. Configure as notificações:
    * Tipo: Email/SMS message/Push/Voice
    * Adicione o email desejado
@@ -291,6 +290,10 @@ jobLogs
 
 ![Review Action Group](https://github.com/user-attachments/assets/323b8638-7602-4df4-96f7-28dc44de3ef7)
 
+5. Selecione o Action Group criado
+
+![Select Action Group](https://github.com/user-attachments/assets/7a321391-d45d-4418-ae0b-2b2416cd199c)
+
 #### 4. Finalização do Alerta
 1. Configure os detalhes do alerta:
    * Severity: 1 - Error
@@ -298,11 +301,6 @@ jobLogs
    * Region: East US
 
 ![Alert Details](https://github.com/user-attachments/assets/69c197f6-1a33-47f4-9347-a0473cb7efad)
-
-2. Selecione o Action Group criado
-
-![Select Action Group](https://github.com/user-attachments/assets/7a321391-d45d-4418-ae0b-2b2416cd199c)
-
 
 3. Revise todas as configurações
 
