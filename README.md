@@ -311,13 +311,6 @@ jobLogs
    > - Monitore o Log Analytics workspace periodicamente
    > - Mantenha o email de notificação sempre atualizado
 
-```
-> ⚠️ **Importante**: 
-> - Após configuração, você receberá emails em caso de falhas no Start/Stop das VMs
-> - Monitore o Log Analytics workspace periodicamente
-> - Mantenha o email de notificação sempre atualizado
-```
-
 ## 🔄 Procedimento de Rollback
 
 Se for necessário fazer rollback da infraestrutura, siga estes passos:
