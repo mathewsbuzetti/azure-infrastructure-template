@@ -570,7 +570,7 @@ if ($InstalarVPN) {
 
         if (-not $gatewaySubnet) {
             Write-Log "Sub-rede de Gateway não encontrada. Criando sub-rede de Gateway..." "WARNING"
-            Add-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "GatewaySubnet" -AddressPrefix $GatewaySubnetIPRange"
+            Add-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "GatewaySubnet" -AddressPrefix "$GatewaySubnetIPRange"
             Set-AzVirtualNetwork -VirtualNetwork $vnet
             $vnet = Get-AzVirtualNetwork -ResourceGroupName $ResourceGroup -Name $VNetName
             $gatewaySubnet = $vnet.Subnets | Where-Object { $_.Name -eq "GatewaySubnet" }
