@@ -1,5 +1,6 @@
 # 🚀 Implantação de Infraestrutura do Azure no BrazilSouth
 
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mathews_Buzetti-blue)](https://www.linkedin.com/in/mathewsbuzetti)
 ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
