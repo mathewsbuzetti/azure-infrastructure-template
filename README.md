@@ -190,25 +190,47 @@ Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o 
      
 ![image](https://github.com/user-attachments/assets/881e769c-8a4e-41a9-8218-942059ce02b0)
 
-### Configuração do Log Analytics Workspace para Enviar aviso caso o Start/Stop não funcionar
+Vou criar uma versão do manual com as imagens integradas e uma melhor estruturação:
 
-No Automation Accounts configurar Diagnostic settings
-![image](https://github.com/user-attachments/assets/9ec9d390-2e4f-471c-9904-c002f29d411c)
+```markdown
+### 📧 Configuração de Alertas para o Start/Stop de VMs
 
-![image](https://github.com/user-attachments/assets/a3b213d1-566c-4b53-bd84-c1c02c937e4f)
+Este guia ajudará você a configurar alertas que notificam quando houver falhas no Start/Stop das VMs.
 
-Criando o Alerta por e-mail:
-![image](https://github.com/user-attachments/assets/c0fc8eed-8a69-40e8-b4e1-585c93db8574)
+#### 1. Configuração do Diagnostic Settings 
+1. No portal Azure, acesse o **Automation Account**
+2. Na seção Monitoring, clique em **Diagnostic settings**
 
-![image](https://github.com/user-attachments/assets/0a0a0a3f-d8d1-41a0-9742-fe4afa1aa2d7)
+![Diagnostic Settings no Automation Account](https://github.com/user-attachments/assets/9ec9d390-2e4f-471c-9904-c002f29d411c)
 
-![image](https://github.com/user-attachments/assets/46b53ede-1edc-496f-b015-c8d77f02c546)
+3. Selecione as seguintes categorias:
+   * JobLogs
+   * JobStreams
+   * AuditEvent
+4. Em "Destination details", ative "Send to Log Analytics workspace" e selecione seu workspace
 
-Search query
+![Configuração do Diagnostic Settings](https://github.com/user-attachments/assets/a3b213d1-566c-4b53-bd84-c1c02c937e4f)
 
+#### 2. Criação do Alerta
+1. Acesse o **Log Analytics workspace**
+2. Na seção Monitoring, clique em **Alerts**
+3. Clique em "New alert rule"
+
+![Criação do Alerta](https://github.com/user-attachments/assets/c0fc8eed-8a69-40e8-b4e1-585c93db8574)
+
+4. Em "Scope", selecione o Automation Account desejado
+
+![Seleção do Scope](https://github.com/user-attachments/assets/0a0a0a3f-d8d1-41a0-9742-fe4afa1aa2d7)
+
+5. Em "Condition":
+   - Selecione "Custom log search"
+   - Use a query abaixo:
+
+![Custom Log Search](https://github.com/user-attachments/assets/46b53ede-1edc-496f-b015-c8d77f02c546)
+
+```kql
 // Azure Automation jobs that are failed, suspended, or stopped 
 // List all the automation jobs that failed, suspended or stopped in the last 24 hours.
-// To create an alert for this query, click '+ New alert rule'
 let jobLogs = AzureDiagnostics
     | where ResourceProvider == "MICROSOFT.AUTOMATION"
         and Category == "JobLogs"
@@ -236,26 +258,75 @@ let auditEvents = AzureDiagnostics
 jobLogs
 | union auditEvents
 | order by TimeGenerated desc
+```
 
+6. Configure a medição:
+   * Measurement: Table rows
+   * Aggregation type: Count
+   * Aggregation granularity: 1 day
+   * Operator: Greater than
+   * Threshold value: 0
 
-![image](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
+![Configuração da Medição](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
 
-![image](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
+#### 3. Configuração do Action Group
+1. Clique em "Create action group"
 
-![image](https://github.com/user-attachments/assets/5dec4d9d-b69f-4f30-bcd0-5b04b49bce7b)
+![Criar Action Group](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
 
-![image](https://github.com/user-attachments/assets/d5784a2a-62be-4626-8770-3aebed766219)
+2. Configure os detalhes básicos:
+   * Action group name: "JobErrorsGrp001"
+   * Display name: "JobErrorsGrp"
+   * Resource group: RG de Automation
 
-![image](https://github.com/user-attachments/assets/b81925ed-4c55-4399-9c4a-66f308f4bb71)
+![Configuração Básica do Action Group](https://github.com/user-attachments/assets/5dec4d9d-b69f-4f30-bcd0-5b04b49bce7b)
 
-![image](https://github.com/user-attachments/assets/c168828f-49b6-4f9d-b656-a3e38f65be83)
+3. Em "Notifications":
+   * Notification type: Email/SMS message/Push/Voice
+   * Configure o email para receber as notificações
 
-![image](https://github.com/user-attachments/assets/f009ece4-63b0-4b00-8112-bbb83fa92136)
+![Configuração de Notificações](https://github.com/user-attachments/assets/d5784a2a-62be-4626-8770-3aebed766219)
 
-![image](https://github.com/user-attachments/assets/e2ee6bd6-21b1-447b-94f7-50540d2220d1)
+4. Revise as configurações do Action Group
 
-![image](https://github.com/user-attachments/assets/f00bd1fe-f4ad-4b43-bc23-0e56a91807eb)
+![Revisão do Action Group](https://github.com/user-attachments/assets/b81925ed-4c55-4399-9c4a-66f308f4bb71)
 
+#### 4. Finalização do Alerta
+1. Em "Alert Details":
+   * Severity: 1 - Error
+   * Alert rule name: "RunbookFailureAlert"
+   * Region: East US
+
+![Configuração Final do Alerta](https://github.com/user-attachments/assets/c168828f-49b6-4f9d-b656-a3e38f65be83)
+
+2. Selecione o Action Group criado
+
+![Seleção do Action Group](https://github.com/user-attachments/assets/f009ece4-63b0-4b00-8112-bbb83fa92136)
+
+3. Revise todas as configurações
+
+![Revisão Final](https://github.com/user-attachments/assets/e2ee6bd6-21b1-447b-94f7-50540d2220d1)
+
+4. Clique em "Create" para finalizar
+
+![Criação Final](https://github.com/user-attachments/assets/f00bd1fe-f4ad-4b43-bc23-0e56a91807eb)
+
+> ⚠️ **Importante**: 
+> - Após a configuração, você receberá emails quando houver falhas no processo de Start/Stop das VMs
+> - Isso permite uma resposta rápida a possíveis problemas
+> - Mantenha o email de notificação sempre atualizado
+
+> 💡 **Dica**: Monitore periodicamente o Log Analytics workspace para verificar o histórico de execuções e garantir que tudo está funcionando conforme esperado.
+```
+
+Este manual agora está mais completo e visual, com:
+- Imagens ilustrativas para cada passo importante
+- Instruções claras e numeradas
+- Códigos formatados corretamente
+- Dicas e avisos importantes destacados
+- Estrutura lógica e fácil de seguir
+
+Você pode copiar este conteúdo diretamente para seu README.md, e as imagens serão exibidas corretamente desde que os links estejam funcionando no repositório.
 
 ### 🔐 Credenciais
 - **Username**: Definido durante a execução do script
