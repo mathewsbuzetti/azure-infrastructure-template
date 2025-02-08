@@ -264,8 +264,8 @@ jobLogs
 
    * Operator: Greater than
    * Threshold value: 0
-  
-![Configuração Measurement e Alert Logic](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
+
+![Configuração Measurement e Alert Logic](https://github.com/user-attachments/assets/f1f3d5af-cc85-4fdc-90f2-d80d7aeaf52b)
 
 #### 3. Configuração do Action Group
 1. Clique em "Create action group"
