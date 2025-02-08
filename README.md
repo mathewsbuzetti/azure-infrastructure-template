@@ -255,6 +255,7 @@ jobLogs
 | union auditEvents
 | order by TimeGenerated desc
 ```
+![query](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
 
 5. Configure a medição:
    * Measure: Table rows
@@ -262,26 +263,27 @@ jobLogs
    * Aggregation granularity: 1 day
    * Operator: Greater than
    * Threshold value: 0
-
-![Configuração Medição](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
+  
+![Configuração Medição](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
 
 #### 3. Configuração do Action Group
 1. Clique em "Create action group"
 
-![Criar Action Group](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
+![Criar Action Group](https://github.com/user-attachments/assets/32c6bddb-58dc-4a59-809a-6919a8e68c50)
 
 2. Configure os detalhes básicos:
    * Action group name: "JobErrorsGrp001"
    * Display name: "JobErrorsGrp"
    * Resource group: RG de Automation
 
-![Básico Action Group](https://github.com/user-attachments/assets/5dec4d9d-b69f-4f30-bcd0-5b04b49bce7b)
+![Configurar Email](https://github.com/user-attachments/assets/3aa89cfa-4bfb-4944-9cb3-0d506cab5269)
+
 
 3. Configure as notificações:
    * Tipo: Email/SMS message/Push/Voice
    * Adicione o email desejado
 
-![Configurar Email](https://github.com/user-attachments/assets/d5784a2a-62be-4626-8770-3aebed766219)
+![Configurar Email](https://github.com/user-attachments/assets/bd54df3c-8430-44b4-a069-886f4c1cd27b)
 
 4. Revise as configurações do Action Group
 
@@ -293,33 +295,23 @@ jobLogs
    * Alert rule name: "RunbookFailureAlert"
    * Region: East US
 
-![Alert Details](https://github.com/user-attachments/assets/c168828f-49b6-4f9d-b656-a3e38f65be83)
+![Alert Details](https://github.com/user-attachments/assets/69c197f6-1a33-47f4-9347-a0473cb7efad)
 
 2. Selecione o Action Group criado
 
-![Select Action Group](https://github.com/user-attachments/assets/f009ece4-63b0-4b00-8112-bbb83fa92136)
+![Select Action Group](https://github.com/user-attachments/assets/7a321391-d45d-4418-ae0b-2b2416cd199c)
+
 
 3. Revise todas as configurações
 
-![Review Alert](https://github.com/user-attachments/assets/e2ee6bd6-21b1-447b-94f7-50540d2220d1)
+![Review Alert](https://github.com/user-attachments/assets/3c3c2305-d274-447d-a50e-e163d83c5ebf)
 
-4. Clique em "Create" para finalizar
-
-![Create Alert](https://github.com/user-attachments/assets/f00bd1fe-f4ad-4b43-bc23-0e56a91807eb)
 
 > ⚠️ **Importante**: 
 > - Após configuração, você receberá emails em caso de falhas no Start/Stop das VMs
 > - Monitore o Log Analytics workspace periodicamente
 > - Mantenha o email de notificação sempre atualizado
 ```
-
-Este formato mantém todas as imagens originais e organiza o conteúdo de forma mais estruturada e fácil de seguir, com passos numerados e seções bem definidas.
-
-### 🔐 Credenciais
-- **Username**: Definido durante a execução do script
-- **Password**: Definido durante a execução do script
-
-⚠️ **IMPORTANTE**: Use uma senha forte que atenda aos requisitos de segurança do Azure!
 
 ## 🔄 Procedimento de Rollback
 
