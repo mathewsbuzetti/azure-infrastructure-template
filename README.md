@@ -306,7 +306,7 @@ jobLogs
 
 ![Review Alert](https://github.com/user-attachments/assets/3c3c2305-d274-447d-a50e-e163d83c5ebf)
 
-
+```
 > ⚠️ **Importante**: 
 > - Após configuração, você receberá emails em caso de falhas no Start/Stop das VMs
 > - Monitore o Log Analytics workspace periodicamente
