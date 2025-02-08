@@ -33,7 +33,16 @@ param (
     [string]$VMUsername,
 
     [Parameter(Mandatory = $true)]
-    [string]$VMPassword
+    [string]$VMPassword,
+
+    [Parameter(Mandatory = $true)]
+    [string]$VNetIPRange,
+
+    [Parameter(Mandatory = $true)]
+    [string]$SubnetInternalIPRange,
+
+    [Parameter(Mandatory = $true)]
+    [string]$GatewaySubnetIPRange
 )
 
 # Função para exibir mensagens coloridas com suporte a negrito
@@ -118,9 +127,9 @@ function Add-Subnet {
 }
 
 # Criar VNET e Subnets
-Create-VNet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -AddressPrefix "10.1.0.0/16" -Location $LocationBrazil
-Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "SNET-$ClientNameUpper-Internal-001" -AddressPrefix "10.1.1.0/24"
-Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "GatewaySubnet" -AddressPrefix "10.1.253.0/27"
+Create-VNet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -AddressPrefix $VNetIPRange -Location $LocationBrazil
+Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "SNET-$ClientNameUpper-Internal-001" -AddressPrefix $SubnetInternalIPRange
+Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "GatewaySubnet" -AddressPrefix $GatewaySubnetIPRange
 
 # Função para criar NSG com regra para porta 3389 (RDP)
 function Create-NSG {
@@ -561,7 +570,7 @@ if ($InstalarVPN) {
 
         if (-not $gatewaySubnet) {
             Write-Log "Sub-rede de Gateway não encontrada. Criando sub-rede de Gateway..." "WARNING"
-            Add-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "GatewaySubnet" -AddressPrefix "10.1.253.0/27"
+            Add-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "GatewaySubnet" -AddressPrefix $GatewaySubnetIPRange"
             Set-AzVirtualNetwork -VirtualNetwork $vnet
             $vnet = Get-AzVirtualNetwork -ResourceGroupName $ResourceGroup -Name $VNetName
             $gatewaySubnet = $vnet.Subnets | Where-Object { $_.Name -eq "GatewaySubnet" }
