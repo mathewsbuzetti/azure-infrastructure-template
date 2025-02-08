@@ -21,31 +21,16 @@
 
 1. [Metadados](#-metadados)
 2. [Especificações Técnicas](#-especificações-técnicas)
-   - [Máquina Virtual](#-máquina-virtual)
-   - [Networking](#-networking)
-   - [IPs Públicos](#-ips-públicos)
-   - [VPN Gateway](#-vpn-gateway-opcional)
-   - [Armazenamento e Backup](#-armazenamento-e-backup)
 3. [Automação e Monitoramento](#-automation-e-monitoramento)
-   - [Automation Account](#automation-account)
-   - [Log Analytics Workspace](#log-analytics-workspace)
-   - [Diagnóstico e Logs](#diagnóstico-e-logs)
 4. [Pré-requisitos](#-pré-requisitos)
 5. [Como Usar](#-como-usar)
 6. [Avisos Importantes e Pós-Instalação](#️-avisos-importantes-e-pós-instalação)
-   - [Troubleshooting VPN Gateway](#troubleshooting-vpn-gateway)
-   - [Diagnóstico da VM](#diagnóstico-da-vm)
-   - [Configuração de Backup](#configuração-de-backup)
-   - [Configuração do Start/Stop de VMs](#configuração-do-startstop-de-vms)
-   - [Configuração de Tags na VM](#configuração-de-tags-na-vm)
-   - [Configuração de Alertas para o Start/Stop de VMs](#-configuração-de-alertas-para-o-startstop-de-vms)
 7. [Procedimento de Rollback](#-procedimento-de-rollback)
 8. [Resource Groups e Organização](#️-resource-groups-e-organização)
 9. [Tagging e Governança](#️-tagging-e-governança)
 10. [Logs e Feedback](#-logs-e-feedback)
 11. [Parâmetros do Script](#-parâmetros-do-script)
 12. [Versionamento](#-versionamento)
-
 
 ## 💻 Especificações Técnicas
 
