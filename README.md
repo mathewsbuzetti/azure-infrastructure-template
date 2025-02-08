@@ -190,7 +190,6 @@ Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o 
      
 ![image](https://github.com/user-attachments/assets/881e769c-8a4e-41a9-8218-942059ce02b0)
 
-```markdown
 ### 📧 Configuração de Alertas para o Start/Stop de VMs
 
 #### 1. Configuração do Diagnostic Settings 
