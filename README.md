@@ -259,12 +259,6 @@ jobLogs
 ![query](https://github.com/user-attachments/assets/287872f9-060e-4fa1-beb5-feee15c1bd81)
 
 5. Configure a Measurement e Alert Logic:
-   * Measure: Table rows
-   * Aggregation type: Count
-   * Aggregation granularity: 1 day
-
-   * Operator: Greater than
-   * Threshold value: 0
 
 ![Configuração Measurement e Alert Logic](https://github.com/user-attachments/assets/f1f3d5af-cc85-4fdc-90f2-d80d7aeaf52b)
 
