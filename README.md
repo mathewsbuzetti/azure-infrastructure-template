@@ -255,7 +255,8 @@ jobLogs
 | union auditEvents
 | order by TimeGenerated desc
 ```
-![query](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
+
+![query](https://github.com/user-attachments/assets/287872f9-060e-4fa1-beb5-feee15c1bd81)
 
 5. Configure a Measurement e Alert Logic:
    * Measure: Table rows
