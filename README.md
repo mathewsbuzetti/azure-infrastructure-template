@@ -13,7 +13,7 @@
 | Título | Template de Infraestrutura Azure para Ambiente Corporativo com Alta Disponibilidade |
 | Assunto | Azure Virtual Machines |
 | Tipo | Início Rápido |
-| Data | 05/02/2025 |
+| Data | 08/02/2025 |
 | Autor | Mathews Buzetti |
 | Tags | azure-automation, windows-server, high-availability, infrastructure-as-code |
 
@@ -26,9 +26,9 @@
 * Opção de criar uma segunda VM com as mesmas configurações
 
 ### 🌐 Networking
-* VNET (10.1.0.0/16)
-  * SNET-Internal (10.1.1.0/24)
-  * GatewaySubnet (10.1.253.0/27)
+* VNET (Configurável via parâmetro VNetIPRange)
+  * SNET-Internal (Configurável via parâmetro SubnetInternalIPRange)
+  * GatewaySubnet (Configurável via parâmetro GatewaySubnetIPRange)
 * NSG com regras para:
   * RDP (porta 3389)
 
@@ -87,16 +87,24 @@
    
    [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/azure-infrastructure-template/)
 
-   No site web será pedido os parâmetros necessários:
+   No site, você deverá preencher todos os parâmetros necessários:
+
+   **Informações Básicas:**
    * ID da Assinatura Azure
    * Nome do Cliente (maiúsculo)
    * Nome do Cliente (minúsculo)
-   * Ambiente (ex: production, development)
    * Nome da Máquina Virtual
-   * Nome da Segunda VM (opcional)
    * Usuário e senha para login nas máquinas virtuais
-   * Selecione se deseja criar segunda VM
-   * Selecione se deseja instalar VPN **GW1**
+
+   **Configurações de Rede:**
+   * VNET IP Range
+   * Subnet Internal IP Range
+   * Gateway Subnet IP Range
+
+   **Opções Adicionais:**
+   * Criar Segunda VM (Sim/Não)
+     - Se sim, informar nome da segunda VM
+   * Instalar VPN Gateway (Sim/Não)
 
 7. Copie o comando gerado.
 
@@ -258,8 +266,11 @@ O script fornece feedback em tempo real com cores:
 | InstalarVPN | Instalar Gateway VPN | $true/$false | Não |
 | VMUsername | Nome do Usuário Admin | "admaz" | Sim |
 | VMPassword | Senha do Usuário Admin | "Sua@Senha123" | Sim |
+| VNetIPRange | Range de IP da VNET | "10.1.0.0/16" | Sim |
+| SubnetInternalIPRange | Range de IP da Subnet Interna | "10.1.1.0/24" | Sim |
+| GatewaySubnetIPRange | Range de IP da Gateway Subnet | "10.1.253.0/27" | Sim |
 
 ## 🔄 Versionamento
 
 - Versão: 1.0.0
-- Última atualização: 05/02/2025
+- Última atualização: 08/02/2025
