@@ -613,5 +613,5 @@ if ($InstalarVPN) {
         -Environment $Environment
 }
 
-Write-Log "Deploy dos recursos executado com sucesso. Script desenvolvido por Mathews Buzetti." "SUCCESS"
+Write-Log "Deploy dos recursos executado com sucesso. Script desenvolvido por Mathews Buzetti." SUCCESS
 
