@@ -257,14 +257,15 @@ jobLogs
 ```
 ![query](https://github.com/user-attachments/assets/4831d708-7230-44f6-9043-dc98117fedd1)
 
-5. Configure a medição:
+5. Configure a Measurement e Alert Logic:
    * Measure: Table rows
    * Aggregation type: Count
    * Aggregation granularity: 1 day
+
    * Operator: Greater than
    * Threshold value: 0
   
-![Configuração Medição](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
+![Configuração Measurement e Alert Logic](https://github.com/user-attachments/assets/6128f7f3-7f60-4825-9559-57172675a123)
 
 #### 3. Configuração do Action Group
 1. Clique em "Create action group"
