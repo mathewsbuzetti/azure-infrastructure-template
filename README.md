@@ -172,7 +172,7 @@ A criação do VPN Gateway 'VNG-MATHEWS' falhou.
 Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o deploy continuará normalmente. Para verificar:
 1. Acesse o Resource Group da VPN
 2. Abra o recurso de VPN Gateway
-3. Você verá uma mensagem de "upgrading", indicando que a implantação está em andamento
+3. Você verá uma mensagem de "Updating", indicando que a implantação está em andamento
 
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
