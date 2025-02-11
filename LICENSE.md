@@ -3,8 +3,7 @@
 > ### ⚡ Implantação de Infraestrutura Azure - BrazilSouth
 > **Status**: ✅ Aprovado para Produção  
 > **Última Atualização**: 2025  
-> **Autor**: Junovan Fantin
-
+> **Autor**: Mathews Buzetti
 ## 🔐 Termos de Uso
 
 ### ⚖️ Direitos Reservados
