@@ -30,7 +30,7 @@ Usuários devem validar a adequação ao seu ambiente específico
 ---
 
 ### 📧 Contato
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Junovan_Fantin-blue)](https://www.linkedin.com/in/junovanfantin)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Mathews_Buzetti-blue)](https://www.linkedin.com/in/mathewsbuzetti)
 
 Para solicitações de uso adicional ou comercial, entre em contato através do LinkedIn.
 
