@@ -4,6 +4,7 @@
 ![Azure](https://img.shields.io/badge/Azure-blue?style=flat-square&logo=microsoftazure)
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
+![Documentation](https://img.shields.io/badge/Documentation-Technical-blue?style=flat-square)
 
 **Aplica-se a:** ✔️ VMs do Windows
 
