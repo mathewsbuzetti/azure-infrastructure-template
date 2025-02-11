@@ -417,3 +417,28 @@ O script fornece feedback em tempo real com cores:
 
 - Versão: 1.0.0
 - Última atualização: 08/02/2025
+
+## ⚠️ Aviso
+<div style="background-color:#fff3cd; padding:10px; border-left:5px solid #ffa502;">
+
+**Por padrão**, o cartão de estatísticas exibe apenas estatísticas de repositórios públicos, como estrelas, commits e pull requests.  
+Para exibir estatísticas privadas, você deve implantar sua própria instância usando seu **GitHub API Token**.
+
+</div>
+
+---
+
+## ℹ️ Observação
+<div style="background-color:#d1ecf1; padding:10px; border-left:5px solid #17a2b8;">
+
+A classificação disponível inclui: `S`, `A+`, `A`, `A-`, `B+`, `B`, `B-`, `C+`, com respectivos percentis.  
+Esse sistema de classificação é baseado na **classificação acadêmica japonesa**.  
+O percentil global é calculado com uma soma ponderada dos percentis de diversas estatísticas (commits, pull requests, etc.), utilizando **funções de distribuição exponencial e normal**.  
+
+Para mais detalhes, consulte a implementação em [`atsrc/calculateRank.js`](#).
+
+</div>
+
+
+
+
