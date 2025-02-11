@@ -418,16 +418,8 @@ O script fornece feedback em tempo real com cores:
 - Versão: 1.0.0
 - Última atualização: 08/02/2025
 
-# Código de Conduta
+_Nota: As principais linguagens de programação não fazem declarações sobre habilidades pessoais ou similares, é apenas uma figura-chave com base nas estatísticas do GitHub do usuário indicando a frequência com que cada uma foi utilizada._
 
-> :warning: **Aviso**
->
-> Por padrão, o cartão de estatísticas mostra apenas estatísticas como estrelas, commits e solicitações de pull de repositórios públicos. Para mostrar estatísticas privadas no cartão de estatísticas, você deve [implantar sua própria instância](https://github.com/anuraghazra/github-readme-stats) usando seu próprio token de API do GitHub.
-
-> :information_source: **Observação**
->
-> As classificações disponíveis são S (1% superior), A+ (12,5%), A (25%), A- (37,5%), B+ (50%), B (62,5%), B- (75%), C+ (87,5%) e C (todos). Este esquema de classificação é baseado no [sistema de classificação acadêmica japonês](https://en.wikipedia.org/wiki/Academic_grading_in_Japan). O percentil global é calculado como uma soma ponderada de percentis para cada estatística (número de commits, solicitações de pull, revisões, problemas, estrelas e seguidores), com base na função de distribuição cumulativa das distribuições [exponenciais](https://en.wikipedia.org/wiki/Exponential_distribution) e [log-normais](https://en.wikipedia.org/wiki/Log-normal_distribution). A implementação pode ser investigada em [atsrc/calculateRank.js](https://github.com/anuraghazra/github-readme-stats/blob/master/src/calculateRank.js).
-
-:lock: github.com
-
-
+> :warning: **Importante:**
+> Nomes de linguagens devem ser uma sequência escapada de URI, como específicado em [Codificação por cento](https://pt.wikipedia.org/wiki/Codificação_por_cento)
+> (Ou seja: `c++` deve se tornar `c%2B%2B`, `jupyter notebook` deve se tornar `jupyter%20notebook`, etc.)
