@@ -48,7 +48,8 @@
 * NSG com regras para:
   * RDP (porta 3389)
 
-> ⚠️ **ATENÇÃO**: Por questões de segurança, após configurar a VPN, é altamente recomendado fechar a porta 3389 (RDP) para acesso externo. O acesso à VM deve ser feito através da VPN.
+> [!WARNING]\
+> Por questões de segurança, após configurar a VPN, é altamente recomendado fechar a porta 3389 (RDP) para acesso externo. O acesso à VM deve ser feito através da VPN.
 
 ### 🌍 IPs Públicos
 * VM: PIP-VM-[NOME-DA-VM]
@@ -96,7 +97,8 @@
   * Configurável via Storage Account
   * Permite troubleshooting de problemas de inicialização
 
-> 💡 **Dica**: Configure os alertas do Log Analytics para receber notificações em caso de falhas no START/STOP das VMs.
+> [!TIP]\
+> Configure os alertas do Log Analytics para receber notificações em caso de falhas no START/STOP das VMs.
 
 ## 📋 Pré-requisitos
 
@@ -169,10 +171,14 @@ Audience: https://management.core.windows.net/
 See the troubleshooting guide | for more information: https://aka.ms/azsdk/net/identity/managedidentitycredential/troubleshoot
 A criação do VPN Gateway 'VNG-MATHEWS' falhou.
 ```
-Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o deploy continuará normalmente. Para verificar:
-1. Acesse o Resource Group da VPN
-2. Abra o recurso de VPN Gateway
-3. Você verá uma mensagem de "Updating", indicando que a implantação está em andamento
+
+> [!NOTE]
+> Não se preocupe! Este erro ocorre quando a sessão do CloudShell expira, mas o deploy continuará normalmente.
+> 
+> Para verificar:
+> 1. Acesse o Resource Group da VPN
+> 2. Abra o recurso de VPN Gateway
+> 3. Você verá uma mensagem de "Updating", indicando que a implantação está em andamento
 
 ### Diagnóstico da VM
 - Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
@@ -338,10 +344,10 @@ jobLogs
 
 ![Review Alert](https://github.com/user-attachments/assets/3c3c2305-d274-447d-a50e-e163d83c5ebf)
    
-   > ⚠️ **Importante**: 
-   > - Após configuração, você receberá emails em caso de falhas no Start/Stop das VMs
-   > - Monitore o Log Analytics workspace periodicamente
-   > - Mantenha o email de notificação sempre atualizado
+> [!NOTE]
+> - Após configuração, você receberá emails em caso de falhas no Start/Stop das VMs
+> - Monitore o Log Analytics workspace periodicamente
+> - Mantenha o email de notificação sempre atualizado
 
 ## 🔄 Procedimento de Rollback
 
