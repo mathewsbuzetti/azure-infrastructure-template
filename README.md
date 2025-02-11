@@ -418,17 +418,16 @@ O script fornece feedback em tempo real com cores:
 - Versão: 1.0.0
 - Última atualização: 08/02/2025
 
-<div style="background-color:#fff3cd; padding:10px; border-left:5px solid #ffa502;">
-⚠️ **Aviso**  
-Por padrão, o cartão de estatísticas exibe apenas estatísticas de repositórios públicos, como estrelas, commits e pull requests.  
-Para exibir estatísticas privadas, você deve implantar sua própria instância usando seu **GitHub API Token**.
-</div>
+# Código de Conduta
 
-<div style="background-color:#d1ecf1; padding:10px; border-left:5px solid #17a2b8; margin-top: 10px;">
-ℹ️ **Observação**  
-A classificação disponível inclui: `S`, `A+`, `A`, `A-`, `B+`, `B`, `B-`, `C+`, com respectivos percentis.  
-Esse sistema de classificação é baseado na **classificação acadêmica japonesa**.  
-O percentil global é calculado com uma soma ponderada dos percentis de diversas estatísticas (commits, pull requests, etc.), utilizando **funções de distribuição exponencial e normal**.  
+> :warning: **Aviso**
+>
+> Por padrão, o cartão de estatísticas mostra apenas estatísticas como estrelas, commits e solicitações de pull de repositórios públicos. Para mostrar estatísticas privadas no cartão de estatísticas, você deve [implantar sua própria instância](https://github.com/anuraghazra/github-readme-stats) usando seu próprio token de API do GitHub.
 
-🔗 Para mais detalhes, consulte a implementação em [`atsrc/calculateRank.js`](#).
-</div>
+> :information_source: **Observação**
+>
+> As classificações disponíveis são S (1% superior), A+ (12,5%), A (25%), A- (37,5%), B+ (50%), B (62,5%), B- (75%), C+ (87,5%) e C (todos). Este esquema de classificação é baseado no [sistema de classificação acadêmica japonês](https://en.wikipedia.org/wiki/Academic_grading_in_Japan). O percentil global é calculado como uma soma ponderada de percentis para cada estatística (número de commits, solicitações de pull, revisões, problemas, estrelas e seguidores), com base na função de distribuição cumulativa das distribuições [exponenciais](https://en.wikipedia.org/wiki/Exponential_distribution) e [log-normais](https://en.wikipedia.org/wiki/Log-normal_distribution). A implementação pode ser investigada em [atsrc/calculateRank.js](https://github.com/anuraghazra/github-readme-stats/blob/master/src/calculateRank.js).
+
+:lock: github.com
+
+
