@@ -48,7 +48,7 @@
 * NSG com regras para:
   * RDP (porta 3389)
 
-⚠️ **ATENÇÃO**: Por questões de segurança, após configurar a VPN, é altamente recomendado fechar a porta 3389 (RDP) para acesso externo. O acesso à VM deve ser feito através da VPN.
+> ⚠️ **ATENÇÃO**: Por questões de segurança, após configurar a VPN, é altamente recomendado fechar a porta 3389 (RDP) para acesso externo. O acesso à VM deve ser feito através da VPN.
 
 ### 🌍 IPs Públicos
 * VM: PIP-VM-[NOME-DA-VM]
