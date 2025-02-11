@@ -39,4 +39,4 @@ Para solicitações de uso adicional ou comercial, entre em contato através do 
 ### 📝 Nota Legal
 **Todos os direitos não expressamente concedidos estão reservados.**
 
-*Copyright © 2025 Junovan Fantin. Todos os direitos reservados.*
+*Copyright © 2025 Mathews Buzetti. Todos os direitos reservados.*
