@@ -95,7 +95,7 @@
 
 ### 🏗️ Diagrama de Arquitetura
 
-![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/57b7fbda-be05-4077-9e98-06bba889bfda)
+![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/53d1f699-7371-473e-9dcc-c28c448c5934)
 
 > [!NOTE]
 > Este diagrama representa uma implementação com VPN Gateway habilitada. A arquitetura final pode variar dependendo das escolhas durante o deployment:
