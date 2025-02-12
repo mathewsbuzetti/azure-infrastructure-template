@@ -23,16 +23,17 @@
 
 1. [Metadados](#-metadados)
 2. [Especificações Técnicas](#-especificações-técnicas)
-3. [Automação e Monitoramento](#-automation-e-monitoramento)
-4. [Pré-requisitos](#-pré-requisitos)
-5. [Como Usar](#-como-usar)
-6. [Avisos Importantes e Pós-Instalação](#️-avisos-importantes-e-pós-instalação)
-7. [Procedimento de Rollback](#-procedimento-de-rollback)
-8. [Resource Groups e Organização](#️-resource-groups-e-organização)
-9. [Tagging e Governança](#️-tagging-e-governança)
-10. [Logs e Feedback](#-logs-e-feedback)
-11. [Parâmetros do Script](#-parâmetros-do-script)
-12. [Versionamento](#-versionamento)
+3. [Diagrama de Arquitetura](#-diagrama-de-arquitetura)
+4. [Automação e Monitoramento](#-automation-e-monitoramento)
+5. [Pré-requisitos](#-pré-requisitos)
+6. [Como Usar](#-como-usar)
+7. [Avisos Importantes e Pós-Instalação](#️-avisos-importantes-e-pós-instalação)
+8. [Procedimento de Rollback](#-procedimento-de-rollback)
+9. [Resource Groups e Organização](#️-resource-groups-e-organização)
+10. [Tagging e Governança](#️-tagging-e-governança)
+11. [Logs e Feedback](#-logs-e-feedback)
+12. [Parâmetros do Script](#-parâmetros-do-script)
+13. [Versionamento](#-versionamento)
 
 ## 💻 Especificações Técnicas
 
