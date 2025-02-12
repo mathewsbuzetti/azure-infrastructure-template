@@ -93,7 +93,7 @@
   * Configurável via Storage Account
   * Permite troubleshooting de problemas de inicialização
 
-### 🏗️ Diagrama de Arquitetura
+## 🏗️ Diagrama de Arquitetura
 
 ![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/aafa89e2-db63-436e-888e-8fb30387afcc)
 
