@@ -118,13 +118,15 @@
    
    [![Azure CloudShell](https://img.shields.io/badge/Abrir%20Azure%20CloudShell-blue?style=flat-square&logo=microsoftazure)](https://shell.azure.com)
 
-3. Faça o upload do script Deploy-AzureInfrastructure-BrazilSouth.ps1 no CloudShell.
+3. Execute o comando abaixo no CloudShell do Azure para baixar o script:.
 
-![image](https://github.com/user-attachments/assets/4b607995-c850-45c3-9270-e7e865faf3bf)
+```powershell
+irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Deploy-AzureInfrastructure-BrazilSouth.ps1" -OutFile "Deploy-AzureInfrastructure-BrazilSouth.ps1"
+```
 
-4. Navegue até o diretório onde você fez o upload do script.
+![image](https://github.com/user-attachments/assets/a020bb4e-c244-481b-94ec-e449f49f30f6)
 
-5. Acesse nosso site para gerar o código de execução do script:
+4. Acesse nosso site para gerar o código de execução do script:
    
    [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/azure-infrastructure-template/)
 
@@ -147,9 +149,9 @@
      - Se sim, informar nome da segunda VM
    * Instalar VPN Gateway (Sim/Não)
 
-7. Copie o comando gerado.
+5. Copie o comando gerado.
 
-8. Cole o comando gerado no Azure CloudShell e pressione Enter.
+6. Cole o comando gerado no Azure CloudShell e pressione Enter.
 
 O script iniciará a implantação dos recursos do Azure.
 
