@@ -95,7 +95,7 @@
 
 ### 🏗️ Diagrama de Arquitetura
 
-![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/559ebf38-d655-4c4c-966f-ff184e5a2cb5)
+![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/57b7fbda-be05-4077-9e98-06bba889bfda)
 
 > [!NOTE]
 > Este diagrama apresenta a visão geral da infraestrutura implementada, incluindo todos os recursos e suas conexões.
