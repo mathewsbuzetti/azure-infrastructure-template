@@ -110,15 +110,11 @@
 
 ## 🚀 Como Usar
 
-1. Baixe o script Deploy-AzureInfrastructure-BrazilSouth.ps1
-   
-   [![Download Script](https://img.shields.io/badge/Download%20Script-blue?style=flat-square)](https://github.com/mathewsbuzetti/deployazure/blob/main/Deploy-AzureInfrastructure-BrazilSouth.ps1)
-
-2. Acesse o portal do Azure e abra o Azure CloudShell:
+1. Acesse o portal do Azure e abra o Azure CloudShell:
    
    [![Azure CloudShell](https://img.shields.io/badge/Abrir%20Azure%20CloudShell-blue?style=flat-square&logo=microsoftazure)](https://shell.azure.com)
 
-3. Execute o comando abaixo no CloudShell do Azure para baixar o script:.
+2. Execute o comando abaixo no CloudShell do Azure para baixar o script:.
 
 ```powershell
 irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Deploy-AzureInfrastructure-BrazilSouth.ps1" -OutFile "Deploy-AzureInfrastructure-BrazilSouth.ps1"
@@ -126,7 +122,7 @@ irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-templ
 
 ![image](https://github.com/user-attachments/assets/a020bb4e-c244-481b-94ec-e449f49f30f6)
 
-4. Acesse nosso site para gerar o código de execução do script:
+3. Acesse nosso site para gerar o código de execução do script:
    
    [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/azure-infrastructure-template/)
 
@@ -149,9 +145,9 @@ irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-templ
      - Se sim, informar nome da segunda VM
    * Instalar VPN Gateway (Sim/Não)
 
-5. Copie o comando gerado.
+4. Copie o comando gerado.
 
-6. Cole o comando gerado no Azure CloudShell e pressione Enter.
+5. Cole o comando gerado no Azure CloudShell e pressione Enter.
 
 O script iniciará a implantação dos recursos do Azure.
 
