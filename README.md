@@ -98,10 +98,11 @@
 ![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/57b7fbda-be05-4077-9e98-06bba889bfda)
 
 > [!NOTE]
-> Este diagrama representa uma implementação com todas as opções habilitadas. A arquitetura final pode variar dependendo das escolhas durante o deployment:
+> Este diagrama representa uma implementação com VPN Gateway habilitada. A arquitetura final pode variar dependendo das escolhas durante o deployment:
 > - A VPN Gateway (VNG-MATHEWS) e seus IPs públicos são opcionais
 > - As faixas de IP da VNET e Subnets são configuráveis via parâmetros
-> - É possível criar uma ou duas VMs, dependendo da necessidade
+> - O diagrama mostra apenas uma VM, mas é possível criar uma segunda VM com as mesmas configurações
+> - A segunda VM, quando habilitada, será provisionada na mesma subnet com configurações idênticas
 
 ## 📋 Pré-requisitos
 
