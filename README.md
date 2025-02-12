@@ -103,7 +103,7 @@
 ## 📋 Pré-requisitos
 
 1. Você precisará de uma assinatura ativa do Azure.
-2. Você pode executar este script diretamente no Azure CloudShell. Não é necessário ter o PowerShell instalado localmente.
+2. Você pode executar este script diretamente no Azure CloudShell.
 3. O usuário que executar o script deve ter as seguintes permissões na assinatura do Azure:
    - Contribuidor (Contributor) ou Proprietário (Owner) na assinatura
 
