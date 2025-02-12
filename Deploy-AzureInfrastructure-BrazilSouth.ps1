@@ -556,13 +556,12 @@ if ($InstalarVPN) {
         Write-Log "Obtendo informações do VNet '$VNetName'..." "INFO"
         # Criar PIPs necessários para VPN
         Write-Log "Criando endereços IP públicos para VPN..." "INFO"
-        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
-        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "PIP-S2S-SECONDARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
-        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "PIP-P2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
+        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
+        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-SECONDARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
 
         # Obter IP Público Primário e Secundário
-        $publicIPPrimary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "PIP-S2S-PRIMARY"
-        $publicIPSecondary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "PIP-S2S-SECONDARY"
+        $publicIPPrimary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-PRIMARY"
+        $publicIPSecondary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-SECONDARY"
 
         # Obter VNet e verificar GatewaySubnet
         $vnet = Get-AzVirtualNetwork -ResourceGroupName $ResourceGroup -Name $VNetName
