@@ -114,7 +114,7 @@
    
    [![Azure CloudShell](https://img.shields.io/badge/Abrir%20Azure%20CloudShell-blue?style=flat-square&logo=microsoftazure)](https://shell.azure.com)
 
-2. Execute o comando abaixo no CloudShell do Azure para baixar o script:.
+2. Execute o comando abaixo no CloudShell para baixar o script:.
 
 ```powershell
 irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Deploy-AzureInfrastructure-BrazilSouth.ps1" -OutFile "Deploy-AzureInfrastructure-BrazilSouth.ps1"
