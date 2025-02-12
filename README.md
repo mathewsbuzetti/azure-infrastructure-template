@@ -371,8 +371,6 @@ Se for necessário fazer rollback da infraestrutura, siga estes passos:
 ```powershell
 ./Script_Delete_Resource_Groups.ps1 -SubscriptionId "sua-subscription-id" -ClientNameUpper "NOME-CLIENTE"
 ```
-> [!NOTE]\
-> Demostração da execução:
 
 ![image](https://github.com/user-attachments/assets/31c98d31-0d76-4bcb-85bf-a03ede100bd7)
 
