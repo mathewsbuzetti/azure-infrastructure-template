@@ -57,7 +57,6 @@
 * VPN Gateway (opcional):
   * PIP-S2S-PRIMARY (Site-to-Site Primário)
   * PIP-S2S-SECONDARY (Site-to-Site Secundário)
-  * PIP-P2S-PRIMARY (Point-to-Site)
 * Todos configurados como:
   * Tipo: Static
   * SKU: Standard
