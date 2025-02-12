@@ -23,7 +23,7 @@
 
 1. [Metadados](#-metadados)
 2. [Especificações Técnicas](#-especificações-técnicas)
-3. [Diagrama de Arquitetura](#-diagrama-de-arquitetura)
+3. [Diagrama de Arquitetura](#️-diagrama-de-arquitetura)
 4. [Automação e Monitoramento](#-automation-e-monitoramento)
 5. [Pré-requisitos](#-pré-requisitos)
 6. [Como Usar](#-como-usar)
