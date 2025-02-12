@@ -87,18 +87,18 @@
   * Coleta de logs de execução
   * Métricas de performance
 
-#### Diagnóstico e Logs
-* Diagnostic settings configuráveis:
-  * JobLogs - Logs de execução dos jobs
-  * JobStreams - Output detalhado dos jobs
-  * AuditEvent - Registro de alterações
+#### Diagnóstico
 * Diagnósticos de Boot:
   * Desabilitado por padrão
   * Configurável via Storage Account
   * Permite troubleshooting de problemas de inicialização
 
-> [!TIP]\
-> Configure os alertas do Log Analytics para receber notificações em caso de falhas no START/STOP das VMs.
+### 🏗️ Diagrama de Arquitetura
+
+![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/e6365ddf-e71f-4614-92df-9adec7df11b4)
+
+> [!NOTE]
+> Este diagrama apresenta a visão geral da infraestrutura implementada, incluindo todos os recursos e suas conexões.
 
 ## 📋 Pré-requisitos
 
