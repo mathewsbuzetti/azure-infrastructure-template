@@ -157,8 +157,8 @@ O script iniciará a implantação dos recursos do Azure.
 
 ## ⚠️ Avisos Importantes e Pós-Instalação
 
-### Diagnóstico da VM
-- Após a criação da VM, é necessário ativar o Diagnóstico utilizando a conta de armazenamento que foi criada durante o processo.
+### Diagnostics da VM
+- Após a criação da VM, é necessário ativar o Diagnostics utilizando a conta de armazenamento que foi criada durante o processo.
 
 ![image](https://github.com/user-attachments/assets/22375a24-4e82-400f-8c4f-3e05a0ad312f)
 
