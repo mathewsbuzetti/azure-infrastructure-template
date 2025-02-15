@@ -552,16 +552,13 @@ if ($InstalarVPN) {
             [string]$ClientNameLower,
             [string]$Environment
         )
-
         Write-Log "Obtendo informações do VNet '$VNetName'..." "INFO"
-        # Criar PIPs necessários para VPN
-        Write-Log "Criando endereços IP públicos para VPN..." "INFO"
+        # Criar PIP necessário para VPN
+        Write-Log "Criando endereço IP público para VPN..." "INFO"
         Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
-        Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-SECONDARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
 
-        # Obter IP Público Primário e Secundário
+        # Obter IP Público
         $publicIPPrimary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-PRIMARY"
-        $publicIPSecondary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-SECONDARY"
 
         # Obter VNet e verificar GatewaySubnet
         $vnet = Get-AzVirtualNetwork -ResourceGroupName $ResourceGroup -Name $VNetName
@@ -575,21 +572,20 @@ if ($InstalarVPN) {
             $gatewaySubnet = $vnet.Subnets | Where-Object { $_.Name -eq "GatewaySubnet" }
         }
 
-        Write-Log "Configurando IPs do Gateway..." "INFO"
+        Write-Log "Configurando IP do Gateway..." "INFO"
         $gatewayIPConfigPrimary = New-AzVirtualNetworkGatewayIpConfig -Name "gwipconfig1" -SubnetId $gatewaySubnet.Id -PublicIpAddressId $publicIPPrimary.Id
-        $gatewayIPConfigSecondary = New-AzVirtualNetworkGatewayIpConfig -Name "gwipconfig2" -SubnetId $gatewaySubnet.Id -PublicIpAddressId $publicIPSecondary.Id
 
         Write-Log "Deploy da VPN em andamento, favor aguardar..." "BOLD-YELLOW"
         $vpnGateway = New-AzVirtualNetworkGateway `
             -ResourceGroupName $ResourceGroup `
             -Location $Location `
             -Name $GatewayName `
-            -IpConfigurations @($gatewayIPConfigPrimary, $gatewayIPConfigSecondary) `
+            -IpConfigurations @($gatewayIPConfigPrimary) `
             -GatewayType "Vpn" `
             -VpnType "RouteBased" `
             -GatewaySku "VpnGw1" `
-            -EnableActiveActiveFeature `
             -EnableBgp $false `
+            -EnablePrivateIpAddress $true `
             -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="vpn"}
 
         if ($vpnGateway.ProvisioningState -eq "Succeeded") {
