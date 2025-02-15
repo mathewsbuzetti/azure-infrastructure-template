@@ -129,8 +129,6 @@
 irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Deploy-AzureInfrastructure-BrazilSouth.ps1" -OutFile "Deploy-AzureInfrastructure-BrazilSouth.ps1"
 ```
 
-![image](https://github.com/user-attachments/assets/a020bb4e-c244-481b-94ec-e449f49f30f6)
-
 3. Acesse nosso site para gerar o código de execução do script:
    
    [![Gerador de Código](https://img.shields.io/badge/Gerador%20de%20C%C3%B3digo-blue?style=flat-square&logo=microsoftazure)](https://mathewsbuzetti.github.io/azure-infrastructure-template/)
