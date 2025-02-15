@@ -56,14 +56,14 @@
 ### 🌍 IPs Públicos
 * VM: PIP-VM-[NOME-DA-VM]
 * VPN Gateway (opcional):
-  * PIP-S2S-PRIMARY (Site-to-Site Primário)
-  * PIP-S2S-SECONDARY (Site-to-Site Secundário)
+  * [CLIENTE]-PIP-S2S-PRIMARY (Site-to-Site)
 * Todos configurados como:
   * Tipo: Static
   * SKU: Standard
 
 ### 🔒 VPN Gateway (Opcional)
-* Gateway VPN Ativo-Ativo
+* Gateway VPN em modo Active-Passive
+* Gateway Private IPs habilitado
 * Suporte para conexões S2S e P2S
 * SKU: VpnGw1
 
@@ -381,24 +381,25 @@ O script fornece feedback em tempo real com cores:
 - 🟥 Vermelho: Erro
 
 ## 🔧 Parâmetros do Script
-
 | Parâmetro | Descrição | Exemplo | Obrigatório |
 |-----------|-----------|---------|-------------|
-| SubscriptionId | ID da Assinatura Azure | "e875c481-..." | Sim |
+| SubscriptionId | ID da Assinatura Azure | "30983457-3b9f-4d50-bae3-a1465e3665ab" | Sim |
 | LocationBrazil | Região do Azure Brasil | "brazilsouth" | Sim |
 | LocationUS | Região do Azure EUA | "eastus" | Sim |
-| ClientNameUpper | Nome do Cliente (Maiúsculo) | "MATHEWSB" | Sim |
-| ClientNameLower | Nome do Cliente (Minúsculo) | "mathewsb" | Sim |
-| Environment | Ambiente do Deploy | "production" | Não |
+| ClientNameUpper | Nome do Cliente (Maiúsculo) | "MATHEWS" | Sim |
+| ClientNameLower | Nome do Cliente (Minúsculo) | "mathews" | Sim |
+| Environment | Ambiente do Deploy | "prod" | Não |
 | VMName | Nome da Máquina Virtual Principal | "MATHEWS-DC01" | Sim |
-| SecondVMName | Nome da Segunda Máquina Virtual | "MATHEWS-DC02" | Não |
-| CriarSegundaVM | Criar Segunda VM | $true/$false | Não |
-| InstalarVPN | Instalar Gateway VPN | $true/$false | Não |
-| VMUsername | Nome do Usuário Admin | "admaz" | Sim |
-| VMPassword | Senha do Usuário Admin | "Sua@Senha123" | Sim |
+| CriarSegundaVM | Criar Segunda VM | $false | Não |
+| SecondVMName | Nome da Segunda VM (se CriarSegundaVM = $true) | "MATHEWS-DC02" | Não* |
+| InstalarVPN | Instalar Gateway VPN | $false | Não |
+| VMUsername | Nome do Usuário Admin da(s) VM(s) | "admaz" | Sim |
+| VMPassword | Senha do Usuário Admin da(s) VM(s) | "*f8gS#(X<S}dwLfw" | Sim |
 | VNetIPRange | Range de IP da VNET | "10.1.0.0/16" | Sim |
 | SubnetInternalIPRange | Range de IP da Subnet Interna | "10.1.1.0/24" | Sim |
-| GatewaySubnetIPRange | Range de IP da Gateway Subnet | "10.1.253.0/27" | Sim |
+| GatewaySubnetIPRange | Range de IP da Gateway Subnet (se InstalarVPN = $true) | "10.1.253.0/27" | Não* |
+
+\* Obrigatório apenas se a funcionalidade correspondente estiver habilitada
 
 ## 🔄 Versionamento
 
