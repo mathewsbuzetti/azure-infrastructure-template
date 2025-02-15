@@ -399,7 +399,8 @@ O script fornece feedback em tempo real com cores:
 | SubnetInternalIPRange | Range de IP da Subnet Interna | "10.1.1.0/24" | Sim |
 | GatewaySubnetIPRange | Range de IP da Gateway Subnet (se InstalarVPN = $true) | "10.1.253.0/27" | Não* |
 
-\* Obrigatório apenas se a funcionalidade correspondente estiver habilitada
+> [!NOTE]\
+> \* Obrigatório apenas se a funcionalidade correspondente estiver habilitada
 
 ## 🔄 Versionamento
 
