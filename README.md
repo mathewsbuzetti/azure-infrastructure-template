@@ -51,7 +51,12 @@
   * RDP (porta 3389)
 
 > [!WARNING]\
-> Por questões de segurança, após configurar a VPN, é altamente recomendado fechar a porta 3389 (RDP) para acesso externo. O acesso à VM deve ser feito através da VPN.
+> Por questões de segurança, após configurar a VPN:
+> 1. É altamente recomendado fechar a porta 3389 (RDP) para acesso externo
+> 2. Remover o IP público da(s) VM(s) uma vez que o acesso pode ser feito via VPN
+> 3. Todo acesso à(s) VM(s) deve ser feito através da VPN utilizando o IP privado
+> 
+> Isso garante uma camada adicional de segurança, pois remove a exposição direta da VM à internet.
 
 ### 🌍 IPs Públicos
 * VM: PIP-VM-[NOME-DA-VM]
