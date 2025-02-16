@@ -99,17 +99,6 @@
   * Configurável via Storage Account
   * Permite troubleshooting de problemas de inicialização
 
-## 🏗️ Diagrama de Arquitetura
-
-![Diagrama de Arquitetura Azure](https://github.com/user-attachments/assets/aafa89e2-db63-436e-888e-8fb30387afcc)
-
-> [!NOTE]
-> Este diagrama representa uma implementação com VPN Gateway habilitada. A arquitetura final pode variar dependendo das escolhas durante o deployment:
-> - A VPN Gateway (VNG-MATHEWS) e seus IPs públicos são opcionais
-> - As faixas de IP da VNET e Subnets são configuráveis via parâmetros
-> - O diagrama mostra apenas uma VM, mas é possível criar uma segunda VM com as mesmas configurações
-> - A segunda VM, quando habilitada, será provisionada na mesma subnet com configurações idênticas
-
 ## 📋 Pré-requisitos
 
 1. Você precisará de uma assinatura ativa do Azure.
