@@ -421,11 +421,15 @@ function Create-VM {
                             -EnableHotpatching $true `
                             -PatchMode "AutomaticByPlatform" | Out-Null
 
-    # Configurar TPM e Secure Boot
-    Set-AzVMSecurityProfile -VM $vmConfig `
-                           -SecurityType "TrustedLaunch" `
-                           -EnableVtpm $true `          
-                           -EnableSecureBoot $true | Out-Null    
+    # Configurar SecurityProfile usando a abordagem de objeto
+    $securityProfile = @{
+        SecurityType = "TrustedLaunch"
+        UefiSettings = @{
+            SecureBootEnabled = $true
+            VTpmEnabled = $true
+        }
+    }
+    $vmConfig.SecurityProfile = $securityProfile
     
     # Definir perfil de rede
     Write-Log "Criando interface de rede para a VM '$VMName'..." "INFO"
