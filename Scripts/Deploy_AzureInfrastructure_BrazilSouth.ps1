@@ -453,7 +453,7 @@ function Create-VM {
     Set-AzVMSourceImage -VM $vmConfig `
                         -PublisherName "MicrosoftWindowsServer" `
                         -Offer "WindowsServer" `
-                        -Skus "2022-datacenter-azure-edition" `
+                        -Skus "2025-datacenter-azure-edition" `
                         -Version "latest" | Out-Null
     
     Write-Log "AVISO: Deploy da VM '$VMName' em andamento. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
