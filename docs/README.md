@@ -43,14 +43,14 @@
 * Disco OS: 127GB StandardSSD_LRS
 * Opção de criar uma segunda VM com as mesmas configurações
 
-#### Configurações Avançadas
+#### ⚙️ Configurações Avançadas
 * Fuso Horário: E. South America Standard Time (Brasil)
 * Provisionamento:
   * VM Agent habilitado
   * Atualizações automáticas ativadas
   * Hot Patching habilitado
   * Patch Mode: AutomaticByPlatform
-* Segurança:
+* 🔒 Segurança:
   * TPM Virtual (vTPM) habilitado
   * Secure Boot ativado
   * Security Type: TrustedLaunch
