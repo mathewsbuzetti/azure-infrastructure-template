@@ -175,7 +175,7 @@ O script iniciará a implantação dos recursos do Azure.
 ### Configuração do Start/Stop de VMs
 1. Baixe o script Start/Stop:
    
-   [![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script%20Start%20e%20Stop%20de%20VMs.ps1)
+[![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script_Start_e_Stop_de_VMs.ps1)
 
 2. No Automation Account, acesse o Runbook "START_STOP_VMs"
 3. Importe o conteúdo do script baixado
