@@ -402,15 +402,16 @@ function Create-VM {
     
     Write-Log "Configurando a VM '$VMName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
     
-    # Definir configuração da VM
+    # Definir configuração da VM com Security Profile
     $vmConfig = New-AzVMConfig -VMName $VMName `
                                -VMSize "Standard_B2ms" `
-                               -AvailabilitySetId $AvailabilitySetId
+                               -AvailabilitySetId $AvailabilitySetId `
+                               -SecurityType "TrustedLaunch"
     
     # Desabilitar Boot Diagnostics
     Set-AzVMBootDiagnostic -VM $vmConfig -Enable $false | Out-Null
     
-    # Definir perfil de sistema operacional com novas configurações
+    # Definir perfil de sistema operacional com todas as configurações avançadas
     Set-AzVMOperatingSystem -VM $vmConfig `
                             -Windows `
                             -ComputerName $VMName `
@@ -421,15 +422,13 @@ function Create-VM {
                             -EnableHotpatching $true `
                             -PatchMode "AutomaticByPlatform" | Out-Null
 
-    # Configurar SecurityProfile usando a abordagem de objeto
-    $securityProfile = @{
-        SecurityType = "TrustedLaunch"
+    # Definir configurações de segurança
+    $vmConfig.SecurityProfile = @{
         UefiSettings = @{
             SecureBootEnabled = $true
             VTpmEnabled = $true
         }
     }
-    $vmConfig.SecurityProfile = $securityProfile
     
     # Definir perfil de rede
     Write-Log "Criando interface de rede para a VM '$VMName'..." "INFO"
@@ -437,7 +436,7 @@ function Create-VM {
     # Obter o IP público primeiro
     $publicIP = Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName"
     
-    # Criar a NIC (Removido o Out-Null para manter a referência)
+    # Criar a NIC
     $nic = New-AzNetworkInterface -ResourceGroupName $ResourceGroup `
                                  -Name "$VMName-NIC" `
                                  -Location $Location `
@@ -472,7 +471,7 @@ function Create-VM {
     Write-Log "AVISO: Deploy da VM '$VMName' em andamento. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
     
     try {
-        # Criar a VM com Boot Diagnostics desabilitado
+        # Criar a VM
         $vm = New-AzVM -ResourceGroupName $ResourceGroup `
                        -Location $Location `
                        -VM $vmConfig
@@ -494,8 +493,15 @@ function Create-VM {
             'Public IP' = if ($publicIPDetails) { $publicIPDetails.IpAddress } else { "N/A" }
             'OS Version' = "Windows Server 2025"
             'Time Zone' = "E. South America Standard Time"
-            'Security Features' = "TPM, Secure Boot, TrustedLaunch"
-            'Patch Mode' = "AutomaticByPlatform with Hotpatching"
+            'Advanced Features' = @(
+                "Provision VM Agent",
+                "Auto Update",
+                "Hot Patching",
+                "Automatic Platform Updates",
+                "TPM",
+                "Secure Boot",
+                "Trusted Launch"
+            ) -join ", "
         }
         
         $output | Format-Table -AutoSize
