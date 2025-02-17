@@ -200,32 +200,6 @@ function Create-PublicIP {
 # Criar IPs Públicos
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
-# Função para criar Automation Account
-function Create-AutomationAccount {
-    param (
-        [string]$ResourceGroup,
-        [string]$AutomationAccountName,
-        [string]$Location,
-        [string]$ClientNameLower,
-        [string]$Environment
-    )
-    Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
-    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location -Plan "Free"
-    if ($null -ne $automationAccount) {
-        # Aplicar as tags diretamente ao recurso de automação
-        Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.Automation/automationAccounts" -ResourceName $AutomationAccountName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="automation"} -Force
-        # Obter detalhes atualizados do Automation Account
-        $automationAccountDetails = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName
-        
-        Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
-        Write-Host ""
-        # Exibir detalhes do Automation Account como tabela
-        $automationAccountDetails | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
-    } else {
-        Write-Log "Falha ao criar o Automation Account '$AutomationAccountName'." "ERROR"
-    }
-}
-
 # Criar Automation Account
 Create-AutomationAccount `
     -ResourceGroup "RG-$ClientNameUpper-Automation" `
