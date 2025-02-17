@@ -211,26 +211,52 @@ function Create-AutomationAccount {
     )
 
     Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
-    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location
-
-    if ($null -ne $automationAccount) {
-        # Aplicar as tags diretamente ao recurso de automação
-        Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.Automation/automationAccounts" -ResourceName $AutomationAccountName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="automation"} -Force
-
-        # Obter detalhes atualizados do Automation Account
-        $automationAccountDetails = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName
+    
+    try {
+        # Verificar se o Automation Account já existe
+        $existingAA = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -ErrorAction SilentlyContinue
         
-        Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
-        Write-Host ""
-        # Exibir detalhes do Automation Account como tabela
-        $automationAccountDetails | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
-    } else {
-        Write-Log "Falha ao criar o Automation Account '$AutomationAccountName'." "ERROR"
+        if ($null -eq $existingAA) {
+            # Criar o Automation Account com mais detalhes no log
+            $automationAccount = New-AzAutomationAccount `
+                -ResourceGroupName $ResourceGroup `
+                -Name $AutomationAccountName `
+                -Location $Location `
+                -Plan Free # Especificar o plano explicitamente
+
+            if ($null -ne $automationAccount) {
+                # Aplicar as tags
+                $tags = @{
+                    "client" = $ClientNameLower
+                    "environment" = $Environment
+                    "technology" = "automation"
+                }
+                
+                Set-AzResource -ResourceGroupName $ResourceGroup `
+                             -ResourceType "Microsoft.Automation/automationAccounts" `
+                             -ResourceName $AutomationAccountName `
+                             -Tag $tags `
+                             -Force
+
+                Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
+                Write-Host ""
+                $automationAccount | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
+            }
+        } else {
+            Write-Log "Automation Account '$AutomationAccountName' já existe." "WARNING"
+            $automationAccount = $existingAA
+        }
+        
+        return $automationAccount
+    }
+    catch {
+        Write-Log "Erro ao criar Automation Account: $($_.Exception.Message)" "ERROR"
+        throw $_
     }
 }
 
 # Criar Automation Account
-Create-AutomationAccount `
+$automationAccount = Create-AutomationAccount `
     -ResourceGroup "RG-$ClientNameUpper-Automation" `
     -AutomationAccountName "AA-$ClientNameUpper-Automation" `
     -Location $LocationUS `
