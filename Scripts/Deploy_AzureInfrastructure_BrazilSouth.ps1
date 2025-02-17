@@ -424,8 +424,8 @@ function Create-VM {
     # Configurar TPM e Secure Boot
     Set-AzVMSecurityProfile -VM $vmConfig `
                            -SecurityType "TrustedLaunch" `
-                           -vTPMEnabled $true `
-                           -SecureBootEnabled $true | Out-Null
+                           -EnableVtpm $true `          
+                           -EnableSecureBoot $true | Out-Null    
     
     # Definir perfil de rede
     Write-Log "Criando interface de rede para a VM '$VMName'..." "INFO"
