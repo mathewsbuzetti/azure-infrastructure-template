@@ -622,7 +622,7 @@
             const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
             const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
 
-            let command = `.\\Deploy-AzureInfrastructure-BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
+            let command = `.\\Deploy_AzureInfrastructure_BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
 
             if (secondVM) {
                 command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
