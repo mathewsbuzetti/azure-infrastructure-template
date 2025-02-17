@@ -38,10 +38,30 @@
 ## 💻 Especificações Técnicas
 
 ### 💻 Máquina Virtual
-* Windows Server 2025 Datacenter
+* Windows Server 2025 Datacenter Azure Edition
 * Tamanho: Standard_B2ms
 * Disco OS: 127GB StandardSSD_LRS
 * Opção de criar uma segunda VM com as mesmas configurações
+
+#### Configurações Avançadas
+* Fuso Horário: E. South America Standard Time (Brasil)
+* Provisionamento:
+  * VM Agent habilitado
+  * Atualizações automáticas ativadas
+  * Hot Patching habilitado
+  * Patch Mode: AutomaticByPlatform
+* Segurança:
+  * TPM Virtual (vTPM) habilitado
+  * Secure Boot ativado
+  * Security Type: TrustedLaunch
+  * Boot Diagnostics desabilitado por padrão
+
+> [!TIP]
+> Estas configurações avançadas garantem:
+> * Maior segurança com TPM e Secure Boot
+> * Atualizações automáticas gerenciadas
+> * Fuso horário correto para Brasil
+> * Conformidade com boas práticas de segurança
 
 ### 🌐 Networking
 * VNET (Configurável via parâmetro VNetIPRange)
