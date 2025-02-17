@@ -410,13 +410,22 @@ function Create-VM {
     # Desabilitar Boot Diagnostics
     Set-AzVMBootDiagnostic -VM $vmConfig -Enable $false | Out-Null
     
-    # Definir perfil de sistema operacional
+    # Definir perfil de sistema operacional com novas configurações
     Set-AzVMOperatingSystem -VM $vmConfig `
                             -Windows `
                             -ComputerName $VMName `
                             -Credential $cred `
                             -ProvisionVMAgent `
-                            -EnableAutoUpdate | Out-Null
+                            -EnableAutoUpdate `
+                            -TimeZone "E. South America Standard Time" `
+                            -EnableHotpatching $true `
+                            -PatchMode "AutomaticByPlatform" | Out-Null
+
+    # Configurar TPM e Secure Boot
+    Set-AzVMSecurityProfile -VM $vmConfig `
+                           -SecurityType "TrustedLaunch" `
+                           -vTPMEnabled $true `
+                           -SecureBootEnabled $true | Out-Null
     
     # Definir perfil de rede
     Write-Log "Criando interface de rede para a VM '$VMName'..." "INFO"
@@ -479,6 +488,10 @@ function Create-VM {
             AvailabilitySet = if ($vmDetails.AvailabilitySetReference) { ($vmDetails.AvailabilitySetReference.Id.Split('/')[-1]) } else { "N/A" }
             'IP Address' = $nicDetails.IpConfigurations[0].PrivateIpAddress
             'Public IP' = if ($publicIPDetails) { $publicIPDetails.IpAddress } else { "N/A" }
+            'OS Version' = "Windows Server 2025"
+            'Time Zone' = "E. South America Standard Time"
+            'Security Features' = "TPM, Secure Boot, TrustedLaunch"
+            'Patch Mode' = "AutomaticByPlatform with Hotpatching"
         }
         
         $output | Format-Table -AutoSize
