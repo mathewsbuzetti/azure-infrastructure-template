@@ -200,68 +200,42 @@ function Create-PublicIP {
 # Criar IPs Públicos
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
-# Função para criar Automation Account
-function Create-AutomationAccount {
+# Função para criar Runbook no Automation Account
+function Create-Runbook {
     param (
         [string]$ResourceGroup,
         [string]$AutomationAccountName,
-        [string]$Location,
-        [string]$ClientNameLower,
-        [string]$Environment
+        [string]$RunbookName,
+        [string]$RunbookType
     )
 
-    Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
-    
-    try {
-        # Verificar se o Automation Account já existe
-        $existingAA = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -ErrorAction SilentlyContinue
-        
-        if ($null -eq $existingAA) {
-            # Criar o Automation Account com mais detalhes no log
-            $automationAccount = New-AzAutomationAccount `
-                -ResourceGroupName $ResourceGroup `
-                -Name $AutomationAccountName `
-                -Location $Location `
-                -Plan Free # Especificar o plano explicitamente
+    Write-Log "Criando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
+    $runbook = New-AzAutomationRunbook `
+        -ResourceGroupName $ResourceGroup `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $RunbookName `
+        -Type $RunbookType `
+        -Description "Runbook to start and stop VMs" `
+        -LogProgress $true `
+        -LogVerbose $true
 
-            if ($null -ne $automationAccount) {
-                # Aplicar as tags
-                $tags = @{
-                    "client" = $ClientNameLower
-                    "environment" = $Environment
-                    "technology" = "automation"
-                }
-                
-                Set-AzResource -ResourceGroupName $ResourceGroup `
-                             -ResourceType "Microsoft.Automation/automationAccounts" `
-                             -ResourceName $AutomationAccountName `
-                             -Tag $tags `
-                             -Force
+    Write-Log "Publicando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
+    Publish-AzAutomationRunbook `
+        -ResourceGroupName $ResourceGroup `
+        -AutomationAccountName $AutomationAccountName `
+        -Name $RunbookName
 
-                Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
-                Write-Host ""
-                $automationAccount | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
-            }
-        } else {
-            Write-Log "Automation Account '$AutomationAccountName' já existe." "WARNING"
-            $automationAccount = $existingAA
-        }
-        
-        return $automationAccount
-    }
-    catch {
-        Write-Log "Erro ao criar Automation Account: $($_.Exception.Message)" "ERROR"
-        throw $_
-    }
+    Write-Log "Runbook '$RunbookName' criado e publicado com sucesso no Automation Account '$AutomationAccountName'." "SUCCESS"
+    Write-Host ""
+    $runbook | Format-Table -Property Name, ResourceGroupName, AutomationAccountName, Location, RunbookType, State, LogVerbose, LogProgress
 }
 
-# Criar Automation Account
-$automationAccount = Create-AutomationAccount `
+# Criar Runbook no Automation Account
+Create-Runbook `
     -ResourceGroup "RG-$ClientNameUpper-Automation" `
     -AutomationAccountName "AA-$ClientNameUpper-Automation" `
-    -Location $LocationUS `
-    -ClientNameLower $ClientNameLower `
-    -Environment $Environment
+    -RunbookName "START_STOP_VMs" `
+    -RunbookType "PowerShell"
 
 # Função para criar Runbook no Automation Account
 function Create-Runbook {
