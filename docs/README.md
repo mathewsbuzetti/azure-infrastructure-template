@@ -38,7 +38,7 @@
 ## 💻 Especificações Técnicas
 
 ### 💻 Máquina Virtual
-* Windows Server 2022 Datacenter
+* Windows Server 2025 Datacenter
 * Tamanho: Standard_B2ms
 * Disco OS: 127GB StandardSSD_LRS
 * Opção de criar uma segunda VM com as mesmas configurações
