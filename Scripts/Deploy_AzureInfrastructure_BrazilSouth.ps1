@@ -200,14 +200,6 @@ function Create-PublicIP {
 # Criar IPs Públicos
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
-# Criar Automation Account
-Create-AutomationAccount `
-    -ResourceGroup "RG-$ClientNameUpper-Automation" `
-    -AutomationAccountName "AA-$ClientNameUpper-Automation" `
-    -Location $LocationUS `
-    -ClientNameLower $ClientNameLower `
-    -Environment $Environment
-
 # Função para criar Runbook no Automation Account
 function Create-Runbook {
     param (
