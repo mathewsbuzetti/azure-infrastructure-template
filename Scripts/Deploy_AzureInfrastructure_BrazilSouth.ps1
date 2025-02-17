@@ -209,14 +209,11 @@ function Create-AutomationAccount {
         [string]$ClientNameLower,
         [string]$Environment
     )
-
     Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
-    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location
-
+    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location -Plan "Free"
     if ($null -ne $automationAccount) {
         # Aplicar as tags diretamente ao recurso de automação
         Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.Automation/automationAccounts" -ResourceName $AutomationAccountName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="automation"} -Force
-
         # Obter detalhes atualizados do Automation Account
         $automationAccountDetails = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName
         
