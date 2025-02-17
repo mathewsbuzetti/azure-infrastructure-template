@@ -115,7 +115,7 @@
 2. Execute o comando abaixo no CloudShell para baixar o script:
 
 ```powershell
-irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Deploy-AzureInfrastructure-BrazilSouth.ps1" -OutFile "Deploy-AzureInfrastructure-BrazilSouth.ps1"
+irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Deploy-AzureInfrastructure-BrazilSouth.ps1"
 ```
 
 3. Acesse nosso site para gerar o código de execução do script:
@@ -175,7 +175,7 @@ O script iniciará a implantação dos recursos do Azure.
 ### Configuração do Start/Stop de VMs
 1. Baixe o script Start/Stop:
    
-[![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/deployazure/blob/main/Script_Start_e_Stop_de_VMs.ps1)
+[![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/azure-infrastructure-template/blob/main/Scripts/Script_Start_e_Stop_de_VMs.ps1)
 
 2. No Automation Account, acesse o Runbook "START_STOP_VMs"
 3. Importe o conteúdo do script baixado
@@ -334,7 +334,7 @@ Se for necessário fazer rollback da infraestrutura, siga estes passos:
 2. Execute o comando abaixo no CloudShell para baixar o script:
 
 ```powershell
-irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Script_Delete_Resource_Groups.ps1" -OutFile "Script_Delete_Resource_Groups.ps1"
+irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Script_Delete_Resource_Groups.ps1"
 ```
 
 3. No CloudShell, execute o comando abaixo substituindo os parâmetros:
