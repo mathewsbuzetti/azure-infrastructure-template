@@ -115,7 +115,7 @@
 2. Execute o comando abaixo no CloudShell para baixar o script:
 
 ```powershell
-irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Deploy_AzureInfrastructure_BrazilSouth.ps1"
+irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Deploy_AzureInfrastructure_BrazilSouth.ps1" -OutFile "Deploy_AzureInfrastructure_BrazilSouth.ps1"
 ```
 
 3. Acesse nosso site para gerar o código de execução do script:
@@ -334,7 +334,7 @@ Se for necessário fazer rollback da infraestrutura, siga estes passos:
 2. Execute o comando abaixo no CloudShell para baixar o script:
 
 ```powershell
-irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Script_Delete_Resource_Groups.ps1"
+irm "https://raw.githubusercontent.com/mathewsbuzetti/azure-infrastructure-template/main/Scripts/Script_Delete_Resource_Groups.ps1" -OutFile "Script_Delete_Resource_Groups.ps1"
 ```
 
 3. No CloudShell, execute o comando abaixo substituindo os parâmetros:
