@@ -200,42 +200,42 @@ function Create-PublicIP {
 # Criar IPs Públicos
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
-# Função para criar Runbook no Automation Account
-function Create-Runbook {
+# Função para criar Automation Account
+function Create-AutomationAccount {
     param (
         [string]$ResourceGroup,
         [string]$AutomationAccountName,
-        [string]$RunbookName,
-        [string]$RunbookType
+        [string]$Location,
+        [string]$ClientNameLower,
+        [string]$Environment
     )
 
-    Write-Log "Criando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
-    $runbook = New-AzAutomationRunbook `
-        -ResourceGroupName $ResourceGroup `
-        -AutomationAccountName $AutomationAccountName `
-        -Name $RunbookName `
-        -Type $RunbookType `
-        -Description "Runbook to start and stop VMs" `
-        -LogProgress $true `
-        -LogVerbose $true
+    Write-Log "Criando Automation Account '$AutomationAccountName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
+    $automationAccount = New-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName -Location $Location
 
-    Write-Log "Publicando Runbook '$RunbookName' no Automation Account '$AutomationAccountName'..." "INFO"
-    Publish-AzAutomationRunbook `
-        -ResourceGroupName $ResourceGroup `
-        -AutomationAccountName $AutomationAccountName `
-        -Name $RunbookName
+    if ($null -ne $automationAccount) {
+        # Aplicar as tags diretamente ao recurso de automação
+        Set-AzResource -ResourceGroupName $ResourceGroup -ResourceType "Microsoft.Automation/automationAccounts" -ResourceName $AutomationAccountName -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="automation"} -Force
 
-    Write-Log "Runbook '$RunbookName' criado e publicado com sucesso no Automation Account '$AutomationAccountName'." "SUCCESS"
-    Write-Host ""
-    $runbook | Format-Table -Property Name, ResourceGroupName, AutomationAccountName, Location, RunbookType, State, LogVerbose, LogProgress
+        # Obter detalhes atualizados do Automation Account
+        $automationAccountDetails = Get-AzAutomationAccount -ResourceGroupName $ResourceGroup -Name $AutomationAccountName
+        
+        Write-Log "Automation Account '$AutomationAccountName' criado com sucesso na região '$Location'." "SUCCESS"
+        Write-Host ""
+        # Exibir detalhes do Automation Account como tabela
+        $automationAccountDetails | Format-Table -Property AutomationAccountName, ResourceGroupName, Location, State
+    } else {
+        Write-Log "Falha ao criar o Automation Account '$AutomationAccountName'." "ERROR"
+    }
 }
 
-# Criar Runbook no Automation Account
-Create-Runbook `
+# Criar Automation Account
+Create-AutomationAccount `
     -ResourceGroup "RG-$ClientNameUpper-Automation" `
     -AutomationAccountName "AA-$ClientNameUpper-Automation" `
-    -RunbookName "START_STOP_VMs" `
-    -RunbookType "PowerShell"
+    -Location $LocationUS `
+    -ClientNameLower $ClientNameLower `
+    -Environment $Environment
 
 # Função para criar Runbook no Automation Account
 function Create-Runbook {
