@@ -15,7 +15,7 @@
 | **Título** | Template de Infraestrutura Azure para Ambiente Corporativo com Alta Disponibilidade |
 | **Assunto** | Azure Virtual Machines |
 | **Versão** | 1.0.0 |
-| **Data** | 08/02/2025 |
+| **Data** | 18/02/2025 |
 | **Autor** | Mathews Buzetti |
 | **Tags** | `azure-automation`, `windows-server`, `high-availability`, `infrastructure-as-code` |
 
@@ -416,4 +416,4 @@ O script fornece feedback em tempo real com cores:
 ## 🔄 Versionamento
 
 - Versão: 1.0.0
-- Última atualização: 08/02/2025
+- Última atualização: 18/02/2025
