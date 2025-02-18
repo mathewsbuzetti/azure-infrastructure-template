@@ -608,7 +608,6 @@ if ($InstalarVPN) {
             -VpnType "RouteBased" `
             -GatewaySku "VpnGw1" `
             -EnableBgp $false `
-            -ActiveActive $false `
             -Tag @{
                 "client" = $ClientNameLower
                 "environment" = $Environment
