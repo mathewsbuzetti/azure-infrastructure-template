@@ -609,6 +609,7 @@ if ($InstalarVPN) {
             -GatewaySku "VpnGw1" `
             -EnableBgp $false `
             -EnablePrivateIpAddress $true `
+            -ActiveActive $false `
             -Tag @{
                 "client" = $ClientNameLower
                 "environment" = $Environment
