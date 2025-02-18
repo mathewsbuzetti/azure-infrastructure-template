@@ -45,7 +45,7 @@ param (
     [string]$GatewaySubnetIPRange
 )
 
-# FunÃ§Ã£o para exibir mensagens coloridas com suporte a negrito
+# Função para exibir mensagens coloridas com suporte a negrito
 function Write-Log {
     param (
         [string]$Message,
@@ -78,7 +78,7 @@ Write-Host ""
 $subscription = Get-AzSubscription -SubscriptionId $SubscriptionId
 $subscription | Format-Table -Property Name, Id, State, TenantId
 
-# Funcao para criar Resource Group
+# Função para criar Resource Group
 function Create-ResourceGroup {
     param (
         [string]$ResourceGroupName,
@@ -100,7 +100,7 @@ Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-Backup" -Location $
 Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-Automation" -Location $LocationUS -Technology "automationaccounts"
 Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-LogAnalytics" -Location $LocationUS -Technology "loganalyticsworkspace"
 
-# Funcao para criar VNET + Subnet + GatewaySubnet
+# Função para criar VNET + Subnet + GatewaySubnet
 function Create-VNet {
     param (
         [string]$ResourceGroupName,
@@ -131,7 +131,7 @@ Create-VNet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$C
 Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "SNET-$ClientNameUpper-Internal-001" -AddressPrefix $SubnetInternalIPRange
 Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "GatewaySubnet" -AddressPrefix $GatewaySubnetIPRange
 
-# Funcao para criar NSG com regra para porta 3389 (RDP)
+# Função para criar NSG com regra para porta 3389 (RDP)
 function Create-NSG {
     param (
         [string]$ResourceGroupName,
@@ -171,7 +171,7 @@ function Create-NSG {
 # Criar NSG
 Create-NSG -ResourceGroupName "RG-$ClientNameUpper-Networks" -NSGName "NSG-$ClientNameUpper-Internal-001" -Location $LocationBrazil
 
-# Funcao para criar endereco IP public
+# Função para criar endereco IP public
 function Create-PublicIP {
     param (
         [string]$ResourceGroupName,
