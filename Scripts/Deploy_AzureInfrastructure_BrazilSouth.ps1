@@ -565,7 +565,7 @@ if ($CriarSegundaVM -and $SecondVMName) {
 
 # Criar VPN se solicitado
 if ($InstalarVPN) {
-    # FunÃ§Ã£o para criar VPN Gateway
+    # Função para criar VPN Gateway
     function Create-VPNGateway {
         param (
             [string]$ResourceGroup,
@@ -576,11 +576,11 @@ if ($InstalarVPN) {
             [string]$Environment
         )
         Write-Log "Obtendo informações do VNet '$VNetName'..." "INFO"
-        # Criar PIP necessarios para VPN
-        Write-Log "Criando endereço IP Public para VPN..." "INFO"
+        # Criar PIP necessário para VPN
+        Write-Log "Criando endereço IP público para VPN..." "INFO"
         Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
 
-        # Obter IP Public
+        # Obter IP Público
         $publicIPPrimary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-PRIMARY"
 
         # Obter VNet e verificar GatewaySubnet
@@ -609,7 +609,11 @@ if ($InstalarVPN) {
             -GatewaySku "VpnGw1" `
             -EnableBgp $false `
             -EnablePrivateIpAddress $true `
-            -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="vpn"}
+            -Tag @{
+                "client" = $ClientNameLower
+                "environment" = $Environment
+                "technology" = "vpn"
+            }
 
         if ($vpnGateway.ProvisioningState -eq "Succeeded") {
             Write-Log "VPN Gateway '$GatewayName' criado com sucesso no grupo de recursos '$ResourceGroup'." "SUCCESS"
