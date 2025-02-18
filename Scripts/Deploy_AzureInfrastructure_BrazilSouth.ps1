@@ -78,7 +78,7 @@ Write-Host ""
 $subscription = Get-AzSubscription -SubscriptionId $SubscriptionId
 $subscription | Format-Table -Property Name, Id, State, TenantId
 
-# FunÃ§Ã£o para criar Resource Group
+# Funcao para criar Resource Group
 function Create-ResourceGroup {
     param (
         [string]$ResourceGroupName,
@@ -100,7 +100,7 @@ Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-Backup" -Location $
 Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-Automation" -Location $LocationUS -Technology "automationaccounts"
 Create-ResourceGroup -ResourceGroupName "RG-$ClientNameUpper-LogAnalytics" -Location $LocationUS -Technology "loganalyticsworkspace"
 
-# FunÃ§Ã£o para criar VNET + Subnet + GatewaySubnet
+# Funcao para criar VNET + Subnet + GatewaySubnet
 function Create-VNet {
     param (
         [string]$ResourceGroupName,
@@ -131,7 +131,7 @@ Create-VNet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$C
 Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "SNET-$ClientNameUpper-Internal-001" -AddressPrefix $SubnetInternalIPRange
 Add-Subnet -ResourceGroupName "RG-$ClientNameUpper-Networks" -VNetName "VNET-$ClientNameUpper-Hub-001" -SubnetName "GatewaySubnet" -AddressPrefix $GatewaySubnetIPRange
 
-# FunÃ§Ã£o para criar NSG com regra para porta 3389 (RDP)
+# Funcao para criar NSG com regra para porta 3389 (RDP)
 function Create-NSG {
     param (
         [string]$ResourceGroupName,
@@ -171,7 +171,7 @@ function Create-NSG {
 # Criar NSG
 Create-NSG -ResourceGroupName "RG-$ClientNameUpper-Networks" -NSGName "NSG-$ClientNameUpper-Internal-001" -Location $LocationBrazil
 
-# FunÃ§Ã£o para criar endereÃ§o IP pÃºblico
+# Funcao para criar endereco IP public
 function Create-PublicIP {
     param (
         [string]$ResourceGroupName,
@@ -197,7 +197,7 @@ function Create-PublicIP {
     return $publicIP
 }
 
-# Criar IPs PÃºblicos
+# Criar IPs Public
 Create-PublicIP -ResourceGroupName "RG-$ClientNameUpper-Networks" -IPName "PIP-VM-$VMName" -Location $LocationBrazil -ClientNameLower $ClientNameLower -Environment $Environment
 
 # Função para criar Automation Account
@@ -274,7 +274,7 @@ Create-Runbook `
     -RunbookName "START_STOP_VMs" `
     -RunbookType "PowerShell"
 
-# FunÃ§Ã£o para criar Storage Account
+# Função para criar Storage Account
 function Create-StorageAccount {
     param (
         [string]$ResourceGroupName,
@@ -296,7 +296,7 @@ function Create-StorageAccount {
 # Criar Storage Account
 Create-StorageAccount -ResourceGroupName "RG-$ClientNameUpper-Storage" -StorageAccountName "st$($ClientNameLower)001" -Location $LocationBrazil
 
-# FunÃ§Ã£o para criar Log Analytics Workspace
+# Função para criar Log Analytics Workspace
 function Create-LogAnalyticsWorkspace {
 param (
     [string]$ResourceGroupName,
@@ -312,7 +312,7 @@ $workspace | Format-Table -Property Name, Location, ProvisioningState, Sku
 # Criar Log Analytics Workspace
 Create-LogAnalyticsWorkspace -ResourceGroupName "RG-$ClientNameUpper-LogAnalytics" -WorkspaceName "LAW-$ClientNameUpper-EASTUS-001" -Location $LocationUS
 
-# FunÃ§Ã£o para criar cofre de backup
+# Função para criar cofre de backup
 function Create-BackupVault {
     param (
         [string]$ResourceGroup,
@@ -348,7 +348,7 @@ function Create-BackupVault {
     }
 }
 
-# Informar ao usuÃ¡rio sobre o tempo estimado de criaÃ§Ã£o do cofre de backup
+# Informar ao usuário sobre o tempo estimado de criação do cofre de backup
 Write-Log "Iniciando a criaÃ§Ã£o do cofre de backup. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
 
 # Criar Cofre de Backup
@@ -359,7 +359,7 @@ Create-BackupVault `
 -ClientNameLower $ClientNameLower `
 -Environment $Environment
 
-# FunÃ§Ã£o para criar Availability Set
+# Função para criar Availability Set
 function Create-AvailabilitySet {
 param (
     [string]$ResourceGroup,
@@ -383,7 +383,7 @@ Create-AvailabilitySet `
 -AvailabilitySetName "AS-$VMName" `
 -Location $LocationBrazil
 
-# FunÃ§Ã£o para criar VM
+# Função para criar VM
 function Create-VM {
     param (
         [string]$ResourceGroup,
@@ -402,7 +402,7 @@ function Create-VM {
     
     Write-Log "Configurando a VM '$VMName' no grupo de recursos '$ResourceGroup' na regiÃ£o '$Location'..." "INFO"
     
-    # Definir configuraÃ§Ã£o da VM com Security Profile
+    # Definir configurações da VM com Security Profile
     $vmConfig = New-AzVMConfig -VMName $VMName `
                                -VMSize "Standard_B2ms" `
                                -AvailabilitySetId $AvailabilitySetId `
@@ -411,7 +411,7 @@ function Create-VM {
     # Desabilitar Boot Diagnostics
     Set-AzVMBootDiagnostic -VM $vmConfig -Enable $false | Out-Null
     
-    # Definir perfil de sistema operacional com todas as configuraÃ§Ãµes avanÃ§adas
+    # Definir perfil de sistema operacional com todas as configurações avançadas
     Set-AzVMOperatingSystem -VM $vmConfig `
                             -Windows `
                             -ComputerName $VMName `
@@ -422,7 +422,7 @@ function Create-VM {
                             -EnableHotpatching $true `
                             -PatchMode "AutomaticByPlatform" | Out-Null
 
-    # Definir configuraÃ§Ãµes de seguranÃ§a
+    # Definir configurações de segurança
     $vmConfig.SecurityProfile = @{
         UefiSettings = @{
             SecureBootEnabled = $true
@@ -450,7 +450,7 @@ function Create-VM {
         return
     }
     
-    # Adicionar interface de rede Ã  configuraÃ§Ã£o da VM
+    # Adicionar interface de rede a configurações da VM
     Add-AzVMNetworkInterface -VM $vmConfig -Id $nic.Id | Out-Null
     
     # Definir perfil de armazenamento
@@ -478,12 +478,12 @@ function Create-VM {
         
         Write-Log "VM '$VMName' criada com sucesso." "SUCCESS"
         
-        # Obter informaÃ§Ãµes adicionais da VM
+        # Obter informações adicionais da VM
         $vmDetails = Get-AzVM -ResourceGroupName $ResourceGroup -Name $VMName
         $nicDetails = Get-AzNetworkInterface -ResourceGroupName $ResourceGroup -Name "$VMName-NIC"
         $publicIPDetails = Get-AzPublicIpAddress -ResourceGroupName $PublicIPResourceGroupName -Name "PIP-VM-$VMName"
         
-        # Exibir informaÃ§Ãµes formatadas sobre a VM criada
+        # Exibir informações formatadas sobre a VM criada
         $output = @{
             Name = $vmDetails.Name
             Location = $vmDetails.Location
@@ -543,7 +543,7 @@ if ($CriarSegundaVM -and $SecondVMName) {
 
     Write-Log "Availability Set '$ASName2' criado com sucesso." "SUCCESS"
 
-    # Criar IP PÃºblico para segunda VM
+    # Criar IP Public para segunda VM
     $publicIP_VM2 = Create-PublicIP `
         -ResourceGroupName "RG-$ClientNameUpper-Networks" `
         -IPName "PIP-VM-$SecondVMName" `
@@ -576,11 +576,11 @@ if ($InstalarVPN) {
             [string]$Environment
         )
         Write-Log "Obtendo informaÃ§Ãµes do VNet '$VNetName'..." "INFO"
-        # Criar PIP necessÃ¡rio para VPN
+        # Criar PIP necessarios para VPN
         Write-Log "Criando endereÃ§o IP pÃºblico para VPN..." "INFO"
         Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
 
-        # Obter IP PÃºblico
+        # Obter IP Public
         $publicIPPrimary = Get-AzPublicIpAddress -ResourceGroupName $ResourceGroup -Name "$ClientNameUpper-PIP-S2S-PRIMARY"
 
         # Obter VNet e verificar GatewaySubnet
