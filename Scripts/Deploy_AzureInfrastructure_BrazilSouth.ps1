@@ -400,7 +400,7 @@ function Create-VM {
     $adminPassword = ConvertTo-SecureString $VMPassword -AsPlainText -Force
     $cred = New-Object System.Management.Automation.PSCredential ($adminUsername, $adminPassword)
     
-    Write-Log "Configurando a VM '$VMName' no grupo de recursos '$ResourceGroup' na regiÃ£o '$Location'..." "INFO"
+    Write-Log "Configurando a VM '$VMName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
     
     # Definir configurações da VM com Security Profile
     $vmConfig = New-AzVMConfig -VMName $VMName `
@@ -552,7 +552,7 @@ if ($CriarSegundaVM -and $SecondVMName) {
         -Environment $Environment
 
     # Criar segunda VM
-    Write-Log "Iniciando a criaÃ§Ã£o da VM '$SecondVMName'..." "INFO"
+    Write-Log "Iniciando a criação da VM '$SecondVMName'..." "INFO"
     Create-VM `
         -ResourceGroup "RG-$ClientNameUpper-VM" `
         -VMName $SecondVMName `
@@ -575,9 +575,9 @@ if ($InstalarVPN) {
             [string]$ClientNameLower,
             [string]$Environment
         )
-        Write-Log "Obtendo informaÃ§Ãµes do VNet '$VNetName'..." "INFO"
+        Write-Log "Obtendo informações do VNet '$VNetName'..." "INFO"
         # Criar PIP necessarios para VPN
-        Write-Log "Criando endereÃ§o IP pÃºblico para VPN..." "INFO"
+        Write-Log "Criando endereço IP Public para VPN..." "INFO"
         Create-PublicIP -ResourceGroupName $ResourceGroup -IPName "$ClientNameUpper-PIP-S2S-PRIMARY" -Location $Location -ClientNameLower $ClientNameLower -Environment $Environment
 
         # Obter IP Public
@@ -588,7 +588,7 @@ if ($InstalarVPN) {
         $gatewaySubnet = $vnet.Subnets | Where-Object { $_.Name -eq "GatewaySubnet" }
 
         if (-not $gatewaySubnet) {
-            Write-Log "Sub-rede de Gateway nÃ£o encontrada. Criando sub-rede de Gateway..." "WARNING"
+            Write-Log "Sub-rede de Gateway não encontrada. Criando sub-rede de Gateway..." "WARNING"
             Add-AzVirtualNetworkSubnetConfig -VirtualNetwork $vnet -Name "GatewaySubnet" -AddressPrefix "$GatewaySubnetIPRange"
             Set-AzVirtualNetwork -VirtualNetwork $vnet
             $vnet = Get-AzVirtualNetwork -ResourceGroupName $ResourceGroup -Name $VNetName
@@ -614,14 +614,14 @@ if ($InstalarVPN) {
         if ($vpnGateway.ProvisioningState -eq "Succeeded") {
             Write-Log "VPN Gateway '$GatewayName' criado com sucesso no grupo de recursos '$ResourceGroup'." "SUCCESS"
         } else {
-            Write-Log "A criaÃ§Ã£o do VPN Gateway '$GatewayName' falhou." "ERROR"
+            Write-Log "A criação do VPN Gateway '$GatewayName' falhou." "ERROR"
         }
 
         return $vpnGateway
     }
 
     # Criar VPN Gateway
-    Write-Log "AVISO: Iniciando a criaÃ§Ã£o do VPN Gateway. Este processo pode levar entre 30 minutos a uma hora. Por favor, aguarde..." "BOLD-YELLOW"
+    Write-Log "AVISO: Iniciando a criação do VPN Gateway. Este processo pode levar entre 30 minutos a uma hora. Por favor, aguarde..." "BOLD-YELLOW"
     $vpnGateway = Create-VPNGateway `
         -ResourceGroup "RG-$ClientNameUpper-Networks" `
         -Location $LocationBrazil `
