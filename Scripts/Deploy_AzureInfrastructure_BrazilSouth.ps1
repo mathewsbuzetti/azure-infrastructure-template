@@ -85,7 +85,7 @@ function Create-ResourceGroup {
         [string]$Location,
         [string]$Technology
     )
-    Write-Log "Criando Resource Group '$ResourceGroupName' na regiÃ£o '$Location'..." "INFO"
+    Write-Log "Criando Resource Group '$ResourceGroupName' na região '$Location'..." "INFO"
     $rg = New-AzResourceGroup -Name $ResourceGroupName -Location $Location -Tags @{"client"=$ClientNameLower; "environment"=$Environment; "technology"=$Technology}
     Write-Log "Resource Group '$ResourceGroupName' criado com sucesso." "SUCCESS"
     Write-Host ""
@@ -181,7 +181,7 @@ function Create-PublicIP {
         [string]$Environment
     )
 
-    Write-Log "Criando endereÃ§o IP pÃºblico '$IPName' no grupo de recursos '$ResourceGroupName' na regiÃ£o '$Location'..." "INFO"
+    Write-Log "Criando endereço IP Public '$IPName' no grupo de recursos '$ResourceGroupName' na região '$Location'..." "INFO"
     
     $publicIP = New-AzPublicIpAddress `
         -Name $IPName `
@@ -191,7 +191,7 @@ function Create-PublicIP {
         -Sku Standard `
         -Tag @{"client"=$ClientNameLower; "environment"=$Environment; "technology"="networking"}
 
-    Write-Log "EndereÃ§o IP pÃºblico '$IPName' criado com sucesso." "SUCCESS"
+    Write-Log "Endereço IP Public '$IPName' criado com sucesso." "SUCCESS"
     $publicIP | Format-Table -Property Name, IpAddress, Location, ProvisioningState -AutoSize
     
     return $publicIP
@@ -322,7 +322,7 @@ function Create-BackupVault {
         [string]$Environment
     )
 
-    Write-Log "Criando cofre de backup '$VaultName' no grupo de recursos '$ResourceGroup' na regiÃ£o '$Location'..." "INFO"
+    Write-Log "Criando cofre de backup '$VaultName' no grupo de recursos '$ResourceGroup' na região '$Location'..." "INFO"
     
     # Suprimir mensagens de aviso
     $WarningPreference = "SilentlyContinue"
@@ -339,7 +339,7 @@ function Create-BackupVault {
         # Obter detalhes atualizados do cofre de backup
         $backupVaultDetails = Get-AzRecoveryServicesVault -ResourceGroupName $ResourceGroup -Name $VaultName
         
-        Write-Log "Cofre de backup '$VaultName' criado com sucesso na regiÃ£o '$Location'." "SUCCESS"
+        Write-Log "Cofre de backup '$VaultName' criado com sucesso na região '$Location'." "SUCCESS"
         Write-Host ""
         # Exibir detalhes do cofre de backup como tabela
         $backupVaultDetails | Format-Table -Property Name, ResourceGroupName, Location
@@ -349,7 +349,7 @@ function Create-BackupVault {
 }
 
 # Informar ao usuário sobre o tempo estimado de criação do cofre de backup
-Write-Log "Iniciando a criaÃ§Ã£o do cofre de backup. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
+Write-Log "Iniciando a criação do cofre de backup. Este processo pode levar alguns minutos. Por favor, aguarde..." "BOLD-YELLOW"
 
 # Criar Cofre de Backup
 Create-BackupVault `
