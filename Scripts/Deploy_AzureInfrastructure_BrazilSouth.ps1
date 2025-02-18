@@ -371,8 +371,17 @@ function Create-VM {
                                -AvailabilitySetId $AvailabilitySetId `
                                -SecurityType "TrustedLaunch"
     
-    # Desabilitar Boot Diagnostics
-    Set-AzVMBootDiagnostic -VM $vmConfig -Enable $false | Out-Null
+    # Configurar Boot Diagnostics
+    $storageAccountName = "st$($ClientNameLower)001"
+    $storageAccount = Get-AzStorageAccount -ResourceGroupName "RG-$ClientNameUpper-Storage" -Name $storageAccountName
+
+    if ($storageAccount) {
+        Write-Log "Configurando Boot Diagnostics com storage account '$storageAccountName'..." "INFO"
+        $vmConfig.DiagnosticsProfile.BootDiagnostics = @{
+            Enabled = $true
+            StorageUri = $storageAccount.PrimaryEndpoints.Blob
+        }
+    }
     
     # Definir perfil de sistema operacional com todas as configurações avançadas
     Set-AzVMOperatingSystem -VM $vmConfig `
@@ -457,13 +466,12 @@ function Create-VM {
             'OS Version' = "Windows Server 2025"
             'Time Zone' = "E. South America Standard Time"
             'Advanced Features' = @(
-                "Provision VM Agent",
-                "Auto Update",
+                "VM Agent",
                 "Hot Patching",
-                "Automatic Platform Updates",
+                "Automatic Updates",
                 "TPM",
                 "Secure Boot",
-                "Trusted Launch"
+                "Boot Diagnostics"
             ) -join ", "
         }
         
