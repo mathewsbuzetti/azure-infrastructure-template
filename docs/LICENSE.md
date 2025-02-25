@@ -1,3 +1,5 @@
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
+
 # 📜 Licença de Uso Restrito
 
 > ### ⚡ Implantação de Infraestrutura Azure - BrazilSouth
