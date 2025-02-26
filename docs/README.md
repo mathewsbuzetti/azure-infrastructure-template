@@ -193,40 +193,153 @@ O script iniciará a implantação dos recursos do Azure.
 ![image](https://github.com/user-attachments/assets/0adee237-3151-4de4-a38f-3ea6b362be36)
 
 ### Configuração do Start/Stop de VMs
-1. Baixe o script Start/Stop:
-   
-[![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/azure-infrastructure-template/blob/main/Scripts/Script_Start_e_Stop_de_VMs.ps1)
 
-2. No Automation Account, acesse o Runbook "START_STOP_VMs"
-3. Importe o conteúdo do script baixado
+#### 1. Habilitar Managed Identity
+
+1. Abrir o Automation Account
+2. No menu lateral, em **Settings**, selecione **Identity**
+3. Na aba **System Assigned**, defina o **Status** como **On**
    
+![image](https://github.com/user-attachments/assets/021587b9-5323-444d-b9fa-8066481439e3)
+
+4. Clique em **Save**
+5. Na mesma tela acesse a opção **Azure role assignments**:
+   
+![image](https://github.com/user-attachments/assets/14cb07be-9439-4d80-bceb-9f09a7b83fab)
+
+6. Na tela Azure role assignments preencha os dados
+
+   - **Scope:** Subscription
+   - **Subscription:** sua Assinatura
+   - **Role:** Virtual Machine Contributor
+
+![image](https://github.com/user-attachments/assets/db68d04e-516d-4921-8996-d0d66c033119)
+
+> [!WARNING]  
+> Não atribua mais permissões do que o necessário à Managed Identity. O princípio de "least privilege" deve ser aplicado para maior segurança.
+
+### 2. Configuração do Script e Runbook
+
+#### 2.1 Obter o Script **Start-StopAzureVMsByTag.ps1**
+
+[![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/azure-infrastructure-template/blob/main/Scripts/Start-StopAzureVMsByTag.ps1)
+
+#### 2.2 Criar um Novo Runbook
+
+1. Acesse sua **Automation Account** no Portal Azure
+2. No menu lateral, em **Process Automation**, selecione **Runbooks**
+3. Clique em **+ Create a runbook**
+4. Preencha as informações:
+   - **Name:** START_STOP_VMs
+   - **Runbook type:** PowerShell
+   - **Runtime version:** 5.1
+   - **Description:** "Automação para iniciar e parar VMs com base em tags"
+5. Clique em **Create**
+
+#### 2.3 Importar o Script
+
+1. No editor do runbook que acabou de abrir, apague qualquer código existente
+2. Copie e cole o conteúdo completo do script **Start-StopAzureVMsByTag.ps1**
+3. Clique em **Save**
+4. Depois em **Publish**
+
 ![image](https://github.com/user-attachments/assets/6b321a34-4421-4816-b4aa-f783cedea4ec)
 
-5. Configure as políticas de execução:
-   
-   * Crie um agendamento para Start (ex: dias úteis às 9h)
-     
-![image](https://github.com/user-attachments/assets/a49a51f6-c229-4d40-b235-19f4bdae45e6)
+> [!WARNING]  
+> Não altere os nomes dos parâmetros, pois os agendamentos farão referência a esses nomes específicos.
 
-   * Crie um agendamento para Stop (ex: dias úteis às 19h)
-     
-![image](https://github.com/user-attachments/assets/6bb4c703-8a6c-4a1a-8714-b6f5274792e9)
+Depois de publicar vai voltar para tela inicial do runbook. Para configurar o Agendamento, siga os passos:
 
-   * Configure os parâmetros:
-     - TagName: nome da tag para identificar VMs
-     - TagValue: valor da tag
-     - Shutdown: true (para parar) ou false (para iniciar)
+6. Acesse a opção **Resources** e depois **Schedules**:
 
-### Configuração de Tags na VM
-1. Acesse a VM que deseja configurar o Start/Stop automático
-2. Na seção "Tags", adicione uma nova tag:
-   
-   > ⚙️ **Configuração**: A tag deve corresponder aos parâmetros configurados no Runbook
-   
-   * Nome da tag: [TagName configurado no Runbook]
-   * Valor da tag: [TagValue configurado no Runbook]
-     
-![image](https://github.com/user-attachments/assets/881e769c-8a4e-41a9-8218-942059ce02b0)
+![image](https://github.com/user-attachments/assets/bcbd0e63-2724-4746-ab25-118f3a1ad37a)
+
+7. Na tela de **Schedules**, clique em **Add a Schedule** e aparecerão duas opções conforme a imagem abaixo:
+
+![image](https://github.com/user-attachments/assets/641cd254-fb40-418a-9258-c09af387587f)
+
+8. Vamos configurar primeiro o Schedule. Neste exemplo, configurei para ligar VMs às 08:00 da manhã:
+
+Preencha as informações:
+   - **Name:** StartVMs_Morning
+   - **Description:** "Inicia as VMs nos dias úteis pela manhã"
+   - **Starts:** Selecione a data e hora de início (recomendado: próximo dia útil às 8h)
+   - **Time zone:** Selecione seu fuso horário local
+   - **Recurrence:** Recurring
+   - **Recur every:** 1 Day
+   - **Set expiration:** No 
+   - **Week days:** Selecione apenas os dias úteis (Monday to Friday)
+
+> [!WARNING]  
+> O Azure Automation usa UTC por padrão. Certifique-se de selecionar o fuso horário correto para que as VMs sejam iniciadas no horário local desejado.
+
+![image](https://github.com/user-attachments/assets/70877c7d-e574-4277-8e1d-e6e829823ee7)
+
+9. Agora configure os **Parameters**:
+     - TagName: start
+     - TagValue: 08:00
+     - Shutdown: false (para iniciar)
+       
+![image](https://github.com/user-attachments/assets/bba76498-3f87-4d8c-bb3c-cc2b9c9936cf)
+
+10. Depois clique em **OK** para criar o agendamento:
+
+![image](https://github.com/user-attachments/assets/7c2beaf0-1d14-4ace-a40e-51ec4fbba0f5)
+
+Para criar o agendamento de Stop, vamos seguir o mesmo processo, porém alterando o horário para 19:00:
+
+11. Na tela de **Schedules**, clique em **Add a Schedule**:
+
+![image](https://github.com/user-attachments/assets/641cd254-fb40-418a-9258-c09af387587f)
+
+12. Configure o Schedule para desligar as VMs às 19:00:
+
+Preencha as informações:
+   - **Name:** StopVMs_Evening
+   - **Description:** "Para as VMs nos dias úteis à noite"
+   - **Starts:** Selecione a data e hora de início (recomendado: próximo dia útil às 19h)
+   - **Time zone:** Selecione seu fuso horário local (mesmo do agendamento anterior)
+   - **Recurrence:** Recurring
+   - **Recur every:** 1 Day
+   - **Set expiration:** No
+   - **Week days:** Selecione apenas os dias úteis (Monday to Friday)
+
+> [!WARNING]  
+> O Azure Automation usa UTC por padrão. Certifique-se de selecionar o fuso horário correto para que as VMs sejam paradas no horário local desejado.
+
+![image](https://github.com/user-attachments/assets/5ddfe4e6-e22a-49d3-b205-d0f4a6a9671d)
+
+13. Configure os **Parameters**:
+     - TagName: stop
+     - TagValue: 19:00
+     - Shutdown: true (para desligar)
+       
+![image](https://github.com/user-attachments/assets/0c9902e5-dd7e-4687-bb4e-6124672a1044)
+
+14. Depois clique em **OK** para criar o agendamento:
+
+![image](https://github.com/user-attachments/assets/eed13269-9512-47a5-b2f8-074f896066d7)
+
+### 4. Preparação das VMs
+
+#### 4.1 Adicionar Tags às VMs
+
+Para cada VM que você deseja incluir na automação:
+
+1. No Portal Azure, acesse **Virtual Machines**
+2. Clique na VM que deseja gerenciar
+3. No menu lateral, selecione **Tags**
+4. Adicione a tag com o mesmo nome e valor configurados nos agendamentos:
+   - **Name:** Digite o nome da tag (ex: "start")
+   - **Value:** Digite o valor da tag (ex: "07:00")
+   - **Name:** Digite o nome da tag (ex: "stop")
+   - **Value:** Digite o valor da tag (ex: "19:00")
+5. Clique em **Apply**
+
+![image](https://github.com/user-attachments/assets/bad363fa-956b-442c-9ec4-cdf3fd3ca94e)
+
+> [!WARNING]  
+> Certifique-se de que o nome e valor das tags nas VMs correspondam exatamente ao configurado nos agendamentos do Runbook.
 
 ### 📧 Configuração de Alertas para o Start/Stop de VMs
 
