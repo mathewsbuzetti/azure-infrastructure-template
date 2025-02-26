@@ -1,30 +1,56 @@
-# 📜 Licença de Uso Restrito
+# 📜 Licença MIT com Uso Restrito
 
 > ### ⚡ Implantação de Infraestrutura Azure - BrazilSouth
 > **Status**: ✅ Aprovado para Produção  
 > **Última Atualização**: 2025  
 > **Autor**: Mathews Buzetti
+
 ## 🔐 Termos de Uso
 
-### ⚖️ Direitos Reservados
-- Todo o conteúdo deste repositório está protegido por direitos autorais
-- Não é permitida a cópia, distribuição ou modificação sem autorização expressa do autor
+### 📑 Escopo do Conteúdo Protegido
+Esta licença protege especificamente:
+- Scripts PowerShell para implantação de infraestrutura (Deploy_AzureInfrastructure_BrazilSouth.ps1)
+- Scripts PowerShell para automação (Start-StopAzureVMsByTag.ps1)
+- Scripts PowerShell para limpeza de recursos (Script_Delete_Resource_Groups.ps1)
+- Documentação técnica e instruções contidas no README.md
+- Diagramas e fluxogramas de processos
+- Todas as configurações de Resource Groups, VMs, VPN, Storage e Automation Account descritas
+
+### ⚖️ Licença Base (MIT Modificada)
+```
+Copyright (c) 2025 Mathews Buzetti
+É concedida permissão, gratuitamente, a qualquer pessoa que obtenha uma cópia deste 
+software e arquivos de documentação associados (o "Software"), para lidar com o 
+Software sem restrições, incluindo, sem limitação, os direitos de usar, copiar e 
+modificar, sujeito às seguintes condições:
+O aviso de direitos autorais acima e este aviso de permissão devem ser incluídos 
+em todas as cópias ou partes substanciais do Software.
+O SOFTWARE É FORNECIDO "COMO ESTÁ", SEM GARANTIA DE QUALQUER TIPO, EXPRESSA OU 
+IMPLÍCITA, INCLUINDO, MAS NÃO SE LIMITANDO ÀS GARANTIAS DE COMERCIALIZAÇÃO, 
+ADEQUAÇÃO A UM DETERMINADO FIM E NÃO VIOLAÇÃO. EM NENHUM CASO OS AUTORES OU 
+DETENTORES DE DIREITOS AUTORAIS SERÃO RESPONSÁVEIS POR QUALQUER REIVINDICAÇÃO, 
+DANOS OU OUTRA RESPONSABILIDADE, SEJA EM AÇÃO DE CONTRATO, DELITO OU DE OUTRA FORMA, 
+DECORRENTE DE, OU EM CONEXÃO COM O SOFTWARE OU O USO OU OUTRAS NEGOCIAÇÕES NO SOFTWARE.
+```
 
 ### ✅ Uso Permitido
 - Consulta e referência do conteúdo
 - Uso como material de estudo
 - Implementação em ambientes próprios seguindo as práticas documentadas
+- Modificações para uso pessoal ou corporativo interno
 
-### ❌ Restrições
-- Proibida a redistribuição do conteúdo
-- Proibido o uso comercial sem autorização
-- Proibida a criação de trabalhos derivados
+### ❌ Restrições Adicionais à Licença Base
+- Proibida a redistribuição comercial do conteúdo sem autorização expressa
+- Proibido o uso da marca ou nome do autor para endossar produtos derivados
+- Proibida a remoção de atribuições de autoria
 
-### ⚠️ Garantia e Responsabilidade
+### ⚠️ Garantia e Responsabilidade Específica para Azure
 ```markdown
-O conteúdo é fornecido "como está"
-O autor não se responsabiliza por danos decorrentes do uso deste conteúdo
-Usuários devem validar a adequação ao seu ambiente específico
+O autor não garante que os scripts funcionarão em todas as configurações do Azure.
+Alterações na API do Azure, estrutura de recursos ou políticas da Microsoft podem 
+afetar o funcionamento dos scripts.
+Usuários devem testar em ambientes não-produtivos antes da implementação completa.
+O autor não é responsável por custos inesperados ou interrupções de serviço.
 ```
 
 ---
@@ -37,6 +63,6 @@ Para solicitações de uso adicional ou comercial, entre em contato através do 
 ---
 
 ### 📝 Nota Legal
-**Todos os direitos não expressamente concedidos estão reservados.**
+Esta licença é uma adaptação da Licença MIT com restrições adicionais. Em caso de conflito ou ambiguidade, prevalecerão as restrições adicionais.
 
 *Copyright © 2025 Mathews Buzetti. Todos os direitos reservados.*
