@@ -224,19 +224,7 @@ O script iniciará a implantação dos recursos do Azure.
 
 [![Download Script Start/Stop](https://img.shields.io/badge/Download%20Script%20Start%2FStop-blue?style=flat-square&logo=powershell)](https://github.com/mathewsbuzetti/azure-infrastructure-template/blob/main/Scripts/Start-StopAzureVMsByTag.ps1)
 
-#### 2.2 Criar um Novo Runbook
-
-1. Acesse sua **Automation Account** no Portal Azure
-2. No menu lateral, em **Process Automation**, selecione **Runbooks**
-3. Clique em **+ Create a runbook**
-4. Preencha as informações:
-   - **Name:** START_STOP_VMs
-   - **Runbook type:** PowerShell
-   - **Runtime version:** 5.1
-   - **Description:** "Automação para iniciar e parar VMs com base em tags"
-5. Clique em **Create**
-
-#### 2.3 Importar o Script
+#### 2.2 Importar o Script
 
 1. No editor do runbook que acabou de abrir, apague qualquer código existente
 2. Copie e cole o conteúdo completo do script **Start-StopAzureVMsByTag.ps1**
@@ -320,9 +308,9 @@ Preencha as informações:
 
 ![image](https://github.com/user-attachments/assets/eed13269-9512-47a5-b2f8-074f896066d7)
 
-### 4. Preparação das VMs
+### 3. Preparação das VMs
 
-#### 4.1 Adicionar Tags às VMs
+#### 3.1 Adicionar Tags às VMs
 
 Para cada VM que você deseja incluir na automação:
 
