@@ -13,7 +13,6 @@ Esta licença protege especificamente:
 - Scripts PowerShell para automação (Start-StopAzureVMsByTag.ps1)
 - Scripts PowerShell para limpeza de recursos (Script_Delete_Resource_Groups.ps1)
 - Documentação técnica e instruções contidas no README.md
-- Diagramas e fluxogramas de processos
 - Todas as configurações de Resource Groups, VMs, VPN, Storage e Automation Account descritas
 
 ### ⚖️ Licença Base (MIT Modificada)
