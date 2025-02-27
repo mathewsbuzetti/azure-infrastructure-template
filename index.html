@@ -2,750 +2,1792 @@
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE4IDEwLjc4YzAtLjMyLS4wMS0uNjUtLjA0LS45N0wxOCAxMGMwLTMuMzEtMi42OS02LTYtNi0yLjYxIDAtNC44MyAxLjY3LTUuNjUgNEg2QzMuNzkgOCAyIDkuNzkgMiAxMmMwIDIuMjEgMS43OSA0IDQgNGgxMmMyLjIxIDAgNC0xLjc5IDQtNCAwLS4xNC0uMDEtLjI4LS4wMi0uNDJ2LS44eiIgZmlsbD0iIzAwNzhENCI+PC9wYXRoPjxwYXRoIGQ9Ik0xOSA4YzAtLjM0LS4wMi0uNjctLjA2LTFIMTljLTIuMjEgMC00IDEuNzktNCA0IDAgLjM0LjA0LjY3LjExIDF2MWMwIDIuMjEgMS43OSA0IDQgNCAyLjIxIDAgNC0xLjc5IDQtNCAwLTIuMjEtMS43OS00LTQtNHoiIGZpbGw9IiMwMDc4RDQiPjwvcGF0aD48L3N2Zz4=">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ferramenta para facilitar o provisionamento de infraestrutura no Azure">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTTE4IDEwLjc4YzAtLjMyLS4wMS0uNjUtLjA0LS45N0wxOCAxMGMwLTMuMzEtMi42OS02LTYtNi0yLjYxIDAtNC44MyAxLjY3LTUuNjUgNEg2QzMuNzkgOCAyIDkuNzkgMiAxMmMwIDIuMjEgMS43OSA0IDQgNGgxMmMyLjIxIDAgNC0xLjc5IDQtNCAwLS4xNC0uMDEtLjI4LS4wMi0uNDJ2LS44eiIgZmlsbD0iIzAwNzhENCI+PC9wYXRoPjxwYXRoIGQ9Ik0xOSA4YzAtLjM0LS4wMi0uNjctLjA2LTFIMTljLTIuMjEgMC00IDEuNzktNCA0IDAgLjM0LjA0LjY3LjExIDF2MWMwIDIuMjEgMS43OSA0IDQgNCAyLjIxIDAgNC0xLjc5IDQtNCAwLTIuMjEtMS43OS00LTQtNHoiIGZpbGw9IiMwMDc4RDQiPjwvcGF0aD48L3N2Zz4=">
     <title>Azure Infrastructure Deployment Tool</title>
     <style>
-        /* Estilo Visual Original */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: all 0.3s ease; }
-        body { font-family: 'Segoe UI', Arial, sans-serif; background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: #e0e0e0; padding: 20px; min-height: 100vh; }
-        .container { max-width: 700px; margin: 20px auto; background: rgba(30, 30, 30, 0.95); padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); animation: fadeIn 0.6s ease-out; }
-        h1 { text-align: center; margin-bottom: 30px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-size: 32px; font-weight: 600; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); letter-spacing: 0.5px; }
-        label { display: block; margin: 15px 0 8px; font-weight: 500; color: #e0e0e0; font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px; }
-        input[type="text"], select { width: 100%; padding: 12px 16px; margin-bottom: 15px; border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 8px; background: rgba(44, 44, 44, 0.8); color: #e0e0e0; font-size: 15px; outline: none; }
-        input[readonly] { background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); border-color: rgba(255, 255, 255, 0.05); cursor: not-allowed; }
-        
-        /* Estilo dos radio buttons */
-        .radio-group {
-            margin: 15px 0;
-            display: flex;
-            gap: 15px;
-        }
+    /* Melhorias de Acessibilidade: Reset e Variáveis para manter consistência */
+    :root {
+      /* Paleta principal */
+      --color-primary: #3b82f6;
+      --color-primary-light: #60a5fa;
+      --color-primary-dark: #2563eb;
+      --color-secondary: #0f172a;
+      --color-secondary-dark: #0f172a;
+      
+      /* Cores de texto com melhor contraste para acessibilidade */
+      --color-text: #f8fafc;
+      --color-text-secondary: #e2e8f0;
+      --color-text-muted: #cbd5e1;
+      
+      /* Cores para feedbacks */
+      --color-success: #22c55e;
+      --color-success-bg: rgba(34, 197, 94, 0.1);
+      --color-error: #ef4444;
+      --color-error-bg: rgba(239, 68, 68, 0.1);
+      --color-warning: #eab308;
+      --color-warning-bg: rgba(234, 179, 8, 0.1);
+      --color-info: #3b82f6;
+      --color-info-bg: rgba(59, 130, 246, 0.1);
+      
+      /* Cores de fundo e superfícies */
+      --color-bg: #1e293b;
+      --color-bg-darker: #0f172a;
+      --color-card: rgba(30, 30, 30, 0.95);
+      --color-input-bg: rgba(44, 44, 44, 0.8);
+      --color-input-border: rgba(255, 255, 255, 0.1);
+      --color-input-focus-border: var(--color-primary-light);
+      
+      /* Sombras */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.3);
+      
+      /* Tipografia */
+      --font-family: 'Segoe UI', Arial, sans-serif;
+      --font-size-sm: 0.875rem;
+      --font-size-base: 1rem;
+      --font-size-lg: 1.125rem;
+      --font-size-xl: 1.25rem;
+      --font-size-2xl: 1.5rem;
+      
+      /* Espaçamentos */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      
+      /* Bordas */
+      --radius-sm: 0.25rem;
+      --radius-md: 0.5rem;
+      --radius-lg: 0.75rem;
+      --radius-xl: 1rem;
+      
+      /* Transições */
+      --transition-fast: all 0.2s ease;
+      --transition-normal: all 0.3s ease;
+    }
 
-        .radio-option {
-            position: relative;
-        }
+    /* Animações */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        .radio-option input[type="radio"] {
-            display: none;
-        }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+    }
 
-        .radio-option label {
-            display: inline-block;
-            padding: 8px 24px;
-            background: rgba(44, 44, 44, 0.8);
-            border: 2px solid rgba(96, 165, 250, 0.3);
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 0;
-            text-transform: none;
-            font-size: 14px;
-            color: #e0e0e0;
-            transition: all 0.2s ease;
-        }
+    /* Reset e estilos base */
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+      transition: var(--transition-normal);
+    }
 
-        .radio-option input[type="radio"]:checked + label {
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            border-color: #60a5fa;
-            color: white;
-        }
+    body { 
+      font-family: var(--font-family); 
+      background: linear-gradient(135deg, var(--color-bg-darker) 0%, var(--color-bg) 100%); 
+      color: var(--color-text); 
+      padding: var(--space-4); 
+      min-height: 100vh;
+      line-height: 1.5;
+    }
 
-        .radio-option label:hover {
-            border-color: #60a5fa;
-        }
+    /* Foco aprimorado para acessibilidade */
+    :focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
 
-        /* Estilos de validação */
-        .field-error {
-            border-color: #ef4444 !important;
-            background-color: rgba(239, 68, 68, 0.1) !important;
-        }
+    :focus:not(:focus-visible) {
+      outline: none;
+    }
 
-        .error-message {
-            color: #ef4444;
-            font-size: 12px;
-            margin-top: -12px;
-            margin-bottom: 12px;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
+    :focus-visible {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
 
-        .error-container {
-            background-color: rgba(239, 68, 68, 0.1);
-            border: 1px solid #ef4444;
-            border-radius: 8px;
-            padding: 16px;
-            margin-bottom: 20px;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
+    /* Melhorias de Usabilidade: Container principal */
+    .container { 
+      max-width: 800px; 
+      margin: var(--space-5) auto; 
+      background: var(--color-card); 
+      padding: var(--space-8); 
+      border-radius: var(--radius-xl); 
+      box-shadow: var(--shadow-lg);
+      animation: fadeIn 0.6s ease-out; 
+    }
 
-        .error-container ul {
-            margin: 8px 0 0 20px;
-            color: #ef4444;
-        }
+    /* Melhorias de Acessibilidade: Alto contraste e tipografia */
+    h1 { 
+      text-align: center; 
+      margin-bottom: var(--space-8); 
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%); 
+      -webkit-background-clip: text; 
+      -webkit-text-fill-color: transparent; 
+      font-size: var(--font-size-2xl); 
+      font-weight: 600; 
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3); 
+      letter-spacing: 0.5px; 
+    }
 
-        /* Estilo da senha */
-        .password-field {
-            position: relative;
-            margin-bottom: 15px;
-            display: flex;
-            gap: 10px;
-        }
+    @supports not (background: -webkit-linear-gradient(transparent, transparent)) {
+      h1 {
+        background: none;
+        -webkit-text-fill-color: var(--color-primary-light);
+        color: var(--color-primary-light);
+      }
+    }
 
-        .password-input-wrapper {
-            position: relative;
-            flex: 1;
-        }
+    /* Agrupamento semântico com fieldsets */
+    fieldset {
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: var(--space-6) var(--space-6) var(--space-8);
+      margin-bottom: var(--space-8);
+      border-radius: var(--radius-md);
+      background: rgba(15, 23, 42, 0.3);
+    }
 
-        .password-field input[type="password"],
-        .password-field input[type="text"] {
-            width: 100%;
-            padding: 14px 45px 14px 16px;
-            border: 2px solid rgba(96, 165, 250, 0.2);
-            border-radius: 8px;
-            background: rgba(44, 44, 44, 0.8);
-            color: #e0e0e0;
-            font-size: 15px;
-            outline: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
+    legend {
+      font-weight: 600;
+      padding: 0 var(--space-3);
+      color: var(--color-primary-light);
+      font-size: var(--font-size-lg);
+    }
 
-        .password-toggle {
-            position: absolute;
-            right: 12px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: none;
-            border: none;
-            color: #60a5fa;
-            cursor: pointer;
-            padding: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            z-index: 2;
-        }
+    .radio-fieldset {
+      border: none;
+      padding: var(--space-3) 0;
+      margin: var(--space-2) 0;
+    }
 
-        .password-buttons {
-            display: flex;
-            gap: 8px;
-        }
+    .radio-fieldset legend {
+      font-size: var(--font-size-base);
+      font-weight: 500;
+      color: var(--color-text);
+      text-transform: none;
+      padding: 0;
+      margin-bottom: var(--space-3);
+    }
 
-        .password-field .action-btn {
-            padding: 0 20px;
-            background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-            border: none;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    /* Form groups */
+    .form-group {
+      margin-bottom: var(--space-6);
+    }
 
-        .password-requirements {
-            margin: -10px 0 15px 0;
-            padding: 12px 15px;
-            background: rgba(44, 44, 44, 0.8);
-            border-radius: 8px;
-            border-left: 3px solid #60a5fa;
-            font-size: 0.85em;
-            color: #e0e0e0;
-        }
+    /* Labels com melhor contraste */
+    label { 
+      display: block; 
+      margin-bottom: var(--space-2); 
+      font-weight: 500; 
+      color: var(--color-text); 
+      font-size: var(--font-size-sm); 
+      text-transform: uppercase; 
+      letter-spacing: 0.5px; 
+    }
 
-        .password-requirements h4 {
-            color: #60a5fa;
-            margin-bottom: 8px;
-            font-size: 0.95em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+    .required {
+      color: var(--color-error);
+    }
 
-        .password-requirements ul {
-            list-style: none;
-            margin: 0;
-            padding: 0;
-        }
+    /* Inputs com alto contraste e estados de foco */
+    input[type="text"], 
+    input[type="password"],
+    select { 
+      width: 100%; 
+      padding: var(--space-3) var(--space-4); 
+      margin-bottom: var(--space-2); 
+      border: 2px solid var(--color-input-border); 
+      border-radius: var(--radius-md); 
+      background: var(--color-input-bg); 
+      color: var(--color-text); 
+      font-size: var(--font-size-base); 
+      outline: none;
+      transition: var(--transition-fast);
+    }
 
-        .password-requirements li {
-            margin: 4px 0;
-            padding-left: 20px;
-            position: relative;
-            line-height: 1.4;
-        }
+    input:hover,
+    select:hover {
+      border-color: rgba(96, 165, 250, 0.4);
+    }
 
-        .password-requirements li:before {
-            content: "•";
-            color: #60a5fa;
-            position: absolute;
-            left: 0;
-            top: 0;
-            font-size: 1.2em;
-        }
+    input:focus,
+    select:focus {
+      border-color: var(--color-input-focus-border);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+    }
 
-        .password-requirements .warning {
-            margin-top: 8px;
-            color: #f87171;
-            font-style: italic;
-            padding-left: 20px;
-            position: relative;
-        }
+    input[readonly] { 
+      background: linear-gradient(135deg, rgba(44, 44, 44, 0.5) 0%, rgba(44, 44, 44, 0.3) 100%); 
+      border-color: rgba(255, 255, 255, 0.05); 
+      cursor: not-allowed; 
+      opacity: 0.8;
+    }
 
-        .password-requirements .warning:before {
-            content: "⚠";
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
+    /* Grupos de radio buttons com melhor acessibilidade */
+    .radio-group {
+      margin: var(--space-3) 0;
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+    }
 
-        /* Botões e output */
-        .button-group { display: flex; gap: 12px; margin-top: 20px; }
-        button { flex: 1; padding: 12px 16px; background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%); color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; letter-spacing: 0.5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); text-transform: uppercase; }
-        button:hover { transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); }
-        button:active { transform: translateY(0); }
-        .output { margin-top: 25px; padding: 16px; background: rgba(44, 44, 44, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; font-family: 'Consolas', monospace; white-space: pre-wrap; word-break: break-all; font-size: 14px; min-height: 60px; }
-        .output:not(:empty) { border-color: #60a5fa; box-shadow: 0 0 10px rgba(96, 165, 250, 0.1); }
-        .message { display: none; margin-top: 15px; padding: 12px; background: rgba(40, 167, 69, 0.9); color: white; border-radius: 8px; text-align: center; animation: fadeIn 0.3s ease; }
-        .reminder { margin-top: 15px; padding: 12px; background: rgba(255, 193, 7, 0.9); color: black; border-radius: 8px; text-align: center; }
-        footer { margin-top: 30px; text-align: center; font-size: 13px; color: #888; padding: 20px; }
-        footer a { color: #60a5fa; text-decoration: none; font-weight: 500; position: relative; }
-        footer a:after { content: ''; position: absolute; width: 0; height: 1px; bottom: -2px; left: 0; background-color: #60a5fa; transition: width 0.3s ease; }
-        footer a:hover:after { width: 100%; }
+    .radio-option {
+      position: relative;
+    }
+
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .radio-option label {
+      display: inline-block;
+      padding: var(--space-2) var(--space-6);
+      background: var(--color-input-bg);
+      border: 2px solid rgba(96, 165, 250, 0.3);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin: 0;
+      text-transform: none;
+      font-size: var(--font-size-sm);
+      color: var(--color-text);
+      transition: var(--transition-fast);
+      position: relative;
+    }
+
+    /* Melhoria de acessibilidade: foco visível em teclado */
+    .radio-option input[type="radio"]:focus + label {
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
+    }
+
+    .radio-option input[type="radio"]:checked + label {
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+      border-color: var(--color-primary-light);
+      color: white;
+    }
+
+    .radio-option label:hover {
+      border-color: var(--color-primary-light);
+    }
+
+    /* Melhorias de validação com mensagens de erro mais visíveis */
+    .field-error {
+      border-color: var(--color-error) !important;
+      background-color: var(--color-error-bg) !important;
+      animation: shake 0.5s ease;
+    }
+
+    .error-message {
+      color: var(--color-error);
+      font-size: var(--font-size-sm);
+      margin-top: var(--space-1);
+      margin-bottom: var(--space-3);
+      display: none;
+      animation: fadeIn 0.3s ease;
+      font-weight: 500;
+    }
+
+    .error-container {
+      background-color: var(--color-error-bg);
+      border: 1px solid var(--color-error);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-5);
+      display: none;
+      animation: fadeIn 0.3s ease;
+      color: var(--color-error);
+    }
+
+    .error-container ul {
+      margin: var(--space-2) 0 0 var(--space-5);
+    }
+
+    /* Campos de senha com melhor usabilidade e segurança */
+    .password-field {
+      position: relative;
+      margin-bottom: var(--space-3);
+      display: flex;
+      gap: var(--space-3);
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 600px) {
+      .password-field {
+        flex-direction: column;
+      }
+      
+      .password-buttons {
+        width: 100%;
+      }
+    }
+
+    .password-input-wrapper {
+      position: relative;
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .password-field input[type="password"],
+    .password-field input[type="text"] {
+      width: 100%;
+      padding-right: var(--space-10);
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: var(--space-3);
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      color: var(--color-primary-light);
+      cursor: pointer;
+      padding: var(--space-1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.7;
+      transition: var(--transition-fast);
+      z-index: 2;
+      border-radius: var(--radius-sm);
+    }
+
+    .password-toggle:hover {
+      opacity: 1;
+    }
+
+    .password-toggle:focus {
+      opacity: 1;
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    .password-buttons {
+      display: flex;
+      gap: var(--space-2);
+    }
+
+    .password-field .action-btn {
+      padding: 0 var(--space-4);
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
+      border: none;
+      border-radius: var(--radius-md);
+      color: white;
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      transition: var(--transition-fast);
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      height: 42px;
+    }
+
+    .password-field .action-btn:hover {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      transform: translateY(-2px);
+    }
+
+    .password-field .action-btn:focus {
+      outline: 2px solid var(--color-primary-dark);
+      outline-offset: 2px;
+    }
+
+    /* Caixas informativas com melhor legibilidade */
+    .info-box {
+      margin-top: var(--space-2);
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-info-bg);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--color-primary);
+      font-size: var(--font-size-sm);
+      color: var(--color-text-secondary);
+    }
+
+    .info-box h4 {
+      color: var(--color-primary-light);
+      margin-bottom: var(--space-2);
+      font-size: 0.95em;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .info-box ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .info-box li {
+      margin: var(--space-1) 0;
+      padding-left: var(--space-5);
+      position: relative;
+      line-height: 1.4;
+    }
+
+    .info-box li:before {
+      content: "•";
+      color: var(--color-primary-light);
+      position: absolute;
+      left: 0;
+      top: 0;
+      font-size: 1.2em;
+    }
+
+    .password-requirements {
+      border-left-color: var(--color-warning);
+    }
+
+    .password-requirements h4 {
+      color: var(--color-warning);
+    }
+
+    .password-requirements li:before {
+      color: var(--color-warning);
+    }
+
+    .password-requirements .warning {
+      margin-top: var(--space-2);
+      color: var(--color-error);
+      font-style: italic;
+      padding-left: var(--space-5);
+      position: relative;
+    }
+
+    .password-requirements .warning:before {
+      content: "⚠";
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    /* Botões com melhor acessibilidade e estados */
+    .button-group { 
+      display: flex; 
+      gap: var(--space-3); 
+      margin-top: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    button { 
+      flex: 1; 
+      padding: var(--space-3) var(--space-4); 
+      background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%); 
+      color: white; 
+      border: none; 
+      border-radius: var(--radius-md); 
+      cursor: pointer; 
+      font-size: var(--font-size-base); 
+      font-weight: 500; 
+      letter-spacing: 0.5px; 
+      box-shadow: var(--shadow-sm); 
+      text-transform: uppercase;
+      transition: var(--transition-fast);
+      min-width: 150px;
+    }
+
+    @media (max-width: 600px) {
+      .button-group {
+        flex-direction: column;
+      }
+      
+      button {
+        width: 100%;
+      }
+    }
+
+    button:hover { 
+      transform: translateY(-2px); 
+      box-shadow: var(--shadow-md); 
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%); 
+    }
+
+    button:active { 
+      transform: translateY(0);
+    }
+
+    button:focus {
+      outline: 2px solid var(--color-primary-dark);
+      outline-offset: 2px;
+    }
+
+    /* Output e mensagens com melhor contraste */
+    .output { 
+      margin-top: var(--space-6); 
+      padding: var(--space-4); 
+      background: var(--color-input-bg); 
+      border: 1px solid var(--color-input-border); 
+      border-radius: var(--radius-md); 
+      font-family: 'Consolas', monospace; 
+      white-space: pre-wrap; 
+      word-break: break-all; 
+      font-size: var(--font-size-sm); 
+      min-height: 60px;
+      color: var(--color-text); 
+    }
+
+    .output:not(:empty) { 
+      border-color: var(--color-primary); 
+      box-shadow: 0 0 10px rgba(96, 165, 250, 0.1);
+    }
+
+    .message { 
+      display: none; 
+      margin-top: var(--space-4); 
+      padding: var(--space-3); 
+      background: var(--color-success);
+      color: white; 
+      border-radius: var(--radius-md); 
+      text-align: center; 
+      animation: fadeIn 0.3s ease;
+      font-weight: bold;
+    }
+
+    .reminder { 
+      margin-top: var(--space-4); 
+      padding: var(--space-3); 
+      background: var(--color-warning-bg); 
+      color: var(--color-text); 
+      border-radius: var(--radius-md); 
+      text-align: center;
+      border: 1px solid var(--color-warning);
+    }
+
+    .reminder strong {
+      color: var(--color-warning);
+    }
+
+    /* Notificações flutuantes */
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      background: var(--color-success);
+      color: white;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: all 0.3s ease;
+      z-index: 9999;
+    }
+
+    .notification.error {
+      background: var(--color-error);
+    }
+
+    .notification.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Rodapé e links melhorados */
+    footer { 
+      margin-top: var(--space-8); 
+      text-align: center; 
+      font-size: var(--font-size-sm); 
+      color: var(--color-text-muted); 
+      padding: var(--space-5);
+    }
+
+    footer a { 
+      color: var(--color-primary-light); 
+      text-decoration: none; 
+      font-weight: 500; 
+      position: relative;
+      transition: var(--transition-fast);
+    }
+
+    footer a:after { 
+      content: ''; 
+      position: absolute; 
+      width: 0; 
+      height: 1px; 
+      bottom: -2px; 
+      left: 0; 
+      background-color: var(--color-primary-light); 
+      transition: width 0.3s ease; 
+    }
+
+    footer a:hover:after { 
+      width: 100%; 
+    }
+
+    footer a:focus {
+      outline: 2px solid var(--color-primary);
+      outline-offset: 2px;
+    }
+
+    /* Media queries responsivas */
+    @media (max-width: 768px) {
+      .container {
+        padding: var(--space-5);
+      }
+      
+      h1 {
+        font-size: var(--font-size-xl);
+      }
+    }
+
+    /* Alto contraste para modo escuro forçado */
+    @media (prefers-contrast: more) {
+      :root {
+        --color-primary: #2563eb;
+        --color-primary-light: #1d4ed8;
+        --color-text: #ffffff;
+        --color-error: #f87171;
+      }
+      
+      .info-box {
+        border-left-width: 5px;
+      }
+    }
+
+    /* Reduções de movimento para acessibilidade */
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
     </style>
 </head>
 <body>
-    <div class="container">
+    <main class="container" role="main">
         <h1>Azure Infrastructure Deployment Tool</h1>
-        <form id="deployForm">
-            <!-- Campos básicos -->
-            <label for="subscriptionId">ID da Assinatura *</label>
-            <input type="text" id="subscriptionId" placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" required>
+
+        <!-- Mensagem de erro global para validação -->
+        <section class="error-container" id="errorContainer" role="alert" aria-live="assertive">
+            <strong>Por favor, corrija os seguintes erros:</strong>
+            <ul id="errorList"></ul>
+        </section>
+        
+        <form id="deployForm" novalidate>
+            <!-- Agrupamento semântico de informações básicas -->
+            <fieldset>
+                <legend>Informações da Assinatura</legend>
+                
+                <div class="form-group">
+                    <label for="subscriptionId" id="subscription-label">ID da Assinatura <span class="required">*</span></label>
+                    <input type="text" 
+                           id="subscriptionId" 
+                           placeholder="Ex.: e875c481-3a50-4369-8c6f-5c58697332e2" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="subscription-label"
+                           aria-describedby="subscription-error">
+                    <div id="subscription-error" class="error-message" role="alert"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="location" id="location-label">Localização Brazil South</label>
+                    <input type="text" 
+                           id="location" 
+                           value="brazilsouth" 
+                           readonly 
+                           aria-labelledby="location-label">
+                </div>
+                
+                <div class="form-group">
+                    <label for="locationUS" id="locationUS-label">Localização US East</label>
+                    <input type="text" 
+                           id="locationUS" 
+                           value="eastus" 
+                           readonly 
+                           aria-labelledby="locationUS-label">
+                    <div class="info-box" role="note">
+                        <h4>Importante: Região US East</h4>
+                        <ul>
+                            <li>Região necessária para o Azure Automation Account</li>
+                            <li>Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação START/STOP</li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
             
-            <label for="location">Localização Brazil South</label>
-            <input type="text" id="location" value="brazilsouth" readonly>
+            <!-- Agrupamento semântico de informações do cliente -->
+            <fieldset>
+                <legend>Informações do Cliente</legend>
+                
+                <div class="form-group">
+                    <label for="clientNameUpper" id="clientNameUpper-label">Nome do Cliente (Maiúsculo) <span class="required">*</span></label>
+                    <input type="text" 
+                           id="clientNameUpper" 
+                           placeholder="Ex.: MATHEWS" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="clientNameUpper-label"
+                           aria-describedby="clientNameUpper-error">
+                    <div id="clientNameUpper-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Por que maiúsculo?</h4>
+                        <ul>
+                            <li>Utilizado para criar os Resource Groups e os recursos</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="clientNameLower" id="clientNameLower-label">Nome do Cliente (Minúsculo) <span class="required">*</span></label>
+                    <input type="text" 
+                           id="clientNameLower" 
+                           placeholder="Ex.: mathews" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="clientNameLower-label"
+                           aria-describedby="clientNameLower-error">
+                    <div id="clientNameLower-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Por que minúsculo?</h4>
+                        <ul>
+                            <li>Necessário para criar as Tags dos recursos</li>
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
             
-            <label for="locationUS">Localização US East</label>
-            <input type="text" id="locationUS" value="eastus" readonly>
-            <div class="password-requirements">
-                <h4>Importante: Região US East</h4>
-                <ul>
-                    <li>Região necessária para o Azure Automation Account</li>
-                    <li>Deve ser diferente da região principal (Brazil South) para garantir o correto funcionamento da automação START/STOP</li>
-                </ul>
-            </div>
+            <!-- Agrupamento semântico de configurações das máquinas virtuais -->
+            <fieldset>
+                <legend>Configurações de Máquinas Virtuais</legend>
+                
+                <div class="form-group">
+                    <label for="vmName" id="vmName-label">Nome da Máquina Virtual <span class="required">*</span></label>
+                    <input type="text" 
+                           id="vmName" 
+                           placeholder="Ex.: MATHEWS-DC01" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="vmName-label"
+                           aria-describedby="vmName-error">
+                    <div id="vmName-error" class="error-message" role="alert"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="vmUsername" id="vmUsername-label">Nome do Usuário <span class="required">*</span></label>
+                    <input type="text" 
+                           id="vmUsername" 
+                           placeholder="Ex.: administrador" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="vmUsername-label"
+                           aria-describedby="vmUsername-error"
+                           autocomplete="username">
+                    <div id="vmUsername-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Informação do Usuário</h4>
+                        <ul>
+                            <li>Nome do usuário para login nas máquinas virtuais</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Melhorias de segurança e acessibilidade no campo de senha -->
+                <div class="form-group">
+                    <label for="vmPassword" id="vmPassword-label">Senha <span class="required">*</span></label>
+                    <div class="password-field">
+                        <div class="password-input-wrapper">
+                            <input type="password" 
+                                   id="vmPassword" 
+                                   placeholder="Digite a senha" 
+                                   required 
+                                   aria-required="true"
+                                   aria-labelledby="vmPassword-label"
+                                   aria-describedby="vmPassword-error"
+                                   autocomplete="new-password">
+                            <button type="button" 
+                                    class="password-toggle" 
+                                    id="passwordToggle"
+                                    onclick="togglePassword()" 
+                                    aria-label="Mostrar ou ocultar senha">
+                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="password-buttons">
+                            <button type="button" 
+                                   class="action-btn" 
+                                   onclick="generatePassword()" 
+                                   aria-label="Gerar senha segura">
+                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M8 1a4 4 0 0 0-4 4v1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1V5a4 4 0 0 0-4-4zm0 2a2 2 0 0 1 2 2v1H6V5a2 2 0 0 1 2-2z" fill="currentColor"/>
+                                </svg>
+                                <span>Gerar</span>
+                            </button>
+                            <button type="button" 
+                                   class="action-btn" 
+                                   onclick="copyPassword()" 
+                                   aria-label="Copiar senha para área de transferência">
+                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M4.85 11.15l6.3-6.3a.5.5 0 0 1 .7.7l-6.3 6.3a.5.5 0 0 1-.7-.7z" fill="currentColor"/>
+                                    <path d="M10 3.5a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 0 13V5a1.5 1.5 0 0 1 1.5-1.5h8zm0 1h-8a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5z" fill="currentColor"/>
+                                    <path d="M4.5 0A1.5 1.5 0 0 0 3 1.5v1h1v-1a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-1v1h1a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 12.5 0h-8z" fill="currentColor"/>
+                                </svg>
+                                <span>Copiar</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div id="vmPassword-error" class="error-message" role="alert"></div>
+                    <div class="info-box password-requirements" role="note">
+                        <h4>Requisitos de Senha</h4>
+                        <ul>
+                            <li>Mínimo de 12 caracteres</li>
+                            <li>Letras maiúsculas e minúsculas</li>
+                            <li>Números</li>
+                            <li>Caracteres especiais</li>
+                        </ul>
+                        <div class="warning">Evite usar caracteres especiais como $, `, ", etc</div>
+                    </div>
+                </div>
+                
+                <!-- Opção de Segunda VM -->
+                <div class="form-group">
+                    <fieldset class="radio-fieldset">
+                        <legend>Deseja provisionar mais uma máquina virtual? <span class="required">*</span></legend>
+                        <div class="radio-group" role="radiogroup" aria-required="true">
+                            <div class="radio-option">
+                                <input type="radio" 
+                                      id="secondVMYes" 
+                                      name="secondVM" 
+                                      value="yes" 
+                                      required 
+                                      aria-required="true"
+                                      onchange="toggleSecondVMField(true)">
+                                <label for="secondVMYes">Sim</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" 
+                                      id="secondVMNo" 
+                                      name="secondVM" 
+                                      value="no" 
+                                      required 
+                                      aria-required="true"
+                                      onchange="toggleSecondVMField(false)">
+                                <label for="secondVMNo">Não</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="form-group" id="secondVMField" style="display: none;">
+                    <label for="secondVMName" id="secondVMName-label">Nome da Segunda Máquina Virtual <span class="required">*</span></label>
+                    <input type="text" 
+                           id="secondVMName" 
+                           placeholder="Ex.: MATHEWS-DC02"
+                           aria-labelledby="secondVMName-label"
+                           aria-describedby="secondVMName-error">
+                    <div id="secondVMName-error" class="error-message" role="alert"></div>
+                </div>
+            </fieldset>
             
-            <label for="clientNameUpper">Nome do Cliente (Maiúsculo) *</label>
-            <input type="text" id="clientNameUpper" placeholder="Ex.: MATHEWS" required>
-            <div class="password-requirements">
-                <h4>Por que maiúsculo?</h4>
-                <ul>
-                    <li>Utilizado para criar os Resource Groups e os recursos</li>
-                </ul>
-            </div>
+            <!-- Agrupamento semântico de configurações de rede -->
+            <fieldset>
+                <legend>Configurações de Rede</legend>
+                
+                <div class="form-group">
+                    <label for="vnetIPRange" id="vnetIPRange-label">VNET IP Range <span class="required">*</span></label>
+                    <input type="text" 
+                           id="vnetIPRange" 
+                           placeholder="Ex.: 10.1.0.0/16" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="vnetIPRange-label"
+                           aria-describedby="vnetIPRange-error">
+                    <div id="vnetIPRange-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Informação da VNET</h4>
+                        <ul>
+                            <li>Faixa de IP para a rede virtual (VNET)</li>
+                            <li>Formato CIDR (ex: 10.1.0.0/16)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subnetInternalIPRange" id="subnetInternalIPRange-label">Subnet Internal IP Range <span class="required">*</span></label>
+                    <input type="text" 
+                           id="subnetInternalIPRange" 
+                           placeholder="Ex.: 10.1.1.0/24" 
+                           required
+                           aria-required="true" 
+                           aria-labelledby="subnetInternalIPRange-label"
+                           aria-describedby="subnetInternalIPRange-error">
+                    <div id="subnetInternalIPRange-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Informação da Subnet Interna</h4>
+                        <ul>
+                            <li>Faixa de IP para a subnet interna</li>
+                            <li>Deve estar dentro do range da VNET</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="gatewaySubnetIPRange" id="gatewaySubnetIPRange-label">Gateway Subnet IP Range <span class="required">*</span></label>
+                    <input type="text" 
+                           id="gatewaySubnetIPRange" 
+                           placeholder="Ex.: 10.1.253.0/27" 
+                           required 
+                           aria-required="true"
+                           aria-labelledby="gatewaySubnetIPRange-label"
+                           aria-describedby="gatewaySubnetIPRange-error">
+                    <div id="gatewaySubnetIPRange-error" class="error-message" role="alert"></div>
+                    <div class="info-box" role="note">
+                        <h4>Informação da Gateway Subnet</h4>
+                        <ul>
+                            <li>Faixa de IP para a Gateway Subnet</li>
+                            <li>Recomendado usar /27 ou maior</li>
+                            <li>Deve estar dentro do range da VNET</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <fieldset class="radio-fieldset">
+                        <legend>Deseja instalar a VPN GW1? <span class="required">*</span></legend>
+                        <div class="radio-group" role="radiogroup" aria-required="true">
+                            <div class="radio-option">
+                                <input type="radio" 
+                                      id="vpnYes" 
+                                      name="vpn" 
+                                      value="yes" 
+                                      required 
+                                      aria-required="true">
+                                <label for="vpnYes">Sim</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" 
+                                      id="vpnNo" 
+                                      name="vpn" 
+                                      value="no" 
+                                      required 
+                                      aria-required="true">
+                                <label for="vpnNo">Não</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
             
-            <label for="clientNameLower">Nome do Cliente (Minúsculo) *</label>
-            <input type="text" id="clientNameLower" placeholder="Ex.: mathews" required>
-            <div class="password-requirements">
-                <h4>Por que minúsculo?</h4>
-                <ul>
-                    <li>Necessário para criar as Tags dos recursos</li>
-                    </ul>
-            </div>
-            
-            <label for="vmName">Nome da Máquina Virtual *</label>
-            <input type="text" id="vmName" placeholder="Ex.: MATHEWS-DC01" required>
-
-            <label for="vmUsername">Nome do Usuário *</label>
-            <input type="text" id="vmUsername" placeholder="Ex.: administrador" required>
-            <div class="password-requirements">
-                <h4>Informação do Usuário</h4>
-                <ul>
-                    <li>Nome do usuário para login nas máquinas virtuais</li>
-                </ul>
-            </div>
-
-            <label for="vmPassword">Senha *</label>
-            <div class="password-field">
-                <div class="password-input-wrapper">
-                    <input type="password" id="vmPassword" placeholder="Digite a senha" required>
-                    <button type="button" class="password-toggle" onclick="togglePassword()" title="Mostrar/Ocultar senha">
-                        👁️
-                    </button>
-                </div>
-                <div class="password-buttons">
-                    <button type="button" class="action-btn" onclick="generatePassword()">
-                        🔑 Gerar
-                    </button>
-                    <button type="button" class="action-btn" onclick="copyPassword()">
-                        📋 Copiar
-                    </button>
-                </div>
-            </div>
-            <div class="password-requirements">
-                <h4>Requisitos de Senha</h4>
-                <ul>
-                    <li>Mínimo de 12 caracteres</li>
-                    <li>Letras maiúsculas e minúsculas</li>
-                    <li>Números</li>
-                    <li>Caracteres especiais</li>
-                </ul>
-                <div class="warning">Evite usar caracteres especiais como $, `, ", etc</div>
-            </div>
-
-            <!-- Novos campos de rede -->
-            <label for="vnetIPRange">VNET IP Range *</label>
-            <input type="text" id="vnetIPRange" placeholder="Ex.: 10.1.0.0/16" required>
-            <div class="password-requirements">
-                <h4>Informação da VNET</h4>
-                <ul>
-                    <li>Faixa de IP para a rede virtual (VNET)</li>
-                    <li>Formato CIDR (ex: 10.1.0.0/16)</li>
-                </ul>
-            </div>
-
-            <label for="subnetInternalIPRange">Subnet Internal IP Range *</label>
-            <input type="text" id="subnetInternalIPRange" placeholder="Ex.: 10.1.1.0/24" required>
-            <div class="password-requirements">
-                <h4>Informação da Subnet Interna</h4>
-                <ul>
-                    <li>Faixa de IP para a subnet interna</li>
-                    <li>Deve estar dentro do range da VNET</li>
-                </ul>
-            </div>
-
-            <label for="gatewaySubnetIPRange">Gateway Subnet IP Range *</label>
-            <input type="text" id="gatewaySubnetIPRange" placeholder="Ex.: 10.1.253.0/27" required>
-            <div class="password-requirements">
-                <h4>Informação da Gateway Subnet</h4>
-                <ul>
-                    <li>Faixa de IP para a Gateway Subnet</li>
-                    <li>Recomendado usar /27 ou maior</li>
-                    <li>Deve estar dentro do range da VNET</li>
-                </ul>
-            </div>
-
-            <!-- Radio buttons -->
-            <label>Deseja provisionar mais uma máquina virtual? *</label>
-            <div class="radio-group">
-                <div class="radio-option">
-                    <input type="radio" id="secondVMYes" name="secondVM" value="yes" required onclick="toggleSecondVMField(true)">
-                    <label for="secondVMYes">Sim</label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" id="secondVMNo" name="secondVM" value="no" required onclick="toggleSecondVMField(false)">
-                    <label for="secondVMNo">Não</label>
-                </div>
-            </div>
-
-            <div id="secondVMField" style="display: none;">
-                <label for="secondVMName">Nome da Segunda Máquina Virtual *</label>
-                <input type="text" id="secondVMName" placeholder="Ex.: MATHEWS-DC02">
-            </div>
-
-            <label>Deseja instalar a VPN GW1? *</label>
-            <div class="radio-group">
-                <div class="radio-option">
-                    <input type="radio" id="vpnYes" name="vpn" value="yes" required>
-                    <label for="vpnYes">Sim</label>
-                </div>
-                <div class="radio-option">
-                    <input type="radio" id="vpnNo" name="vpn" value="no" required>
-                    <label for="vpnNo">Não</label>
-                </div>
-            </div>
-
             <div class="button-group">
-                <button type="button" onclick="generateCommand()">Gerar Comando</button>
-                <button type="button" onclick="copyCommand()">Copiar Comando</button>
-                <button type="button" onclick="openAzureCloudShell()">Acessar CloudShell</button>
+                <button type="button" 
+                       id="generateBtn" 
+                       onclick="generateCommand()" 
+                       aria-label="Gerar comando para implantação">
+                    Gerar Comando
+                </button>
+                <button type="button" 
+                       id="copyBtn" 
+                       onclick="copyCommand()" 
+                       aria-label="Copiar comando para área de transferência">
+                    Copiar Comando
+                </button>
+                <button type="button" 
+                       id="cloudShellBtn" 
+                       onclick="openAzureCloudShell()" 
+                       aria-label="Abrir o Azure Cloud Shell em uma nova aba">
+                    Acessar CloudShell
+                </button>
             </div>
         </form>
 
-        <div class="output" id="output"></div>
-        <div class="message" id="copyMessage">COMANDO COPIADO!</div>
-        <div class="reminder">LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.</div>
-    </div>
+        <div class="output" id="output" aria-live="polite" aria-label="Comando gerado"></div>
+        <div class="message" id="copyMessage" role="status" aria-live="polite">COMANDO COPIADO!</div>
+        <div class="reminder" role="alert">
+            <strong>IMPORTANTE:</strong> LEMBRE-SE DE FAZER O UPLOAD DO SCRIPT NO CLOUDSHELL ANTES DE EXECUTAR O COMANDO GERADO.
+        </div>
+    </main>
 
     <footer>
-        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank">Mathews Buzetti</a>
+        Desenvolvido por <a href="https://github.com/mathewsbuzetti" target="_blank" rel="noopener">Mathews Buzetti</a>
     </footer>
 
+    <!-- JavaScript incorporado -->
     <script>
-        function toggleSecondVMField(show) {
-            const secondVMField = document.getElementById('secondVMField');
-            secondVMField.style.display = show ? 'block' : 'none';
-            
-            // Se o campo está sendo escondido, limpar seu valor
-            if (!show) {
-                document.getElementById('secondVMName').value = '';
-            }
-        }
+    // Otimizações técnicas: debounce para evitar múltiplos eventos
+    function debounce(func, wait) {
+        let timeout;
+        return function(...args) {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => func.apply(this, args), wait);
+        };
+    }
 
-        function validateForm() {
-            clearErrors();
-            
-            const errors = [];
-            let isValid = true;
+    // Várias melhorias: Acessibilidade, segurança e usabilidade
+    document.addEventListener('DOMContentLoaded', function() {
+        // Cache de elementos DOM para melhor performance
+        const formElements = {
+            subscriptionId: document.getElementById('subscriptionId'),
+            clientNameUpper: document.getElementById('clientNameUpper'),
+            clientNameLower: document.getElementById('clientNameLower'),
+            vmName: document.getElementById('vmName'),
+            vmUsername: document.getElementById('vmUsername'),
+            vmPassword: document.getElementById('vmPassword'),
+            secondVMName: document.getElementById('secondVMName'),
+            vnetIPRange: document.getElementById('vnetIPRange'),
+            subnetInternalIPRange: document.getElementById('subnetInternalIPRange'),
+            gatewaySubnetIPRange: document.getElementById('gatewaySubnetIPRange'),
+            output: document.getElementById('output'),
+            errorContainer: document.getElementById('errorContainer'),
+            errorList: document.getElementById('errorList'),
+            copyMessage: document.getElementById('copyMessage'),
+            passwordToggle: document.getElementById('passwordToggle')
+        };
 
-            // Validação do ID da Assinatura
-            const subscriptionId = document.getElementById('subscriptionId');
-            if (!subscriptionId.value.trim()) {
-                addFieldError(subscriptionId, 'ID da Assinatura é obrigatório');
-                errors.push('ID da Assinatura não foi preenchido');
-                isValid = false;
-            } else if (!/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(subscriptionId.value)) {
-                addFieldError(subscriptionId, 'Formato inválido do ID da Assinatura');
-                errors.push('ID da Assinatura está em formato inválido');
-                isValid = false;
-            }
+        // Configurar validadores de campos
+        setupValidators();
+        
+        // Inicializações
+        updatePasswordToggleState();
+        
+        // Para melhor acessibilidade - habilitar navegação por teclado
+        setupKeyboardNavigation();
+        
+        // Inicializar campos relacionados
+        initializeRelatedFields();
+    });
 
-            // Validação do Nome do Cliente (Maiúsculo)
-            const clientNameUpper = document.getElementById('clientNameUpper');
-            if (!clientNameUpper.value.trim()) {
-                addFieldError(clientNameUpper, 'Nome do Cliente em maiúsculo é obrigatório');
-                errors.push('Nome do Cliente (maiúsculo) não foi preenchido');
-                isValid = false;
-            } else if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
-                addFieldError(clientNameUpper, 'O nome deve estar em maiúsculo');
-                errors.push('Nome do Cliente deve estar em maiúsculo');
-                isValid = false;
-            }
-
-            // Validação do Nome do Cliente (Minúsculo)
-            const clientNameLower = document.getElementById('clientNameLower');
-            if (!clientNameLower.value.trim()) {
-                addFieldError(clientNameLower, 'Nome do Cliente em minúsculo é obrigatório');
-                errors.push('Nome do Cliente (minúsculo) não foi preenchido');
-                isValid = false;
-            } else if (clientNameLower.value !== clientNameLower.value.toLowerCase()) {
-                addFieldError(clientNameLower, 'O nome deve estar em minúsculo');
-                errors.push('Nome do Cliente deve estar em minúsculo');
-                isValid = false;
-            }
-
-            // Validação do Nome da VM
-            const vmName = document.getElementById('vmName');
-            if (!vmName.value.trim()) {
-                addFieldError(vmName, 'Nome da Máquina Virtual é obrigatório');
-                errors.push('Nome da Máquina Virtual não foi preenchido');
-                isValid = false;
-            }
-
-            // Validação do Nome de Usuário
-            const vmUsername = document.getElementById('vmUsername');
-            if (!vmUsername.value.trim()) {
-                addFieldError(vmUsername, 'Nome de Usuário é obrigatório');
-                errors.push('Nome de Usuário não foi preenchido');
-                isValid = false;
-            }
-
-            // Validação da Senha
-            const vmPassword = document.getElementById('vmPassword');
-            if (!vmPassword.value) {
-                addFieldError(vmPassword, 'Senha é obrigatória');
-                errors.push('Senha não foi preenchida');
-                isValid = false;
-            } else {
-                const passwordErrors = validatePassword(vmPassword.value);
-                if (passwordErrors.length > 0) {
-                    addFieldError(vmPassword, passwordErrors[0]);
-                    errors.push(...passwordErrors);
-                    isValid = false;
-                }
-            }
-
-            // Validação dos IPs
-            const vnetIPRange = document.getElementById('vnetIPRange');
-            if (!vnetIPRange.value.trim()) {
-                addFieldError(vnetIPRange, 'VNET IP Range é obrigatório');
-                errors.push('VNET IP Range não foi preenchido');
-                isValid = false;
-            } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(vnetIPRange.value)) {
-                addFieldError(vnetIPRange, 'Formato inválido de IP CIDR');
-                errors.push('VNET IP Range está em formato inválido');
-                isValid = false;
-            }
-
-            const subnetInternalIPRange = document.getElementById('subnetInternalIPRange');
-            if (!subnetInternalIPRange.value.trim()) {
-                addFieldError(subnetInternalIPRange, 'Subnet Internal IP Range é obrigatório');
-                errors.push('Subnet Internal IP Range não foi preenchido');
-                isValid = false;
-            } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(subnetInternalIPRange.value)) {
-                addFieldError(subnetInternalIPRange, 'Formato inválido de IP CIDR');
-                errors.push('Subnet Internal IP Range está em formato inválido');
-                isValid = false;
-            }
-
-            const gatewaySubnetIPRange = document.getElementById('gatewaySubnetIPRange');
-            if (!gatewaySubnetIPRange.value.trim()) {
-                addFieldError(gatewaySubnetIPRange, 'Gateway Subnet IP Range é obrigatório');
-                errors.push('Gateway Subnet IP Range não foi preenchido');
-                isValid = false;
-            } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(gatewaySubnetIPRange.value)) {
-                addFieldError(gatewaySubnetIPRange, 'Formato inválido de IP CIDR');
-                errors.push('Gateway Subnet IP Range está em formato inválido');
-                isValid = false;
-            }
-
-            // Validação dos Radio Buttons
-            if (!document.querySelector('input[name="secondVM"]:checked')) {
-                addFieldError(document.querySelector('.radio-group'), 'Selecione uma opção');
-                errors.push('Opção de segunda máquina virtual não foi selecionada');
-                isValid = false;
-            }
-
-            if (!document.querySelector('input[name="vpn"]:checked')) {
-                addFieldError(document.querySelector('input[name="vpn"]').closest('.radio-group'), 'Selecione uma opção');
-                errors.push('Opção de VPN não foi selecionada');
-                isValid = false;
-            }
-
-            // Validação da Segunda VM se necessário
-            const secondVMYes = document.getElementById('secondVMYes');
-            if (secondVMYes.checked) {
-                const secondVMName = document.getElementById('secondVMName');
-                if (!secondVMName.value.trim()) {
-                    addFieldError(secondVMName, 'Nome da Segunda Máquina Virtual é obrigatório');
-                    errors.push('Nome da Segunda Máquina Virtual não foi preenchido');
-                    isValid = false;
-                }
-            }
-
-            if (!isValid) {
-                showErrorSummary(errors);
-            }
-
-            return isValid;
-        }
-
-        function validatePassword(password) {
-            const errors = [];
-            
-            if (password.length < 12) {
-                errors.push('A senha deve ter no mínimo 12 caracteres');
-            }
-            if (!/[A-Z]/.test(password)) {
-                errors.push('A senha deve conter pelo menos uma letra maiúscula');
-            }
-            if (!/[a-z]/.test(password)) {
-                errors.push('A senha deve conter pelo menos uma letra minúscula');
-            }
-            if (!/[0-9]/.test(password)) {
-                errors.push('A senha deve conter pelo menos um número');
-            }
-            if (!/[!@#%&*()_+\-=\[\]{};:<>?]/.test(password)) {
-                errors.push('A senha deve conter pelo menos um caractere especial');
-            }
-
-            return errors;
-        }
-
-        function addFieldError(field, message) {
-            field.classList.add('field-error');
-            
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'error-message';
-            errorDiv.textContent = message;
-            
-            field.parentNode.insertBefore(errorDiv, field.nextSibling);
-            errorDiv.style.display = 'block';
-        }
-
-        function showErrorSummary(errors) {
-            let errorContainer = document.querySelector('.error-container');
-            if (!errorContainer) {
-                errorContainer = document.createElement('div');
-                errorContainer.className = 'error-container';
-                const form = document.getElementById('deployForm');
-                form.insertBefore(errorContainer, form.firstChild);
-            }
-
-            errorContainer.innerHTML = '<strong>Por favor, corrija os seguintes erros:</strong><ul></ul>';
-            
-            const ul = errorContainer.querySelector('ul');
-            errors.forEach(error => {
-                const li = document.createElement('li');
-                li.textContent = error;
-                ul.appendChild(li);
-            });
-
-            errorContainer.style.display = 'block';
-        }
-
-        function clearErrors() {
-            document.querySelectorAll('.field-error').forEach(field => {
-                field.classList.remove('field-error');
-            });
-
-            document.querySelectorAll('.error-message').forEach(message => {
-                message.remove();
-            });
-
-            const errorContainer = document.querySelector('.error-container');
-            if (errorContainer) {
-                errorContainer.style.display = 'none';
-            }
-        }
-
-        function generateCommand() {
-            if (!validateForm()) {
-                return;
-            }
-
-            const subscriptionId = document.getElementById('subscriptionId').value.trim();
-            const locationBrazil = document.getElementById('location').value.trim();
-            const locationUS = document.getElementById('locationUS').value.trim();
-            const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
-            const clientNameLower = document.getElementById('clientNameLower').value.trim();
-            const vmName = document.getElementById('vmName').value.trim();
-            const vmUsername = document.getElementById('vmUsername').value.trim();
-            const vmPassword = document.getElementById('vmPassword').value.trim();
-            
-            // Parâmetros de rede
-            const vnetIPRange = document.getElementById('vnetIPRange').value.trim();
-            const subnetInternalIPRange = document.getElementById('subnetInternalIPRange').value.trim();
-            const gatewaySubnetIPRange = document.getElementById('gatewaySubnetIPRange').value.trim();
-
-            const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
-            const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
-            const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
-
-            let command = `.\\Deploy_AzureInfrastructure_BrazilSouth.ps1 -SubscriptionId "${subscriptionId}" -LocationBrazil "${locationBrazil}" -LocationUS "${locationUS}" -ClientNameUpper "${clientNameUpper}" -ClientNameLower "${clientNameLower}" -VMName "${vmName}"`;
-
-            if (secondVM) {
-                command += ` -CriarSegundaVM $true -SecondVMName "${secondVMName}"`;
-            } else {
-                command += ` -CriarSegundaVM $false`;
-            }
-
-            command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
-            
-            command += ` -VMUsername "${vmUsername}" -VMPassword "${vmPassword}"`;
-            
-            // Adiciona os parâmetros de rede
-            command += ` -VNetIPRange "${vnetIPRange}" -SubnetInternalIPRange "${subnetInternalIPRange}" -GatewaySubnetIPRange "${gatewaySubnetIPRange}"`;
-
-            document.getElementById('output').textContent = command;
-        }
-
-        function copyCommand() {
-            const outputText = document.getElementById('output').textContent.trim();
-            if (outputText) {
-                navigator.clipboard.writeText(outputText)
-                    .then(() => {
-                        const copyMessage = document.getElementById('copyMessage');
-                        copyMessage.style.display = 'block';
-                        setTimeout(() => {
-                            copyMessage.style.display = 'none';
-                        }, 3000);
-                    })
-                    .catch(() => alert('Erro ao copiar o comando.'));
-            } else {
-                alert('Nada para copiar!');
-            }
-        }
-
-        function copyPassword() {
-            const passwordInput = document.getElementById('vmPassword');
-            const password = passwordInput.value;
-            
-            if (password) {
-                navigator.clipboard.writeText(password)
-                    .then(() => {
-                        alert('Senha copiada com sucesso!');
-                    })
-                    .catch(() => {
-                        alert('Erro ao copiar a senha.');
-                    });
-            } else {
-                alert('Nenhuma senha para copiar!');
-            }
-        }
-
-        function generatePassword() {
-            const upperCase = 'ABCDEFGHJKLMNOPQRSTUVWXYZ';
-            const lowerCase = 'abcdefghijkmnopqrstuvwxyz';
-            const numbers = '23456789';
-            const symbols = '!@#%&*()_+-=[]{};<>?';
-            
-            let password = '';
-            password += upperCase.charAt(Math.floor(Math.random() * upperCase.length));
-            password += lowerCase.charAt(Math.floor(Math.random() * lowerCase.length));
-            password += numbers.charAt(Math.floor(Math.random() * numbers.length));
-            password += symbols.charAt(Math.floor(Math.random() * symbols.length));
-            
-            const allChars = upperCase + lowerCase + numbers + symbols;
-            
-            while(password.length < 16) {
-                password += allChars.charAt(Math.floor(Math.random() * allChars.length));
-            }
-            
-            password = password.split('').sort(() => Math.random() - 0.5).join('');
-            
-            document.getElementById('vmPassword').value = password;
-            
-            document.getElementById('vmPassword').type = 'text';
-            document.querySelector('.password-toggle').textContent = '🔒';
-            
-            setTimeout(() => {
-                document.getElementById('vmPassword').type = 'password';
-                document.querySelector('.password-toggle').textContent = '👁️';
-            }, 3000);
-        }
-
-        function togglePassword() {
-            const passwordInput = document.getElementById('vmPassword');
-            const toggleButton = document.querySelector('.password-toggle');
-            
-            if (passwordInput.type === 'password') {
-                passwordInput.type = 'text';
-                toggleButton.textContent = '🔒';
-            } else {
-                passwordInput.type = 'password';
-                toggleButton.textContent = '👁️';
-            }
-        }
-
-        function openAzureCloudShell() {
-            window.open('https://shell.azure.com', '_blank');
-        }
-
-        // Event listeners para validação em tempo real
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('clientNameUpper').addEventListener('input', function() {
-                clearErrors();
-                if (this.value !== this.value.toUpperCase()) {
-                    addFieldError(this, 'O nome deve estar em maiúsculo');
-                }
-            });
-
-            document.getElementById('clientNameLower').addEventListener('input', function() {
-                clearErrors();
-                if (this.value !== this.value.toLowerCase()) {
-                    addFieldError(this, 'O nome deve estar em minúsculo');
-                }
-            });
-
-            // Validação em tempo real do ID da Assinatura
-            document.getElementById('subscriptionId').addEventListener('input', function() {
-                clearErrors();
-                if (this.value.trim() && !/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(this.value)) {
-                    addFieldError(this, 'Formato inválido do ID da Assinatura');
+    // Melhorias de acessibilidade: suporte a navegação por teclado
+    function setupKeyboardNavigation() {
+        // Permitir "Enter" em botões que não são submit
+        document.querySelectorAll('button[type="button"]').forEach(button => {
+            button.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    button.click();
                 }
             });
         });
+        
+        // Melhorar navegação por teclado nos radio buttons
+        const radioGroups = document.querySelectorAll('.radio-group');
+        radioGroups.forEach(group => {
+            const radios = group.querySelectorAll('input[type="radio"]');
+            radios.forEach(radio => {
+                radio.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        const prev = radio.closest('.radio-option').previousElementSibling;
+                        if (prev) {
+                            prev.querySelector('input[type="radio"]').focus();
+                            prev.querySelector('input[type="radio"]').checked = true;
+                            
+                            // Disparar o evento change para campos que dependem deste
+                            const event = new Event('change');
+                            prev.querySelector('input[type="radio"]').dispatchEvent(event);
+                        }
+                    }
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        const next = radio.closest('.radio-option').nextElementSibling;
+                        if (next) {
+                            next.querySelector('input[type="radio"]').focus();
+                            next.querySelector('input[type="radio"]').checked = true;
+                            
+                            // Disparar o evento change para campos que dependem deste
+                            const event = new Event('change');
+                            next.querySelector('input[type="radio"]').dispatchEvent(event);
+                        }
+                    }
+                });
+            });
+        });
+    }
+
+    function initializeRelatedFields() {
+        // Manter consistência entre maiúsculos e minúsculos
+        document.getElementById('clientNameUpper').addEventListener('input', function() {
+            const lowerField = document.getElementById('clientNameLower');
+            if (!lowerField.dataset.userModified || lowerField.value === '') {
+                lowerField.value = this.value.toLowerCase();
+            }
+        });
+        
+        document.getElementById('clientNameLower').addEventListener('input', function() {
+            this.dataset.userModified = 'true';
+        });
+    }
+
+    // Configurar todos os validadores de campos
+    function setupValidators() {
+        // Subscription ID - validar formato UUID
+        const subscriptionValidator = debounce(function() {
+            const field = document.getElementById('subscriptionId');
+            clearFieldError(field);
+            
+            if (field.value.trim() && !/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(field.value)) {
+                addFieldError(field, 'Formato inválido do ID da Assinatura');
+                return false;
+            }
+            return true;
+        }, 300);
+        
+        document.getElementById('subscriptionId').addEventListener('input', subscriptionValidator);
+        
+        // Cliente nome maiúsculo
+        const upperNameValidator = debounce(function() {
+            const field = document.getElementById('clientNameUpper');
+            clearFieldError(field);
+            
+            if (field.value.trim() && field.value !== field.value.toUpperCase()) {
+                addFieldError(field, 'O nome deve estar em maiúsculo');
+                return false;
+            }
+            return true;
+        }, 300);
+        
+        document.getElementById('clientNameUpper').addEventListener('input', upperNameValidator);
+        
+        // Cliente nome minúsculo
+        const lowerNameValidator = debounce(function() {
+            const field = document.getElementById('clientNameLower');
+            clearFieldError(field);
+            
+            if (field.value.trim() && field.value !== field.value.toLowerCase()) {
+                addFieldError(field, 'O nome deve estar em minúsculo');
+                return false;
+            }
+            return true;
+        }, 300);
+        
+        document.getElementById('clientNameLower').addEventListener('input', lowerNameValidator);
+        
+        // Validador de formato IP CIDR
+        const ipCidrValidator = debounce(function(e) {
+            const field = e.target;
+            clearFieldError(field);
+            
+            if (field.value.trim() && !/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(field.value)) {
+                addFieldError(field, 'Formato inválido de IP CIDR');
+                return false;
+            }
+            
+            // Validação extra se for uma range válida
+            if (field.value.trim()) {
+                const parts = field.value.split('/');
+                if (parts.length === 2) {
+                    const ipParts = parts[0].split('.');
+                    const prefix = parseInt(parts[1], 10);
+                    
+                    // Validar partes do IP (0-255)
+                    for (const part of ipParts) {
+                        const num = parseInt(part, 10);
+                        if (isNaN(num) || num < 0 || num > 255) {
+                            addFieldError(field, 'Endereço IP contém números inválidos (deve ser entre 0-255)');
+                            return false;
+                        }
+                    }
+                    
+                    // Validar prefixo CIDR
+                    if (isNaN(prefix) || prefix < 0 || prefix > 32) {
+                        addFieldError(field, 'Prefixo CIDR inválido (deve ser entre 0-32)');
+                        return false;
+                    }
+                }
+            }
+            
+            return true;
+        }, 300);
+        
+        // Aplicar validadores de IP CIDR
+        document.getElementById('vnetIPRange').addEventListener('input', ipCidrValidator);
+        document.getElementById('subnetInternalIPRange').addEventListener('input', ipCidrValidator);
+        document.getElementById('gatewaySubnetIPRange').addEventListener('input', ipCidrValidator);
+        
+        // Senha - validar complexidade
+        const passwordValidator = debounce(function() {
+            const field = document.getElementById('vmPassword');
+            clearFieldError(field);
+            
+            if (field.value.trim()) {
+                const errors = validatePassword(field.value);
+                if (errors.length > 0) {
+                    addFieldError(field, errors[0]);
+                    return false;
+                }
+            }
+            
+            return true;
+        }, 300);
+        
+        document.getElementById('vmPassword').addEventListener('input', passwordValidator);
+    }
+
+    // Alternar campo de segunda VM
+    function toggleSecondVMField(show) {
+        const secondVMField = document.getElementById('secondVMField');
+        if (!secondVMField) return;
+        
+        if (show) {
+            secondVMField.style.display = 'block';
+            const nameField = document.getElementById('secondVMName');
+            nameField.setAttribute('required', 'required');
+            nameField.setAttribute('aria-required', 'true');
+        } else {
+            secondVMField.style.display = 'none';
+            const nameField = document.getElementById('secondVMName');
+            nameField.removeAttribute('required');
+            nameField.removeAttribute('aria-required');
+            nameField.value = '';
+            clearFieldError(nameField);
+        }
+    }
+
+    // Validar todos os campos do formulário
+    function validateForm() {
+        clearAllErrors();
+        
+        const errors = [];
+        let isValid = true;
+
+        // Validação do ID da Assinatura
+        const subscriptionId = document.getElementById('subscriptionId');
+        if (!subscriptionId.value.trim()) {
+            addFieldError(subscriptionId, 'ID da Assinatura é obrigatório');
+            errors.push('ID da Assinatura não foi preenchido');
+            isValid = false;
+        } else if (!/^[0-9a-fA-F]{8}-([0-9a-fA-F]{4}-){3}[0-9a-fA-F]{12}$/.test(subscriptionId.value)) {
+            addFieldError(subscriptionId, 'Formato inválido do ID da Assinatura');
+            errors.push('ID da Assinatura está em formato inválido');
+            isValid = false;
+        }
+
+        // Validação do Nome do Cliente (Maiúsculo)
+        const clientNameUpper = document.getElementById('clientNameUpper');
+        if (!clientNameUpper.value.trim()) {
+            addFieldError(clientNameUpper, 'Nome do Cliente em maiúsculo é obrigatório');
+            errors.push('Nome do Cliente (maiúsculo) não foi preenchido');
+            isValid = false;
+        } else if (clientNameUpper.value !== clientNameUpper.value.toUpperCase()) {
+            addFieldError(clientNameUpper, 'O nome deve estar em maiúsculo');
+            errors.push('Nome do Cliente deve estar em maiúsculo');
+            isValid = false;
+        }
+
+        // Validação do Nome do Cliente (Minúsculo)
+        const clientNameLower = document.getElementById('clientNameLower');
+        if (!clientNameLower.value.trim()) {
+            addFieldError(clientNameLower, 'Nome do Cliente em minúsculo é obrigatório');
+            errors.push('Nome do Cliente (minúsculo) não foi preenchido');
+            isValid = false;
+        } else if (clientNameLower.value !== clientNameLower.value.toLowerCase()) {
+            addFieldError(clientNameLower, 'O nome deve estar em minúsculo');
+            errors.push('Nome do Cliente deve estar em minúsculo');
+            isValid = false;
+        }
+
+        // Validação do Nome da VM
+        const vmName = document.getElementById('vmName');
+        if (!vmName.value.trim()) {
+            addFieldError(vmName, 'Nome da Máquina Virtual é obrigatório');
+            errors.push('Nome da Máquina Virtual não foi preenchido');
+            isValid = false;
+        }
+
+        // Validação do Nome de Usuário
+        const vmUsername = document.getElementById('vmUsername');
+        if (!vmUsername.value.trim()) {
+            addFieldError(vmUsername, 'Nome de Usuário é obrigatório');
+            errors.push('Nome de Usuário não foi preenchido');
+            isValid = false;
+        }
+
+        // Validação da Senha
+        const vmPassword = document.getElementById('vmPassword');
+        if (!vmPassword.value) {
+            addFieldError(vmPassword, 'Senha é obrigatória');
+            errors.push('Senha não foi preenchida');
+            isValid = false;
+        } else {
+            const passwordErrors = validatePassword(vmPassword.value);
+            if (passwordErrors.length > 0) {
+                addFieldError(vmPassword, passwordErrors[0]);
+                errors.push(...passwordErrors);
+                isValid = false;
+            }
+        }
+
+        // Validação dos IPs
+        const vnetIPRange = document.getElementById('vnetIPRange');
+        if (!vnetIPRange.value.trim()) {
+            addFieldError(vnetIPRange, 'VNET IP Range é obrigatório');
+            errors.push('VNET IP Range não foi preenchido');
+            isValid = false;
+        } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(vnetIPRange.value)) {
+            addFieldError(vnetIPRange, 'Formato inválido de IP CIDR');
+            errors.push('VNET IP Range está em formato inválido');
+            isValid = false;
+        }
+
+        const subnetInternalIPRange = document.getElementById('subnetInternalIPRange');
+        if (!subnetInternalIPRange.value.trim()) {
+            addFieldError(subnetInternalIPRange, 'Subnet Internal IP Range é obrigatório');
+            errors.push('Subnet Internal IP Range não foi preenchido');
+            isValid = false;
+        } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(subnetInternalIPRange.value)) {
+            addFieldError(subnetInternalIPRange, 'Formato inválido de IP CIDR');
+            errors.push('Subnet Internal IP Range está em formato inválido');
+            isValid = false;
+        }
+
+        const gatewaySubnetIPRange = document.getElementById('gatewaySubnetIPRange');
+        if (!gatewaySubnetIPRange.value.trim()) {
+            addFieldError(gatewaySubnetIPRange, 'Gateway Subnet IP Range é obrigatório');
+            errors.push('Gateway Subnet IP Range não foi preenchido');
+            isValid = false;
+        } else if (!/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\/\d{1,2}$/.test(gatewaySubnetIPRange.value)) {
+            addFieldError(gatewaySubnetIPRange, 'Formato inválido de IP CIDR');
+            errors.push('Gateway Subnet IP Range está em formato inválido');
+            isValid = false;
+        }
+
+        // Validação dos Radio Buttons
+        if (!document.querySelector('input[name="secondVM"]:checked')) {
+            const radioGroup = document.querySelector('input[name="secondVM"]').closest('.radio-group');
+            radioGroup.classList.add('field-error');
+            errors.push('Opção de segunda máquina virtual não foi selecionada');
+            isValid = false;
+        }
+
+        if (!document.querySelector('input[name="vpn"]:checked')) {
+            const radioGroup = document.querySelector('input[name="vpn"]').closest('.radio-group');
+            radioGroup.classList.add('field-error');
+            errors.push('Opção de VPN não foi selecionada');
+            isValid = false;
+        }
+
+        // Validação da Segunda VM se necessário
+        const secondVMYes = document.getElementById('secondVMYes');
+        if (secondVMYes && secondVMYes.checked) {
+            const secondVMName = document.getElementById('secondVMName');
+            if (!secondVMName.value.trim()) {
+                addFieldError(secondVMName, 'Nome da Segunda Máquina Virtual é obrigatório');
+                errors.push('Nome da Segunda Máquina Virtual não foi preenchido');
+                isValid = false;
+            }
+        }
+
+        // Mostrar resumo de erros se houver problemas
+        if (!isValid) {
+            showErrorSummary(errors);
+            // Melhorias de acessibilidade: anunciar erros
+            document.getElementById('errorContainer').setAttribute('aria-hidden', 'false');
+            
+            // Focar primeiro erro para acessibilidade
+            const firstErrorField = document.querySelector('.field-error');
+            if (firstErrorField) {
+                if (firstErrorField.tagName === 'INPUT') {
+                    firstErrorField.focus();
+                } else {
+                    const inputInError = firstErrorField.querySelector('input');
+                    if (inputInError) inputInError.focus();
+                }
+            }
+        } else {
+            document.getElementById('errorContainer').setAttribute('aria-hidden', 'true');
+        }
+
+        return isValid;
+    }
+
+    // Validar complexidade de senha
+    function validatePassword(password) {
+        const errors = [];
+        
+        if (password.length < 12) {
+            errors.push('A senha deve ter no mínimo 12 caracteres');
+        }
+        if (!/[A-Z]/.test(password)) {
+            errors.push('A senha deve conter pelo menos uma letra maiúscula');
+        }
+        if (!/[a-z]/.test(password)) {
+            errors.push('A senha deve conter pelo menos uma letra minúscula');
+        }
+        if (!/[0-9]/.test(password)) {
+            errors.push('A senha deve conter pelo menos um número');
+        }
+        if (!/[!@#%&*()_+\-=\[\]{};:<>?]/.test(password)) {
+            errors.push('A senha deve conter pelo menos um caractere especial');
+        }
+
+        return errors;
+    }
+
+    // Adicionar erro de validação a um campo
+    function addFieldError(field, message) {
+        field.classList.add('field-error');
+        
+        // Identificar o elemento de erro correspondente
+        let errorDiv = document.getElementById(`${field.id}-error`);
+        
+        // Se não existir, criar um
+        if (!errorDiv) {
+            errorDiv = document.createElement('div');
+            errorDiv.id = `${field.id}-error`;
+            errorDiv.className = 'error-message';
+            errorDiv.setAttribute('role', 'alert');
+            
+            field.parentNode.insertBefore(errorDiv, field.nextSibling);
+        }
+        
+        errorDiv.textContent = message;
+        errorDiv.style.display = 'block';
+        
+        // Definir atributos ARIA para acessibilidade
+        field.setAttribute('aria-invalid', 'true');
+        field.setAttribute('aria-describedby', errorDiv.id);
+    }
+
+    // Mostrar resumo de erros
+    function showErrorSummary(errors) {
+        const errorContainer = document.getElementById('errorContainer');
+        const errorList = document.getElementById('errorList');
+        
+        // Limpar lista existente
+        errorList.innerHTML = '';
+        
+        // Adicionar cada erro à lista
+        errors.forEach(error => {
+            const li = document.createElement('li');
+            li.textContent = error;
+            errorList.appendChild(li);
+        });
+
+        errorContainer.style.display = 'block';
+    }
+
+    // Limpar erros de um campo específico
+    function clearFieldError(field) {
+        field.classList.remove('field-error');
+        field.removeAttribute('aria-invalid');
+        
+        const errorDiv = document.getElementById(`${field.id}-error`);
+        if (errorDiv) {
+            errorDiv.style.display = 'none';
+            errorDiv.textContent = '';
+        }
+    }
+
+    // Limpar todos os erros
+    function clearAllErrors() {
+        document.querySelectorAll('.field-error').forEach(field => {
+            field.classList.remove('field-error');
+            field.removeAttribute('aria-invalid');
+        });
+
+        document.querySelectorAll('.error-message').forEach(message => {
+            message.style.display = 'none';
+            message.textContent = '';
+        });
+        
+        document.querySelectorAll('.radio-group').forEach(group => {
+            group.classList.remove('field-error');
+        });
+
+        document.getElementById('errorContainer').style.display = 'none';
+        document.getElementById('errorList').innerHTML = '';
+    }
+
+    // Gerar comando PowerShell
+    function generateCommand() {
+        if (!validateForm()) {
+            // Anunciar erros para tecnologias assistivas
+            const errorContainer = document.getElementById('errorContainer');
+            errorContainer.setAttribute('aria-live', 'assertive');
+            return;
+        }
+
+        const subscriptionId = document.getElementById('subscriptionId').value.trim();
+        const locationBrazil = document.getElementById('location').value.trim();
+        const locationUS = document.getElementById('locationUS').value.trim();
+        const clientNameUpper = document.getElementById('clientNameUpper').value.trim();
+        const clientNameLower = document.getElementById('clientNameLower').value.trim();
+        const vmName = document.getElementById('vmName').value.trim();
+        const vmUsername = document.getElementById('vmUsername').value.trim();
+        const vmPassword = document.getElementById('vmPassword').value.trim();
+        
+        // Parâmetros de rede
+        const vnetIPRange = document.getElementById('vnetIPRange').value.trim();
+        const subnetInternalIPRange = document.getElementById('subnetInternalIPRange').value.trim();
+        const gatewaySubnetIPRange = document.getElementById('gatewaySubnetIPRange').value.trim();
+
+        const secondVM = document.querySelector('input[name="secondVM"]:checked').value === 'yes';
+        const vpn = document.querySelector('input[name="vpn"]:checked').value === 'yes';
+        const secondVMName = secondVM ? document.getElementById('secondVMName').value.trim() : '';
+
+        let command = `.\\Deploy_AzureInfrastructure_BrazilSouth.ps1 -SubscriptionId "${escapeShellArg(subscriptionId)}" -LocationBrazil "${escapeShellArg(locationBrazil)}" -LocationUS "${escapeShellArg(locationUS)}" -ClientNameUpper "${escapeShellArg(clientNameUpper)}" -ClientNameLower "${escapeShellArg(clientNameLower)}" -VMName "${escapeShellArg(vmName)}"`;
+
+        if (secondVM) {
+            command += ` -CriarSegundaVM $true -SecondVMName "${escapeShellArg(secondVMName)}"`;
+        } else {
+            command += ` -CriarSegundaVM $false`;
+        }
+
+        command += vpn ? ` -InstalarVPN $true` : ` -InstalarVPN $false`;
+        
+        command += ` -VMUsername "${escapeShellArg(vmUsername)}" -VMPassword "${escapeShellArg(vmPassword)}"`;
+        
+        command += ` -VNetIPRange "${escapeShellArg(vnetIPRange)}" -SubnetInternalIPRange "${escapeShellArg(subnetInternalIPRange)}" -GatewaySubnetIPRange "${escapeShellArg(gatewaySubnetIPRange)}"`;
+
+        const output = document.getElementById('output');
+        output.textContent = command;
+        
+        // Anunciar para tecnologias assistivas
+        output.setAttribute('aria-live', 'polite');
+        
+        // Rolar tela para o resultado
+        output.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Segurança: escapar caracteres especiais para evitar injeção de código
+    function escapeShellArg(arg) {
+        // Escape de caracteres especiais para PowerShell
+        return arg.replace(/[""]/g, '`$&');
+    }
+
+    // Copiar comando para o clipboard
+    function copyCommand() {
+        const outputText = document.getElementById('output').textContent.trim();
+        if (!outputText) {
+            showNotification('Nada para copiar!', 'error');
+            return;
+        }
+        
+        // Segurança: usar a API Clipboard moderna
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(outputText)
+                .then(() => {
+                    showCopyMessage();
+                })
+                .catch(() => {
+                    showNotification('Erro ao copiar. Tente selecionar o texto manualmente.', 'error');
+                });
+        } else {
+            // Fallback para método mais antigo
+            const textarea = document.createElement('textarea');
+            textarea.value = outputText;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showCopyMessage();
+                } else {
+                    showNotification('Erro ao copiar. Tente selecionar o texto manualmente.', 'error');
+                }
+            } catch (err) {
+                showNotification('Erro ao copiar. Tente selecionar o texto manualmente.', 'error');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    }
+
+    // Mostrar mensagem de cópia com sucesso
+    function showCopyMessage() {
+        const copyMessage = document.getElementById('copyMessage');
+        copyMessage.style.display = 'block';
+        
+        // Anunciar para tecnologias assistivas
+        copyMessage.setAttribute('aria-live', 'assertive');
+        
+        setTimeout(() => {
+            copyMessage.style.display = 'none';
+        }, 3000);
+    }
+
+    // Mostrar notificação personalizada
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.textContent = message;
+        notification.setAttribute('role', 'alert');
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+
+    // Copiar senha para o clipboard
+    function copyPassword() {
+        const passwordInput = document.getElementById('vmPassword');
+        const password = passwordInput.value;
+        
+        if (!password) {
+            showNotification('Nenhuma senha para copiar!', 'error');
+            return;
+        }
+        
+        // Segurança: usar a API Clipboard moderna
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(password)
+                .then(() => {
+                    showNotification('Senha copiada com sucesso!', 'success');
+                })
+                .catch(() => {
+                    showNotification('Erro ao copiar a senha.', 'error');
+                });
+        } else {
+            // Fallback para método mais antigo
+            const textarea = document.createElement('textarea');
+            textarea.value = password;
+            textarea.setAttribute('readonly', '');
+            textarea.style.position = 'absolute';
+            textarea.style.left = '-9999px';
+            document.body.appendChild(textarea);
+            textarea.select();
+            
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showNotification('Senha copiada com sucesso!', 'success');
+                } else {
+                    showNotification('Erro ao copiar a senha.', 'error');
+                }
+            } catch (err) {
+                showNotification('Erro ao copiar a senha.', 'error');
+            }
+            
+            document.body.removeChild(textarea);
+        }
+    }
+
+    // Segurança melhorada: Gerador de senha
+    function generatePassword() {
+        // Caracteres mais seguros (excludes ambiguous characters)
+        const upperCase = 'ABCDEFGHJKLMNPQRSTUVWXYZ'; // removed I, O
+        const lowerCase = 'abcdefghijkmnopqrstuvwxyz'; // removed l
+        const numbers = '23456789'; // removed 0, 1
+        const symbols = '!@#%&*()_+-=[]{};<>?';
+        
+        // Garantir pelo menos um de cada categoria
+        let password = '';
+        password += upperCase.charAt(secureRandom(upperCase.length));
+        password += lowerCase.charAt(secureRandom(lowerCase.length));
+        password += numbers.charAt(secureRandom(numbers.length));
+        password += symbols.charAt(secureRandom(symbols.length));
+        
+        const allChars = upperCase + lowerCase + numbers + symbols;
+        
+        // Preencher o resto da senha (usando 16 caracteres para maior segurança)
+        while(password.length < 16) {
+            password += allChars.charAt(secureRandom(allChars.length));
+        }
+        
+        // Embaralhar a senha para maior segurança
+        password = shuffleString(password);
+        
+        // Segurança: definir a senha no campo
+        document.getElementById('vmPassword').value = password;
+        document.getElementById('vmPassword').type = 'text';
+        
+        // Atualizar ícone de mostrar/ocultar
+        updatePasswordToggleState();
+        
+        // Limitar tempo de exibição por segurança
+        setTimeout(() => {
+            document.getElementById('vmPassword').type = 'password';
+            updatePasswordToggleState();
+        }, 3000);
+        
+        // Validar a senha (para limpar possíveis mensagens de erro anteriores)
+        const event = new Event('input');
+        document.getElementById('vmPassword').dispatchEvent(event);
+        
+        // Anunciar para acessibilidade
+        showNotification('Senha segura gerada', 'success');
+    }
+
+    // Segurança: método de aleatoriedade mais seguro que Math.random
+    function secureRandom(max) {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return array[0] % max;
+    }
+
+    // Segurança: algoritmo de Fisher-Yates para embaralhamento eficiente
+    function shuffleString(string) {
+        const array = string.split('');
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = secureRandom(i + 1);
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array.join('');
+    }
+
+    // Mostrar/Esconder senha
+    function togglePassword() {
+        const passwordInput = document.getElementById('vmPassword');
+        const toggleButton = document.getElementById('passwordToggle');
+        
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            
+            // Limitar tempo de exibição (segurança)
+            setTimeout(() => {
+                passwordInput.type = 'password';
+                updatePasswordToggleState();
+            }, 10000); // 10s de timeout por segurança
+        } else {
+            passwordInput.type = 'password';
+        }
+        
+        updatePasswordToggleState();
+    }
+
+    // Atualizar ícone do botão de exibição de senha
+    function updatePasswordToggleState() {
+        const passwordInput = document.getElementById('vmPassword');
+        const toggleButton = document.getElementById('passwordToggle');
+        
+        if (passwordInput.type === 'password') {
+            // Acessibilidade: Melhorar com aria-label
+            toggleButton.setAttribute('aria-label', 'Mostrar senha');
+            toggleButton.innerHTML = '<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16"><path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/></svg>';
+        } else {
+            toggleButton.setAttribute('aria-label', 'Esconder senha');
+            toggleButton.innerHTML = '<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16"><path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-1.77 1.77a7.97 7.97 0 0 1-2.87-4.81C2.7 5.08 5.3 3 8 3c1.8 0 3.46.68 4.81 1.36zM8 13c-1.08 0-2.1-.25-3-.7l1.46-1.44A3 3 0 0 0 8 11c1.7 0 3-1.3 3-3 0-.35-.07-.68-.2-1l1.47-1.44A7.93 7.93 0 0 1 14.5 9c-1.2 2.92-3.8 4-6.5 4z" fill="currentColor"/><path d="M3.35 2.35l10.31 10.3a.5.5 0 0 1-.7.7L2.65 3.05a.5.5 0 0 1 .7-.7z" fill="currentColor"/></svg>';
+        }
+    }
+
+    // Abrir Azure Cloud Shell em nova aba
+    function openAzureCloudShell() {
+        // Segurança: Usar rel="noopener" para evitar vulnerabilidades
+        window.open('https://shell.azure.com', '_blank', 'noopener,noreferrer');
+    }
     </script>
 </body>
 </html>
