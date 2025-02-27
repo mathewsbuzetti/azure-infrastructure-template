@@ -5,7 +5,6 @@
 ![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Production-green?style=flat-square)
 ![Documentation](https://img.shields.io/badge/Documentation-Technical-blue?style=flat-square)
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
 **Aplica-se a:** ✔️ VMs do Windows
 
