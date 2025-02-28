@@ -347,48 +347,48 @@
       padding-right: var(--space-10);
     }
 
-    /* SOLUÇÃO ROBUSTA PARA CENTRALIZAR O ÍCONE DE VISUALIZAÇÃO DA SENHA */
+    /* SOLUÇÃO OTIMIZADA PARA O ÍCONE DE VISUALIZAÇÃO DE SENHA */
     .password-toggle {
       position: absolute;
       right: var(--space-3);
       top: 50%;
       transform: translateY(-50%);
       
-      /* Reset completo */
-      margin: 0;
+      /* Remover qualquer aparência de botão */
+      background: transparent;
+      border: none;
       padding: 0;
-      
-      /* Centralização com flexbox */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      /* Dimensões fixas */
-      height: 24px;
-      width: 24px;
+      margin: 0;
       
       /* Remover comportamento de linha */
       line-height: 0;
       
-      /* Manter outras propriedades existentes */
-      background: none;
-      border: none;
+      /* Usar flexbox para centralização perfeita */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      /* Dimensões ajustadas - sem quadrados */
+      height: auto;
+      width: auto;
+      
+      /* Outras propriedades existentes */
       color: var(--color-primary-light);
       cursor: pointer;
       opacity: 0.7;
       transition: var(--transition-fast);
       z-index: 2;
-      border-radius: var(--radius-sm);
     }
 
-    /* Controle explícito do SVG */
+    /* Controle preciso do SVG */
     .password-toggle svg {
       display: block;
+      height: 16px;
+      width: 16px;
+      fill: currentColor;
       margin: 0;
       padding: 0;
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
+      vertical-align: middle;
     }
 
     .password-toggle:hover {
@@ -844,8 +844,10 @@
                                     id="passwordToggle"
                                     onclick="togglePassword()" 
                                     aria-label="Mostrar ou ocultar senha">
-                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
-                                    <path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/>
+                                <!-- SVG Otimizado do Ícone de Olho -->
+                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+                                  <path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="currentColor"/>
+                                  <path d="M8 6C6.3 6 5 7.3 5 9s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/>
                                 </svg>
                             </button>
                         </div>
@@ -1801,10 +1803,10 @@
         if (passwordInput.type === 'password') {
             // Acessibilidade: Melhorar com aria-label
             toggleButton.setAttribute('aria-label', 'Mostrar senha');
-            toggleButton.innerHTML = '<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16"><path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4zm0-7c-1.7 0-3 1.3-3 3s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/></svg>';
+            toggleButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="currentColor"/><path d="M8 6C6.3 6 5 7.3 5 9s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/></svg>';
         } else {
             toggleButton.setAttribute('aria-label', 'Esconder senha');
-            toggleButton.innerHTML = '<svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16"><path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-1.77 1.77a7.97 7.97 0 0 1-2.87-4.81C2.7 5.08 5.3 3 8 3c1.8 0 3.46.68 4.81 1.36zM8 13c-1.08 0-2.1-.25-3-.7l1.46-1.44A3 3 0 0 0 8 11c1.7 0 3-1.3 3-3 0-.35-.07-.68-.2-1l1.47-1.44A7.93 7.93 0 0 1 14.5 9c-1.2 2.92-3.8 4-6.5 4z" fill="currentColor"/><path d="M3.35 2.35l10.31 10.3a.5.5 0 0 1-.7.7L2.65 3.05a.5.5 0 0 1 .7-.7z" fill="currentColor"/></svg>';
+            toggleButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-1.77 1.77a7.97 7.97 0 0 1-2.87-4.81C2.7 5.08 5.3 3 8 3c1.8 0 3.46.68 4.81 1.36zM8 13c-1.08 0-2.1-.25-3-.7l1.46-1.44A3 3 0 0 0 8 11c1.7 0 3-1.3 3-3 0-.35-.07-.68-.2-1l1.47-1.44A7.93 7.93 0 0 1 14.5 9c-1.2 2.92-3.8 4-6.5 4z" fill="currentColor"/><path d="M3.35 2.35l10.31 10.3a.5.5 0 0 1-.7.7L2.65 3.05a.5.5 0 0 1 .7-.7z" fill="currentColor"/></svg>';
         }
     }
 
