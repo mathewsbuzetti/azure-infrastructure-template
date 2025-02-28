@@ -316,97 +316,21 @@
       margin: var(--space-2) 0 0 var(--space-5);
     }
 
-    /* Campos de senha com melhor usabilidade e segurança */
-    .password-field {
-      position: relative;
+    /* Campo de senha simplificado */
+    .password-field-simplified {
+      max-width: 300px; /* Tamanho reduzido */
       margin-bottom: var(--space-3);
-      display: flex;
-      gap: var(--space-3);
-      flex-wrap: wrap;
     }
 
-    @media (max-width: 600px) {
-      .password-field {
-        flex-direction: column;
-      }
-      
-      .password-buttons {
-        width: 100%;
-      }
-    }
-
-    .password-input-wrapper {
-      position: relative;
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .password-field input[type="password"],
-    .password-field input[type="text"] {
-      width: 100%;
-      padding-right: var(--space-10);
-    }
-
-    /* SOLUÇÃO OTIMIZADA PARA O ÍCONE DE VISUALIZAÇÃO DE SENHA */
-    .password-toggle {
-      position: absolute;
-      right: var(--space-3);
-      top: 50%;
-      transform: translateY(-50%);
-      
-      /* Remover qualquer aparência de botão */
-      background: transparent;
-      border: none;
-      padding: 0;
-      margin: 0;
-      
-      /* Remover comportamento de linha */
-      line-height: 0;
-      
-      /* Usar flexbox para centralização perfeita */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      
-      /* Dimensões ajustadas - sem quadrados */
-      height: auto;
-      width: auto;
-      
-      /* Outras propriedades existentes */
-      color: var(--color-primary-light);
-      cursor: pointer;
-      opacity: 0.7;
-      transition: var(--transition-fast);
-      z-index: 2;
-    }
-
-    /* Controle preciso do SVG */
-    .password-toggle svg {
-      display: block;
-      height: 16px;
-      width: 16px;
-      fill: currentColor;
-      margin: 0;
-      padding: 0;
-      vertical-align: middle;
-    }
-
-    .password-toggle:hover {
-      opacity: 1;
-    }
-
-    .password-toggle:focus {
-      opacity: 1;
-      outline: 2px solid var(--color-primary);
-      outline-offset: 2px;
-    }
-
+    /* Botões de geração de senha e cópia */
     .password-buttons {
       display: flex;
       gap: var(--space-2);
+      margin-top: var(--space-2);
+      max-width: 300px; /* Mesma largura que o campo de senha */
     }
 
-    .password-field .action-btn {
+    .action-btn {
       padding: 0 var(--space-4);
       background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-primary) 100%);
       border: none;
@@ -423,12 +347,12 @@
       height: 42px;
     }
 
-    .password-field .action-btn:hover {
+    .action-btn:hover {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
       transform: translateY(-2px);
     }
 
-    .password-field .action-btn:focus {
+    .action-btn:focus {
       outline: 2px solid var(--color-primary-dark);
       outline-offset: 2px;
     }
@@ -442,6 +366,7 @@
       border-left: 3px solid var(--color-primary);
       font-size: var(--font-size-sm);
       color: var(--color-text-secondary);
+      max-width: 500px;
     }
 
     .info-box h4 {
@@ -826,55 +751,45 @@
                     </div>
                 </div>
                 
-                <!-- Melhorias de segurança e acessibilidade no campo de senha -->
+                <!-- Campo de senha simplificado sem ícone de olho -->
                 <div class="form-group">
                     <label for="vmPassword" id="vmPassword-label">Senha <span class="required">*</span></label>
-                    <div class="password-field">
-                        <div class="password-input-wrapper">
-                            <input type="password" 
-                                   id="vmPassword" 
-                                   placeholder="Digite a senha" 
-                                   required 
-                                   aria-required="true"
-                                   aria-labelledby="vmPassword-label"
-                                   aria-describedby="vmPassword-error"
-                                   autocomplete="new-password">
-                            <button type="button" 
-                                    class="password-toggle" 
-                                    id="passwordToggle"
-                                    onclick="togglePassword()" 
-                                    aria-label="Mostrar ou ocultar senha">
-                                <!-- SVG Otimizado do Ícone de Olho -->
-                                <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                                  <path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="currentColor"/>
-                                  <path d="M8 6C6.3 6 5 7.3 5 9s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/>
-                                </svg>
-                            </button>
-                        </div>
-                        <div class="password-buttons">
-                            <button type="button" 
-                                   class="action-btn" 
-                                   onclick="generatePassword()" 
-                                   aria-label="Gerar senha segura">
-                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
-                                    <path d="M8 1a4 4 0 0 0-4 4v1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1V5a4 4 0 0 0-4-4zm0 2a2 2 0 0 1 2 2v1H6V5a2 2 0 0 1 2-2z" fill="currentColor"/>
-                                </svg>
-                                <span>Gerar</span>
-                            </button>
-                            <button type="button" 
-                                   class="action-btn" 
-                                   onclick="copyPassword()" 
-                                   aria-label="Copiar senha para área de transferência">
-                                <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
-                                    <path d="M4.85 11.15l6.3-6.3a.5.5 0 0 1 .7.7l-6.3 6.3a.5.5 0 0 1-.7-.7z" fill="currentColor"/>
-                                    <path d="M10 3.5a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 0 13V5a1.5 1.5 0 0 1 1.5-1.5h8zm0 1h-8a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5z" fill="currentColor"/>
-                                    <path d="M4.5 0A1.5 1.5 0 0 0 3 1.5v1h1v-1a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-1v1h1a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 12.5 0h-8z" fill="currentColor"/>
-                                </svg>
-                                <span>Copiar</span>
-                            </button>
-                        </div>
+                    <div class="password-field-simplified">
+                        <input type="text" 
+                               id="vmPassword" 
+                               placeholder="Digite a senha" 
+                               required 
+                               aria-required="true"
+                               aria-labelledby="vmPassword-label"
+                               aria-describedby="vmPassword-error"
+                               autocomplete="new-password">
+                        <div id="vmPassword-error" class="error-message" role="alert"></div>
                     </div>
-                    <div id="vmPassword-error" class="error-message" role="alert"></div>
+                    
+                    <!-- Botões para gerar e copiar senha -->
+                    <div class="password-buttons">
+                        <button type="button" 
+                               class="action-btn" 
+                               onclick="generatePassword()" 
+                               aria-label="Gerar senha segura">
+                            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                                <path d="M8 1a4 4 0 0 0-4 4v1H3a1 1 0 0 0-1 1v7a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1V5a4 4 0 0 0-4-4zm0 2a2 2 0 0 1 2 2v1H6V5a2 2 0 0 1 2-2z" fill="currentColor"/>
+                            </svg>
+                            <span>Gerar</span>
+                        </button>
+                        <button type="button" 
+                               class="action-btn" 
+                               onclick="copyPassword()" 
+                               aria-label="Copiar senha para área de transferência">
+                            <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 16 16">
+                                <path d="M4.85 11.15l6.3-6.3a.5.5 0 0 1 .7.7l-6.3 6.3a.5.5 0 0 1-.7-.7z" fill="currentColor"/>
+                                <path d="M10 3.5a1.5 1.5 0 0 1 1.5 1.5v8a1.5 1.5 0 0 1-1.5 1.5h-8A1.5 1.5 0 0 1 0 13V5a1.5 1.5 0 0 1 1.5-1.5h8zm0 1h-8a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 .5-.5V5a.5.5 0 0 0-.5-.5z" fill="currentColor"/>
+                                <path d="M4.5 0A1.5 1.5 0 0 0 3 1.5v1h1v-1a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v8a.5.5 0 0 1-.5.5h-1v1h1a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 12.5 0h-8z" fill="currentColor"/>
+                            </svg>
+                            <span>Copiar</span>
+                        </button>
+                    </div>
+                    
                     <div class="info-box password-requirements" role="note">
                         <h4>Requisitos de Senha</h4>
                         <ul>
@@ -1077,15 +992,11 @@
             output: document.getElementById('output'),
             errorContainer: document.getElementById('errorContainer'),
             errorList: document.getElementById('errorList'),
-            copyMessage: document.getElementById('copyMessage'),
-            passwordToggle: document.getElementById('passwordToggle')
+            copyMessage: document.getElementById('copyMessage')
         };
 
         // Configurar validadores de campos
         setupValidators();
-        
-        // Inicializações
-        updatePasswordToggleState();
         
         // Para melhor acessibilidade - habilitar navegação por teclado
         setupKeyboardNavigation();
@@ -1739,16 +1650,6 @@
         
         // Segurança: definir a senha no campo
         document.getElementById('vmPassword').value = password;
-        document.getElementById('vmPassword').type = 'text';
-        
-        // Atualizar ícone de mostrar/ocultar
-        updatePasswordToggleState();
-        
-        // Limitar tempo de exibição por segurança
-        setTimeout(() => {
-            document.getElementById('vmPassword').type = 'password';
-            updatePasswordToggleState();
-        }, 3000);
         
         // Validar a senha (para limpar possíveis mensagens de erro anteriores)
         const event = new Event('input');
@@ -1773,41 +1674,6 @@
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array.join('');
-    }
-
-    // Mostrar/Esconder senha
-    function togglePassword() {
-        const passwordInput = document.getElementById('vmPassword');
-        const toggleButton = document.getElementById('passwordToggle');
-        
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            
-            // Limitar tempo de exibição (segurança)
-            setTimeout(() => {
-                passwordInput.type = 'password';
-                updatePasswordToggleState();
-            }, 10000); // 10s de timeout por segurança
-        } else {
-            passwordInput.type = 'password';
-        }
-        
-        updatePasswordToggleState();
-    }
-
-    // Atualizar ícone do botão de exibição de senha
-    function updatePasswordToggleState() {
-        const passwordInput = document.getElementById('vmPassword');
-        const toggleButton = document.getElementById('passwordToggle');
-        
-        if (passwordInput.type === 'password') {
-            // Acessibilidade: Melhorar com aria-label
-            toggleButton.setAttribute('aria-label', 'Mostrar senha');
-            toggleButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M8 3C4.5 3 1.5 5.7 0 9c1.5 3.3 4.5 6 8 6s6.5-2.7 8-6c-1.5-3.3-4.5-6-8-6zm0 10c-2.2 0-4-1.8-4-4s1.8-4 4-4 4 1.8 4 4-1.8 4-4 4z" fill="currentColor"/><path d="M8 6C6.3 6 5 7.3 5 9s1.3 3 3 3 3-1.3 3-3-1.3-3-3-3z" fill="currentColor"/></svg>';
-        } else {
-            toggleButton.setAttribute('aria-label', 'Esconder senha');
-            toggleButton.innerHTML = '<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M12.81 4.36l-1.77 1.78a4 4 0 0 0-4.9 4.9l-1.77 1.77a7.97 7.97 0 0 1-2.87-4.81C2.7 5.08 5.3 3 8 3c1.8 0 3.46.68 4.81 1.36zM8 13c-1.08 0-2.1-.25-3-.7l1.46-1.44A3 3 0 0 0 8 11c1.7 0 3-1.3 3-3 0-.35-.07-.68-.2-1l1.47-1.44A7.93 7.93 0 0 1 14.5 9c-1.2 2.92-3.8 4-6.5 4z" fill="currentColor"/><path d="M3.35 2.35l10.31 10.3a.5.5 0 0 1-.7.7L2.65 3.05a.5.5 0 0 1 .7-.7z" fill="currentColor"/></svg>';
-        }
     }
 
     // Abrir Azure Cloud Shell em nova aba
